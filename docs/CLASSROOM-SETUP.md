@@ -46,6 +46,10 @@ Neither changes the course's saved settings; the choice only applies to the expo
 
 Implementation: `format=scorm|web` query parameter handled in `plugins/output/adapt/publish.js`; buttons in `part_editorCommon.hbs`. Not yet tested against a running instance - please try both buttons, and test the SCORM zip in your LMS or SCORM Cloud.
 
+## Importing PowerPoint and Google Slides
+
+`scripts/pptx-import/` converts a `.pptx` deck (or a Google Slides deck downloaded as .pptx) into a zip for the editor's **Import source** button. See its README for options and for what does and does not convert (layout, animations and charts do not; text, lists, tables, images and alt text do). Not yet tested against a live authoring tool.
+
 ## Other projects reviewed
 
 Findings from a web search plus direct checks of GitHub repos against framework 5.56.3. Only the "verified" items were actually tested.
