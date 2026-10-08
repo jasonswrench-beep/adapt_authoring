@@ -50,6 +50,20 @@
     },
     {
       "group": "Content blocks",
+      "name": "adapt-iframe",
+      "repo": "cgkineo/adapt-iframe",
+      "community": true,
+      "riseEquivalent": "Embed block (H5P, Google Slides, forms, any web page)"
+    },
+    {
+      "group": "Content blocks",
+      "name": "adapt-list",
+      "repo": "cgkineo/adapt-list",
+      "community": true,
+      "riseEquivalent": "List block"
+    },
+    {
+      "group": "Content blocks",
       "name": "adapt-contrib-blank",
       "repo": "adaptlearning/adapt-contrib-blank"
     },
@@ -90,6 +104,13 @@
       "repo": "cgkineo/adapt-tabs",
       "community": true,
       "riseEquivalent": "Tabs"
+    },
+    {
+      "group": "Interactions",
+      "name": "adapt-graphicCompare",
+      "repo": "nachocinalli/adapt-graphicCompare",
+      "community": true,
+      "riseEquivalent": "Before/after image slider"
     },
     {
       "group": "Knowledge checks",
@@ -145,6 +166,20 @@
       "riseEquivalent": "Accessible answer-error prompt"
     },
     {
+      "group": "Assessment & feedback",
+      "name": "adapt-submitAll",
+      "repo": "cgkineo/adapt-submitAll",
+      "community": true,
+      "riseEquivalent": "One Submit button for a whole quiz page"
+    },
+    {
+      "group": "Assessment & feedback",
+      "name": "adapt-hint",
+      "repo": "cgkineo/adapt-hint",
+      "community": true,
+      "riseEquivalent": "Hint button on questions"
+    },
+    {
       "group": "Navigation & progress",
       "name": "adapt-contrib-pageLevelProgress",
       "repo": "adaptlearning/adapt-contrib-pageLevelProgress",
@@ -167,6 +202,34 @@
       "name": "adapt-contrib-triggered",
       "repo": "adaptlearning/adapt-contrib-triggered",
       "riseEquivalent": "Button-triggered reveal (simple Storyline-style trigger)"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-articleBlockSlider",
+      "repo": "cgkineo/adapt-articleBlockSlider",
+      "community": true,
+      "riseEquivalent": "Slide-by-slide sections (closest to Storyline slides)"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-pageIncompletePrompt",
+      "repo": "cgkineo/adapt-pageIncompletePrompt",
+      "community": true,
+      "riseEquivalent": "Warn before leaving an unfinished lesson"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-homeButton",
+      "repo": "cgkineo/adapt-homeButton",
+      "community": true,
+      "riseEquivalent": "Home button"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-close",
+      "repo": "cgkineo/adapt-close",
+      "community": true,
+      "riseEquivalent": "Exit/close button"
     },
     {
       "group": "Navigation & progress",

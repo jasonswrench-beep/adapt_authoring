@@ -28,12 +28,12 @@ The stock tool installs plugins through a Bower registry hosted on Heroku (`adap
 
 | Piece | Status |
 |---|---|
-| All 36 bundle plugins resolve to a release compatible with framework 5.56.3, with a schema and a recognised type | Checked against the live GitHub repos |
+| All 45 bundle plugins resolve to a release compatible with framework 5.56.3, with a schema and a recognised type | Checked against the live GitHub repos |
 | Installer script and export-format changes: JavaScript syntax | Checked |
 | SCORM / Web export buttons | **Not run** |
 | Docker build, first-run install, plugin registration against MongoDB, and the editor UI | **Not run** (no Docker daemon or MongoDB where this was written). Expect to fix small issues on your first deploy. |
 
-Four bundle entries (`adapt-hotgrid`, `adapt-visua11y`, `adapt-tabs`, `adapt-search`) are community plugins by cgkineo, not adaptlearning.
+Entries marked `"community": true` in `conf/plugin-bundle.json` are not maintained by adaptlearning (mostly cgkineo, plus `nachocinalli/adapt-graphicCompare`). Test them before relying on them.
 
 ## Exporting: SCORM and Web
 
@@ -74,6 +74,19 @@ Jason supplied the org's repository list; every plugin not already in the bundle
 - Skeletons, tooling and docs repos (`adapt-component`, `adapt-extension`, `adapt-questionComponent`, `adapt-cli`, etc.) are not course plugins.
 
 Community plugins outside this org (in the plugin browser registry) are still unreviewed.
+
+### Community plugin candidates supplied from the plugin browser
+
+28 repositories were checked against framework 5.56.3: release tags, declared framework range, schema file, last commit, and whether the code uses framework-2/3 imports (`coreJS/...`), which no longer exist in 5.x.
+
+- **Added (9):** `adapt-iframe`, `adapt-list`, `adapt-graphicCompare`, `adapt-articleBlockSlider`, `adapt-pageIncompletePrompt`, `adapt-homeButton`, `adapt-close`, `adapt-submitAll`, `adapt-hint`. All declare 5.x support, use current imports, and (except graphicCompare, 2023) were updated in 2023-2026.
+  - `adapt-articleBlockSlider` turns a section into slide-by-slide navigation, the closest thing available to Storyline-style slides.
+  - `adapt-iframe` is the route for embedding H5P activities, Google Slides ("publish to web") and other web content.
+- **Candidates to test in a scratch course first, not bundled:** `danielstorey/adapt-backgroundScroll` (2019, modern imports, declares >=3.0) and `LearnChamp/adapt-table` (2017, modern imports, declares >=2.0).
+- **Not usable on framework 5:** `ExultCorp/adapt-contrib-flipcard`, `BATraining/adapt-dragAndDrop-public`, `BATraining/adapt-hotSpot-public`, `danielstorey/adapt-expose`, `adapt-flipper`, `adapt-stacklist`, `kingsonline/adapt-chat`, `adapt-contents`, `adapt-h5p`, `gowithfloat/adapt-course-progress`, `mike-st/adapt-before-and-after` (last commit was a README edit; the code is still framework-2 style). They import `coreJS/...` or declare framework 2.x. Porting is possible but is real development work.
+- **No `properties.schema`, so the authoring tool ignores them:** `mike-st/adapt-dragndropwithimage`, `LearningPool/adapt-contrib-blockslider`, `martinsandberg/adapt-order`, `adamlaird/adapt-menu-singlePageCourse`, `SpongeUK/adapt-courseReset`, `kirsty-hames/adapt-iceCream`.
+
+Consequence for the Storyline goal: no maintained, authoring-tool-ready drag-and-drop, flip-card or hotspot-with-layers plugin exists among these. Those would need to be built or ported (Phase 3).
 
 Not found in this search: Adapt-compatible timeline, hotspot-with-layers, or scenario plugins (hotspot-style content is partly covered by `adapt-contrib-hotgraphic`). Compare the Adapt plugin browser before building any of these yourself.
 
