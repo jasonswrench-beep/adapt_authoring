@@ -79,7 +79,9 @@ function initialize () {
           _duration : 400
         },
         _accessibility : {
-          _isEnabled : false,
+          // the framework's master switch for focus management, popup focus trapping and
+          // aria-hidden handling; it must be on for courses to be keyboard/screen reader usable
+          _isEnabled : true,
           _shouldSupportLegacyBrowsers : true,
           _isTextProcessorEnabled: false
         }

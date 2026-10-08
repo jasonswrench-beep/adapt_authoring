@@ -50,6 +50,12 @@ Implementation: `format=scorm|web` query parameter handled in `plugins/output/ad
 
 `scripts/pptx-import/` converts a `.pptx` deck (or a Google Slides deck downloaded as .pptx) into a zip for the editor's **Import source** button. See its README for options and for what does and does not convert (layout, animations and charts do not; text, lists, tables, images and alt text do). Not yet tested against a live authoring tool.
 
+## Accessibility
+
+- **Default changed:** the stock authoring tool created every new course with the framework's accessibility master switch (`_accessibility._isEnabled`) **off**. In framework 5 that switch controls focus management, hiding background content from screen readers behind popups/the drawer, popup focus trapping and keyboard focus outlines. This fork now creates courses with it **on** (`plugins/content/config/index.js` and `model.schema`). Courses created before this change keep their old value; the checker flags them.
+- **Checker:** `scripts/a11y-check/` checks a Web export (content rules plus axe-core in a real browser). See its README for the rules, limits and options. Run it on the Web package before submitting or publishing a course. It is a command-line tool for now; an in-editor "Check accessibility" button is a good Phase 2 item.
+- **Limits:** automated checks cover only part of WCAG. Also test with a keyboard and a screen reader.
+
 ## Other projects reviewed
 
 Findings from a web search plus direct checks of GitHub repos against framework 5.56.3. Only the "verified" items were actually tested.

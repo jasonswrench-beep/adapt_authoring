@@ -348,7 +348,10 @@ function buildZip(content, assets, options) {
   put('package.json', { name: 'adapt_framework', version: options.framework });
   put('src/course/config.json', {
     _type: 'config', _defaultLanguage: options.lang, _defaultDirection: 'ltr', _questionWeight: 1,
-    _theme: 'adapt-contrib-vanilla', _menu: 'adapt-contrib-boxMenu'
+    _theme: 'adapt-contrib-vanilla', _menu: 'adapt-contrib-boxMenu',
+    // the framework's accessibility module needs this block (it fails to start without it) and
+    // _isEnabled is its master switch for focus management and screen reader support
+    _accessibility: { _isEnabled: true, _isSkipNavigationEnabled: true }
   });
   put(`${base}/course.json`, content.course);
   put(`${base}/contentObjects.json`, content.contentObjects);
