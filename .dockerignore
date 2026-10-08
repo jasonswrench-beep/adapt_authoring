@@ -1,0 +1,6 @@
+node_modules
+.git
+temp
+data
+conf/config.json
+.env

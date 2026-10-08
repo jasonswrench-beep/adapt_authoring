@@ -1,0 +1,24 @@
+# Hosted authoring tool for students.  Usage:  cp .env.example .env && edit it && docker compose up -d --build
+services:
+  mongo:
+    image: mongo:6
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+
+  adapt:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    env_file: .env
+    ports:
+      - "5000:5000"
+    volumes:
+      - adapt_app:/app
+
+volumes:
+  mongo_data:
+  adapt_app:
