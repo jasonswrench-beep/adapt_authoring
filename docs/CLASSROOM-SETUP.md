@@ -28,7 +28,7 @@ The stock tool installs plugins through a Bower registry hosted on Heroku (`adap
 
 | Piece | Status |
 |---|---|
-| All 30 bundle plugins resolve to a release compatible with framework 5.56.3, with a schema and a recognised type | Checked against the live GitHub repos |
+| All 36 bundle plugins resolve to a release compatible with framework 5.56.3, with a schema and a recognised type | Checked against the live GitHub repos |
 | Installer script and export-format changes: JavaScript syntax | Checked |
 | SCORM / Web export buttons | **Not run** |
 | Docker build, first-run install, plugin registration against MongoDB, and the editor UI | **Not run** (no Docker daemon or MongoDB where this was written). Expect to fix small issues on your first deploy. |
@@ -57,6 +57,19 @@ Findings from a web search plus direct checks of GitHub repos against framework 
 | `danielstorey/adapt-dragndrop` | Drag-and-drop question (a core Storyline interaction) | Targets framework ~2.0, last updated 2017: **does not install on 5.x**. Best treated as a Phase 3 port or rewrite |
 | [H5P](https://h5p.org) and the [Lumi](https://lumi.education) desktop editor | 40+ interactive content types (Course Presentation, Interactive Video, Branching Scenario, drag-and-drop); Lumi exports SCORM and standalone HTML | Not an Adapt plugin. Worth evaluating as a *companion* for the Storyline-style interactions Adapt lacks, e.g. embedding H5P output in an Adapt page. Not tested here |
 | Xerte, eXe | Other open-source authoring tools with SCORM output | Alternatives rather than components; not evaluated in depth |
+
+### Review of the `adaptlearning` GitHub organization
+
+Jason supplied the org's repository list; every plugin not already in the bundle was checked against framework 5.56.3 (v5.56.3 is the newest framework release tag).
+
+- **Added:** `adapt-youtube`, `adapt-vimeo`, `adapt-contrib-triggered` (button-triggered reveal, the nearest thing to a Storyline trigger), `adapt-contrib-contentObjectTransition`, `adapt-contrib-instructionError`, `adapt-contrib-trackingErrors`.
+- **Compatible but not added:** `adapt-contrib-xapi` (xAPI tracking; add it only if you need xAPI, and don't run it alongside Spoor on the same course without testing); `adapt-contrib-pointGmcq` (hotspot-style question, but the repo is archived).
+- **Unusable in the authoring tool:** `adapt-contrib-scoring`, `scoringResults`, `scoringAssessment` ship no `properties.schema`, so the tool ignores them.
+- **Unreleased:** `randomise`, `banking`, `modifiers` have no release tags yet.
+- **Too old:** `adapt-contrib-assessmentResultsTotal` (no release compatible with 5.x).
+- Skeletons, tooling and docs repos (`adapt-component`, `adapt-extension`, `adapt-questionComponent`, `adapt-cli`, etc.) are not course plugins.
+
+Community plugins outside this org (in the plugin browser registry) are still unreviewed.
 
 Not found in this search: Adapt-compatible timeline, hotspot-with-layers, or scenario plugins (hotspot-style content is partly covered by `adapt-contrib-hotgraphic`). Compare the Adapt plugin browser before building any of these yourself.
 

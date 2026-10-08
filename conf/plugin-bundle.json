@@ -38,6 +38,18 @@
     },
     {
       "group": "Content blocks",
+      "name": "adapt-youtube",
+      "repo": "adaptlearning/adapt-youtube",
+      "riseEquivalent": "YouTube embed"
+    },
+    {
+      "group": "Content blocks",
+      "name": "adapt-vimeo",
+      "repo": "adaptlearning/adapt-vimeo",
+      "riseEquivalent": "Vimeo embed"
+    },
+    {
+      "group": "Content blocks",
       "name": "adapt-contrib-blank",
       "repo": "adaptlearning/adapt-contrib-blank"
     },
@@ -127,6 +139,12 @@
       "riseEquivalent": "Feedback layers (Storyline)"
     },
     {
+      "group": "Assessment & feedback",
+      "name": "adapt-contrib-instructionError",
+      "repo": "adaptlearning/adapt-contrib-instructionError",
+      "riseEquivalent": "Accessible answer-error prompt"
+    },
+    {
       "group": "Navigation & progress",
       "name": "adapt-contrib-pageLevelProgress",
       "repo": "adaptlearning/adapt-contrib-pageLevelProgress",
@@ -143,6 +161,18 @@
       "name": "adapt-contrib-trickle",
       "repo": "adaptlearning/adapt-contrib-trickle",
       "riseEquivalent": "Continue button / locked sections"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-contrib-triggered",
+      "repo": "adaptlearning/adapt-contrib-triggered",
+      "riseEquivalent": "Button-triggered reveal (simple Storyline-style trigger)"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-contrib-contentObjectTransition",
+      "repo": "adaptlearning/adapt-contrib-contentObjectTransition",
+      "riseEquivalent": "Page transitions"
     },
     {
       "group": "Navigation & progress",
@@ -181,6 +211,12 @@
       "name": "adapt-contrib-spoor",
       "repo": "adaptlearning/adapt-contrib-spoor",
       "riseEquivalent": "SCORM / xAPI-ish tracking"
+    },
+    {
+      "group": "Accessibility & LMS",
+      "name": "adapt-contrib-trackingErrors",
+      "repo": "adaptlearning/adapt-contrib-trackingErrors",
+      "riseEquivalent": "LMS tracking-error notices"
     }
   ]
 }
