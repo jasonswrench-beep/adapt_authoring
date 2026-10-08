@@ -115,6 +115,11 @@ function publishCourse(courseId, mode, request, response, next) {
       }
       if (spoor) {
         spoor._isEnabled = format === 'scorm';
+        // default to SCORM 1.2 (widest LMS support) unless the course picked a version
+        if (format === 'scorm') {
+          spoor._advancedSettings = spoor._advancedSettings || {};
+          spoor._advancedSettings._scormVersion = spoor._advancedSettings._scormVersion || '1.2';
+        }
       }
       exportFormat = format;
       callback(null);
