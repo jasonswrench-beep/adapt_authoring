@@ -22,13 +22,13 @@ docker compose stop adapt && docker compose run --rm --entrypoint "" adapt node 
 
 ## Why a custom plugin installer
 
-The stock tool installs plugins through a Bower registry hosted on Heroku (`adapt-bower-repository.herokuapp.com`) and silently skips any plugin that fails. `scripts/install-plugin-bundle.js` instead clones each plugin from GitHub (or, for the two plugins in `adapt-plugins/`, copies them from this repository), picks the newest release compatible with the installed framework, and registers it through the tool's own `importPackage`. The list is `conf/plugin-bundle.json`; each entry notes its Rise/Storyline analogue.
+The stock tool installs plugins through a Bower registry hosted on Heroku (`adapt-bower-repository.herokuapp.com`) and silently skips any plugin that fails. `scripts/install-plugin-bundle.js` instead clones each plugin from GitHub (or, for the three plugins in `adapt-plugins/`, copies them from this repository), picks the newest release compatible with the installed framework, and registers it through the tool's own `importPackage`. The list is `conf/plugin-bundle.json`; each entry notes its Rise/Storyline analogue.
 
 ## Verification status (be aware)
 
 | Piece | Status |
 |---|---|
-| All 47 bundle entries resolve (45 from GitHub plus 2 local) to a release compatible with framework 5.56.3, with a schema and a recognised type | Checked against the live GitHub repos |
+| All 48 bundle entries resolve (45 from GitHub plus 3 local) to a release compatible with framework 5.56.3, with a schema and a recognised type | Checked against the live GitHub repos |
 | Installer script and export-format changes: JavaScript syntax | Checked |
 | SCORM / Web export buttons | **Not run** |
 | Docker build, first-run install, plugin registration against MongoDB, and the editor UI | **Not run** (no Docker daemon or MongoDB where this was written). Expect to fix small issues on your first deploy. |
@@ -38,6 +38,12 @@ Entries marked `"community": true` in `conf/plugin-bundle.json` are not maintain
 ## Look and feel: the Modern theme and Lessons menu
 
 `adapt-plugins/` holds a Rise-style theme (`adapt-theme-modern`) and course home page (`adapt-menu-lessons`): numbered lesson cards with Start / Continue / Review, the university brand colours (navy `#003E7E` for text, headings, buttons and navigation; orange `#F58426` as a decorative accent only) arranged so every text pairing meets WCAG AA contrast, and a system font stack (no Google Fonts requests). They install with the plugin bundle and are the default for new courses when present; the PowerPoint converter uses them too. See `adapt-plugins/README.md` for where each brand colour can safely be used (pure orange is only 2.56:1 on white, so it is never used for text), how to change the palette, and what was verified (built with the real framework, driven in a browser, axe-core clean). No logo is included. The brand manual page supplied (p. 22) mentions web-safe alternatives on p. 21, which were not available; if that page defines official AA-safe alternatives, send it and the palette can be aligned.
+
+## H5P activities
+
+`adapt-plugins/adapt-component-h5p` adds an **H5P Player** component: upload a `.h5p` file to the asset library, pick it in the component, and the activity plays inside the course, self-hosted, so it also works in Web and SCORM exports. It completes when the learner finishes the activity. The authoring tool unpacks the file automatically when the course is previewed or published (`plugins/output/adapt/h5pPackaging.js`, with path-traversal and size protection). See `adapt-plugins/adapt-component-h5p/README.md` for the steps, how it works and its limits.
+
+Things to know: an `.h5p` file contains JavaScript, so only use files you trust and review any that students upload; H5P scores are not passed to the LMS (completion is); each activity adds roughly its unpacked size to the package. Tested with a real H5P file and a real framework build in a browser; **not yet run inside the live editor**.
 
 ## Exporting: SCORM and Web
 
@@ -71,7 +77,7 @@ Findings from a web search plus direct checks of GitHub repos against framework 
 | `cgkineo/adapt-tabs`, `cgkineo/adapt-search` | Tabs component; keyword search across the course | Verified compatible with 5.56.3; **added to the bundle** |
 | `cgkineo/adapt-audio` | Audio playback extension | Compatible by version, but ships no `properties.schema`, so the authoring tool would ignore it. Not added |
 | `danielstorey/adapt-dragndrop` | Drag-and-drop question (a core Storyline interaction) | Targets framework ~2.0, last updated 2017: **does not install on 5.x**. Best treated as a Phase 3 port or rewrite |
-| [H5P](https://h5p.org) and the [Lumi](https://lumi.education) desktop editor | 40+ interactive content types (Course Presentation, Interactive Video, Branching Scenario, drag-and-drop); Lumi exports SCORM and standalone HTML | Not an Adapt plugin. Worth evaluating as a *companion* for the Storyline-style interactions Adapt lacks, e.g. embedding H5P output in an Adapt page. Not tested here |
+| [H5P](https://h5p.org) and the [Lumi](https://lumi.education) desktop editor | 40+ interactive content types (Course Presentation, Interactive Video, Branching Scenario, drag-and-drop); Lumi exports SCORM and standalone HTML | Not an Adapt plugin, so a self-hosted **H5P Player component was built** (see *H5P activities*): drag-and-drop, flip cards, hotspots and similar Storyline-style interactions can be authored in H5P and embedded |
 | Xerte, eXe | Other open-source authoring tools with SCORM output | Alternatives rather than components; not evaluated in depth |
 
 ### Review of the `adaptlearning` GitHub organization

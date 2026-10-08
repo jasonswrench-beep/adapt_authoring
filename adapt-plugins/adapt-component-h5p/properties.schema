@@ -1,0 +1,81 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "id": "http://jsonschema.net",
+  "$ref": "http://localhost/plugins/content/component/model.schema",
+  "globals": {
+    "loadError": {
+      "type": "string",
+      "required": true,
+      "default": "This activity could not be loaded.",
+      "inputType": "Text",
+      "validators": [],
+      "translatable": true
+    }
+  },
+  "properties": {
+    "_supportedLayout": {
+      "type": "string",
+      "required": true,
+      "enum": [
+        "full-width",
+        "half-width",
+        "both"
+      ],
+      "default": "full-width",
+      "editorOnly": true
+    },
+    "instruction": {
+      "type": "string",
+      "required": false,
+      "default": "",
+      "inputType": "Text",
+      "validators": [],
+      "help": "Instruction text shown above the activity",
+      "translatable": true
+    },
+    "_setCompletionOn": {
+      "type": "string",
+      "required": false,
+      "default": "completed",
+      "title": "Set completion on",
+      "inputType": {
+        "type": "Select",
+        "options": [
+          "completed",
+          "inview"
+        ]
+      },
+      "help": "completed: the learner finishes the H5P activity (answers the question, or reaches the end of a presentation or video). inview: as soon as it scrolls into view."
+    },
+    "_h5p": {
+      "type": "object",
+      "required": true,
+      "title": "H5P activity",
+      "properties": {
+        "_src": {
+          "type": "string",
+          "required": true,
+          "title": "H5P file",
+          "default": "",
+          "inputType": "Asset:other",
+          "validators": [
+            "required"
+          ],
+          "help": "Upload a .h5p file to the asset library and select it here. It is unpacked automatically when the course is previewed or published."
+        },
+        "_minHeight": {
+          "type": "number",
+          "required": false,
+          "title": "Minimum height (px)",
+          "default": "",
+          "inputType": "Number",
+          "validators": [
+            "number"
+          ],
+          "help": "Optional. Reserves space while the activity loads, to stop the page jumping."
+        }
+      }
+    }
+  }
+}

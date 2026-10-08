@@ -173,6 +173,13 @@ function checkContent(data) {
       add(c, 'media-autoplay', 'error', '2.2.2', 'Media starts playing automatically.', 'Turn autoplay off so learners control playback.');
     }
   });
+  components.filter(c => c._component === 'h5pPlayer').forEach(c => {
+    if (!(c._h5p && c._h5p._src)) {
+      add(c, 'h5p-missing-file', 'error', '4.1.2', 'H5P activity has no file selected.', 'Upload a .h5p file to the asset library and select it in the component settings.');
+    }
+    add(c, 'embed-review', 'info', '2.1.1',
+      'Embedded H5P activity.', 'The accessibility of the activity depends on how it was built. Try it with a keyboard and a screen reader, and check any images, audio or video inside it have alternatives; this checker cannot look inside it.');
+  });
   components.filter(c => c._component === 'iframe').forEach(c => {
     add(c, 'embed-review', 'info', '2.1.1',
       'Embedded web content (iframe).', 'Check the embedded page can be used with a keyboard and a screen reader; this checker cannot look inside it.');

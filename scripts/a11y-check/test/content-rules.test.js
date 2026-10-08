@@ -90,3 +90,12 @@ test('inline colour, tiny text and obsolete markup are flagged', () => {
   assert.ok(r('<font>x</font>').includes('obsolete-markup'));
   assert.ok(r('<iframe src="x"></iframe>').includes('iframe-title'));
 });
+
+test('H5P player: missing file is an error; every H5P gets a manual-review note', () => {
+  const none = checkContent(course([{ _component: 'h5pPlayer', title: 'Quiz', _h5p: { _src: '' } }]));
+  assert.deepStrictEqual(rules(none).sort(), ['embed-review', 'h5p-missing-file']);
+  assert.strictEqual(none.find(f => f.rule === 'h5p-missing-file').severity, 'error');
+  const ok = checkContent(course([{ _component: 'h5pPlayer', title: 'Quiz', _h5p: { _src: 'course/en/assets/a.h5p' } }]));
+  assert.deepStrictEqual(rules(ok), ['embed-review']);
+  assert.strictEqual(ok[0].severity, 'info');
+});

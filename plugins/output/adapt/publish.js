@@ -12,6 +12,7 @@ const helpers = require('../../../lib/helpers');
 const installHelpers = require('../../../lib/installHelpers');
 const logger = require('../../../lib/logger');
 const origin = require('../../../');
+const h5pPackaging = require('./h5pPackaging');
 const outputHelpers = require('./outputHelpers');
 const usermanager = require('../../../lib/usermanager');
 
@@ -252,6 +253,14 @@ function publishCourse(courseId, mode, request, response, next) {
       self.clearBuildFlag(path.join(BUILD_FOLDER, Constants.Filenames.Rebuild), function(err) {
         callback(null);
       });
+    },
+    function(callback) {
+      // Unpack uploaded .h5p files for the H5P Player component (no-op when the course has none)
+      if (!isRebuildRequired) return callback(null);
+      h5pPackaging.packageH5P({ components: outputJson.component, buildFolder: BUILD_FOLDER }).then(summary => {
+        summary.warnings.forEach(warning => logger.log('warn', warning));
+        callback(null);
+      }, error => callback(error));
     },
     function(callback) {
       const configPath = path.join(BUILD_FOLDER, Constants.Folders.Course, Constants.CourseCollections.config.filename);
