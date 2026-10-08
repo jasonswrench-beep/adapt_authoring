@@ -310,7 +310,9 @@ function buildContent(slides, courseTitle, options) {
 
     const comps = slide.items.slice();
     if (slide.notes) comps.push({ kind: 'text', html: `<p><strong>Notes</strong></p>${slide.notes}` });
-    if (!comps.length) return; // title-only slide: the article heading is the content
+    // The framework build and the authoring tool's publish step both reject empty parents, so a
+    // title-only slide still gets one (empty) text component under its article heading.
+    if (!comps.length) comps.push({ kind: 'text', html: '' });
 
     const blockId = id('b');
     blocks.push({

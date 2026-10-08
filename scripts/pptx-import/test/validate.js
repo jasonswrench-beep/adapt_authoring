@@ -30,6 +30,12 @@ parentOk(blocks, 'block', new Set(arts.map(i => i._id)));
 parentOk(comps, 'component', new Set(blocks.map(i => i._id)));
 if (course._id !== 'course' || course._type !== 'course' || !course.title) fail('course.json needs _id/_type "course" and a title');
 
+// the authoring tool (validateCourse) and the framework build both reject parents with no children
+[[cos, arts, 'page'], [arts, blocks, 'article'], [blocks, comps, 'block']].forEach(([parents, children, type]) => {
+  parents.forEach(pr => { if (!children.some(c => c._parentId === pr._id)) fail(`${type} ${pr._id} ("${pr.title}") has no children`); });
+});
+cos.forEach(pg => { if (!arts.some(a => a._parentId === pg._id)) fail(`page ${pg._id} has no articles`); });
+
 const files = new Set(zip.getEntries().map(e => e.entryName));
 comps.forEach(c => {
   if (!['text', 'graphic'].includes(c._component)) fail(`${c._id} uses non-core component ${c._component}`);
