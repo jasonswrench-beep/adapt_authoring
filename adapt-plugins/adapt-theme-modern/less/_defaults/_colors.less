@@ -1,14 +1,30 @@
 // Colour definitions
 // --------------------------------------------------
-// Palette (every text/background pairing below meets WCAG AA: see test/palette.test.js in this repo)
-@blue: #3730A3;        // primary (indigo)
-@blueDark: #1E1B4B;    // headings
-@grey: #D1D5DB;        // borders, disabled
+// Brand palette: official university colours (brand manual p. 22), with WCAG AA in mind.
+// Measured contrast against white: navy 10.55:1 (text, buttons, navigation); orange only 2.56:1, so it is
+// a DECORATIVE accent (bars, borders, or a background with near-black text) and never text or the
+// background of white text; rust 5.62:1 is the orange-family colour that is safe for text.
+// test/palette.test.js re-checks every pairing and refuses orange as a text colour.
+// --------------------------------------------------
+@blue: #003E7E;        // primary: PANTONE 281 (navy)
+@blueDark: @blue;      // headings
+@accent: #F58426;      // PANTONE 165 (orange): decorative only
+@accent-text: #A84D10; // PANTONE 174 (rust): accent that is safe for text
+@grey: #D8D9DA;        // borders, disabled: PANTONE Cool Gray 3
 @greyDark: #1F2937;    // body text
-@greyLight: #F3F4F6;   // soft surfaces
-@teal: #0F766E;        // success / accent
-@tealLight: #CCFBF1;
-@indigoLight: #EEF2FF; // tinted surfaces
+@greyLight: #F4F5F6;   // soft surfaces
+@tint: #F0F3F7;        // navy-tinted surface
+
+// Rest of the brand palette, available for custom styling (check contrast before using as text):
+@brand-gold: #FDB924;   // PANTONE 7409
+@brand-coral: #F26649;  // PANTONE 7417
+@brand-sky: #10A6DB;    // PANTONE 639
+@brand-green: #B0BC22;  // PANTONE 583
+@brand-slate: #80A1B6;  // PANTONE 5425
+@brand-cream: #F6F1CD;  // PANTONE 614
+@brand-mist: #C2D1D4;   // PANTONE 7542
+@brand-sage: #A9C398;   // PANTONE 7494
+@brand-sand: #E7E1D5;   // PANTONE 7534
 
 // These variables are used to change the colour of text
 // Primary use is for altering the text colour over a background image
@@ -124,7 +140,7 @@
 // UI (global default for nav, notify, drawer)
 // --------------------------------------------------
 @ui-color: @white;
-@ui-color-inverted: @greyDark;
+@ui-color-inverted: @blue; // navigation bar, drawer and notify text/icons
 
 // Validation states - question marking
 // --------------------------------------------------

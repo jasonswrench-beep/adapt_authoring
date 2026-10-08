@@ -39,18 +39,20 @@ const WHITE = '#FFFFFF';
 // text pairings used by the theme and menu; WCAG AA needs 4.5:1 for normal text
 const PAIRS = [
   ['body text on white', color('greyDark'), WHITE],
-  ['headings on white', color('blueDark'), WHITE],
-  ['links on white', color('blue'), WHITE],
+  ['headings and links (brand navy) on white', color('blue'), WHITE],
   ['link hover, darken(@blue, 8%), on white', darken(color('blue'), 8), WHITE],
-  ['primary button text on primary', WHITE, color('blue')],
+  ['primary button text on brand navy', WHITE, color('blue')],
+  ['navigation icons and text on brand navy', WHITE, color('blue')],
   ['body text on soft grey surface', color('greyDark'), color('greyLight')],
-  ['primary on soft grey surface', color('blue'), color('greyLight')],
-  ['primary on tinted surface', color('blue'), color('indigoLight')],
-  ['success text on white', color('teal'), WHITE],
+  ['body text on navy-tinted surface', color('greyDark'), color('tint')],
+  ['brand navy on soft grey surface', color('blue'), color('greyLight')],
+  ['brand navy on navy-tinted surface', color('blue'), color('tint')],
+  ['accent text (brand rust) on white', color('accent-text'), WHITE],
+  ['white text on brand rust', WHITE, color('accent-text')],
+  ['near-black text on the orange accent background', '#111827', color('accent')],
   ['muted status text on white', '#4B5563', WHITE],
   ['validation success on white', '#166534', WHITE],
-  ['validation error on white', '#B91C1C', WHITE],
-  ['navigation icons on dark navigation', WHITE, color('greyDark')]
+  ['validation error on white', '#B91C1C', WHITE]
 ];
 
 PAIRS.forEach(([name, fg, bg]) => {
@@ -63,4 +65,31 @@ PAIRS.forEach(([name, fg, bg]) => {
 test('darken() helper matches the value LESS produces for @link-hover', () => {
   // verified against the compiled CSS of the built theme: darken(#3730A3, 8%) is #2c2783
   assert.strictEqual(darken('#3730A3', 8), '#2C2783');
+});
+
+// The brand manual itself warns that several brand colours fail WCAG AA. Pure orange is 2.56:1 on white,
+// so it is allowed as a decorative background/border only, never as a text colour.
+test('the orange accent and the lighter brand colours are never used as text colour', () => {
+  const root = path.join(__dirname, '..');
+  const files = [];
+  (function walk(d) {
+    fs.readdirSync(d, { withFileTypes: true }).forEach(e => {
+      const f = path.join(d, e.name);
+      if (e.isDirectory()) walk(f); else if (f.endsWith('.less')) files.push(f);
+    });
+  })(root);
+  const offenders = [];
+  files.forEach(f => fs.readFileSync(f, 'utf8').split('\n').forEach((line, i) => {
+    const code = line.split('//')[0];
+    // a `color:` declaration (not background-color / border-color / outline-color) that uses a light brand colour
+    const m = /(^|[^-\w])color\s*:\s*([^;]*)/.exec(code);
+    if (m && /@(accent(?!-text)|brand-)/.test(m[2])) offenders.push(`${path.relative(root, f)}:${i + 1}: ${line.trim()}`);
+  }));
+  assert.deepStrictEqual(offenders, [], 'use @accent-text (rust) or @blue for text');
+});
+
+test('the brand colours are the official hex values from the brand manual', () => {
+  assert.strictEqual(color('blue').toLowerCase(), '#003e7e');
+  assert.strictEqual(color('accent').toLowerCase(), '#f58426');
+  assert.strictEqual(color('accent-text').toLowerCase(), '#a84d10');
 });

@@ -4,11 +4,25 @@ Two plugins for the authoring tool, forked from the Adapt core theme (`adapt-con
 
 ## `adapt-theme-modern`
 
-- Indigo palette on white with a dark navy navigation bar, rounded corners, bold headings, 1.6 line height.
+- **Brand colours** from the university brand manual (p. 22): navy (PANTONE 281, `#003E7E`) for navigation, headings, links and buttons; orange (PANTONE 165, `#F58426`) as a decorative accent (the bar under titles). Rounded corners, bold headings, 1.6 line height.
 - **System font stack** (`-apple-system`, Segoe UI, Roboto, ...): no request to Google Fonts, so no third-party tracking, faster loads and it works offline.
 - Tighter vertical spacing than the stock theme (blocks 2rem, page title 2.5rem).
-- All colours are LESS variables in `less/_defaults/_colors.less`. Change the palette block at the top of that file to re-brand; `node --test adapt-plugins/test/palette.test.js` re-checks WCAG AA contrast for every text pairing (4.5:1) so a new colour that fails is caught.
+- All colours are LESS variables in `less/_defaults/_colors.less`. `node --test adapt-plugins/test/palette.test.js` re-checks WCAG AA contrast (4.5:1) for every text pairing and fails if the orange (or any lighter brand colour) is ever used as a text colour.
 - Course-specific colour overrides still work through the editor's theme settings (the theme keeps the stock theme's variable schema).
+
+### Where each brand colour can be used (measured contrast against white)
+
+The brand manual warns that several of its colours fail WCAG 2.0 AA; these are the real numbers.
+
+| Colour | Contrast on white | Use |
+|---|---|---|
+| Navy `#003E7E` | 10.55:1 | Text, headings, links, buttons (white text on it is also 10.55:1), navigation |
+| Rust `#A84D10` (PANTONE 174) | 5.62:1 | The orange-family colour that is safe for text (the "In progress" label); white text on it passes too |
+| Orange `#F58426` | 2.56:1 | **Decorative only**: bars, borders, or a background with near-black text (6.94:1). Never text, never a background for white text |
+| Gold `#FDB924`, coral `#F26649`, sky `#10A6DB`, green `#B0BC22`, slate `#80A1B6` | 1.7 - 3.1:1 | Decorative backgrounds with near-black text only |
+| Cream, mist, sage, warm grey, cool grey, sand (neutrals) | 1.1 - 2.1:1 | Surfaces and borders only |
+
+The secondary and neutral colours are defined as `@brand-*` variables for custom styling but are not used by the theme itself.
 
 ## `adapt-menu-lessons`
 
@@ -26,4 +40,4 @@ New courses use them automatically when installed (`plugins/content/config/prefe
 
 ## Verification
 
-Built with the real Adapt framework (5.56.3) and driven in headless Chromium: lesson list at desktop and phone widths; Start opens the lesson; after the lesson is read the card becomes Completed/Review; keyboard focus reaches the buttons; axe-core finds no violations on the menu or on content pages; building under a renamed theme/menu folder (as the authoring tool does) gives identical output. Palette contrast is unit tested. **Not yet run inside the authoring tool's editor** (theme picker, theme variable editor, preview/publish). Not tested on real iOS/Android devices or in Safari/Firefox.
+Built with the real Adapt framework (5.56.3) in the brand colours and driven in headless Chromium: lesson list at desktop and phone widths; Start opens the lesson; after the lesson is read the card becomes Completed/Review; keyboard focus reaches the buttons; axe-core finds no violations on the menu or on content pages; building under a renamed theme/menu folder (as the authoring tool does) gives identical output. Palette contrast is unit tested. **Not yet run inside the authoring tool's editor** (theme picker, theme variable editor, preview/publish). Not tested on real iOS/Android devices or in Safari/Firefox.

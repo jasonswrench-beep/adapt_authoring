@@ -56,6 +56,17 @@
     margin-bottom: @page-title-margin;
     .page-title;
     color: @page-header-title-color;
+
+    // brand accent bar: decorative, carries no information
+    &::after {
+      content: '';
+      display: block;
+      width: 4rem;
+      height: 0.3rem;
+      margin-top: 0.75rem;
+      border-radius: 0.15rem;
+      background-color: @accent;
+    }
   }
 
   &__subtitle {
