@@ -6,6 +6,7 @@
  * Usage:
  *   node pptx-to-adapt.js deck.pptx [-o out.zip] [--layout single|pages] [--notes]
  *        [--include-hidden] [--title "Course title"] [--lang en] [--framework 5.56.3]
+ *        [--theme adapt-theme-modern] [--menu adapt-menu-lessons] [--classic]
  *
  * Layouts:
  *   single (default)  one scrolling page; each slide becomes a section (Rise-like)
@@ -289,7 +290,7 @@ function buildContent(slides, courseTitle, options) {
     singlePageId = id('co');
     contentObjects.push({
       _id: singlePageId, _parentId: 'course', _type: 'page', _classes: '', title: courseTitle,
-      displayTitle: courseTitle, body: '', pageBody: '', instruction: ''
+      displayTitle: courseTitle, body: '', pageBody: '', instruction: '', linkText: 'View', duration: ''
     });
   }
 
@@ -299,7 +300,7 @@ function buildContent(slides, courseTitle, options) {
       pageId = id('co');
       contentObjects.push({
         _id: pageId, _parentId: 'course', _type: 'page', _classes: '', title: slide.title,
-        displayTitle: slide.title, body: '', pageBody: '', instruction: ''
+        displayTitle: slide.title, body: '', pageBody: '', instruction: '', linkText: 'View', duration: ''
       });
     }
     const articleId = id('a');
@@ -348,7 +349,7 @@ function buildZip(content, assets, options) {
   put('package.json', { name: 'adapt_framework', version: options.framework });
   put('src/course/config.json', {
     _type: 'config', _defaultLanguage: options.lang, _defaultDirection: 'ltr', _questionWeight: 1,
-    _theme: 'adapt-contrib-vanilla', _menu: 'adapt-contrib-boxMenu',
+    _theme: options.theme, _menu: options.menu,
     // the framework's accessibility module needs this block (it fails to start without it) and
     // _isEnabled is its master switch for focus management and screen reader support
     _accessibility: { _isEnabled: true, _isSkipNavigationEnabled: true }
@@ -410,7 +411,7 @@ function convert(inputPath, options) {
 }
 
 function parseArgs(argv) {
-  const opts = { layout: 'single', lang: 'en', framework: '5.56.3', notes: false, includeHidden: false };
+  const opts = { layout: 'single', lang: 'en', framework: '5.56.3', notes: false, includeHidden: false, theme: 'adapt-theme-modern', menu: 'adapt-menu-lessons' };
   const rest = [];
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -418,6 +419,9 @@ function parseArgs(argv) {
     else if (a === '--layout') opts.layout = argv[++i];
     else if (a === '--title') opts.title = argv[++i];
     else if (a === '--lang') opts.lang = argv[++i];
+    else if (a === '--theme') opts.theme = argv[++i];
+    else if (a === '--menu') opts.menu = argv[++i];
+    else if (a === '--classic') { opts.theme = 'adapt-contrib-vanilla'; opts.menu = 'adapt-contrib-boxMenu'; }
     else if (a === '--framework') opts.framework = argv[++i];
     else if (a === '--notes') opts.notes = true;
     else if (a === '--include-hidden') opts.includeHidden = true;
@@ -431,7 +435,7 @@ function parseArgs(argv) {
 if (require.main === module) {
   const opts = parseArgs(process.argv.slice(2));
   if (opts.help || !opts.input) {
-    console.log('Usage: node pptx-to-adapt.js deck.pptx [-o out.zip] [--layout single|pages] [--notes] [--include-hidden] [--title "..."] [--lang en] [--framework 5.56.3]');
+    console.log('Usage: node pptx-to-adapt.js deck.pptx [-o out.zip] [--layout single|pages] [--notes] [--include-hidden] [--title "..."] [--lang en] [--framework 5.56.3] [--theme name] [--menu name] [--classic]');
     process.exit(opts.help ? 0 : 1);
   }
   if (!['single', 'pages'].includes(opts.layout)) { console.error('--layout must be "single" or "pages"'); process.exit(1); }

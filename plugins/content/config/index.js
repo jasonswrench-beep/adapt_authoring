@@ -15,7 +15,8 @@ var ContentPlugin = require('../../../lib/contentmanager').ContentPlugin,
     util = require('util'),
     path = require('path'),
     _ = require('underscore'),
-    async = require('async');
+    async = require('async'),
+    preferInstalledLook = require('./preferredLook');
 
 function ConfigContent () {
 }
@@ -87,13 +88,17 @@ function initialize () {
         }
       };
 
-      contentmanager.create.apply(contentmanager, ['config', configObj, function (err, results) {
-        // log an error if it exists, but don't propagate it
-        if (err) {
-          logger.log('error', 'config hook failed on course creation: ' + err.message);
-        }
-        next(null, course);
-      }]);
+      // Prefer the Modern theme and Lessons menu for new courses, but only if they are installed;
+      // otherwise keep the schema defaults (vanilla / boxMenu) so course creation never breaks.
+      preferInstalledLook(origin().db, configObj, function () {
+        contentmanager.create.apply(contentmanager, ['config', configObj, function (err, results) {
+          // log an error if it exists, but don't propagate it
+          if (err) {
+            logger.log('error', 'config hook failed on course creation: ' + err.message);
+          }
+          next(null, course);
+        }]);
+      });
     });
 
     app.contentmanager.addContentHook('update', 'config', { when: 'pre' }, function (data, next) {

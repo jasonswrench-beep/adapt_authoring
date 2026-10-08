@@ -22,18 +22,22 @@ docker compose stop adapt && docker compose run --rm --entrypoint "" adapt node 
 
 ## Why a custom plugin installer
 
-The stock tool installs plugins through a Bower registry hosted on Heroku (`adapt-bower-repository.herokuapp.com`) and silently skips any plugin that fails. `scripts/install-plugin-bundle.js` instead clones each plugin from GitHub, picks the newest release compatible with the installed framework, and registers it through the tool's own `importPackage`. The list is `conf/plugin-bundle.json`; each entry notes its Rise/Storyline analogue.
+The stock tool installs plugins through a Bower registry hosted on Heroku (`adapt-bower-repository.herokuapp.com`) and silently skips any plugin that fails. `scripts/install-plugin-bundle.js` instead clones each plugin from GitHub (or, for the two plugins in `adapt-plugins/`, copies them from this repository), picks the newest release compatible with the installed framework, and registers it through the tool's own `importPackage`. The list is `conf/plugin-bundle.json`; each entry notes its Rise/Storyline analogue.
 
 ## Verification status (be aware)
 
 | Piece | Status |
 |---|---|
-| All 45 bundle plugins resolve to a release compatible with framework 5.56.3, with a schema and a recognised type | Checked against the live GitHub repos |
+| All 47 bundle entries resolve (45 from GitHub plus 2 local) to a release compatible with framework 5.56.3, with a schema and a recognised type | Checked against the live GitHub repos |
 | Installer script and export-format changes: JavaScript syntax | Checked |
 | SCORM / Web export buttons | **Not run** |
 | Docker build, first-run install, plugin registration against MongoDB, and the editor UI | **Not run** (no Docker daemon or MongoDB where this was written). Expect to fix small issues on your first deploy. |
 
 Entries marked `"community": true` in `conf/plugin-bundle.json` are not maintained by adaptlearning (mostly cgkineo, plus `nachocinalli/adapt-graphicCompare`). Test them before relying on them.
+
+## Look and feel: the Modern theme and Lessons menu
+
+`adapt-plugins/` holds a Rise-style theme (`adapt-theme-modern`) and course home page (`adapt-menu-lessons`): numbered lesson cards with Start / Continue / Review, an indigo palette checked for WCAG AA contrast, and a system font stack (no Google Fonts requests). They install with the plugin bundle and are the default for new courses when present; the PowerPoint converter uses them too. See `adapt-plugins/README.md` for details, how to change the palette, and what was verified (built with the real framework, driven in a browser, axe-core clean). Default palette only, since no logo or brand colours were supplied: give me your colours and logo and it is a small change.
 
 ## Exporting: SCORM and Web
 

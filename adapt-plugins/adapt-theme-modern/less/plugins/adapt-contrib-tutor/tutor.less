@@ -1,0 +1,120 @@
+.tutor {
+  &__content-inner {
+    .l-container-padding(@notify-padding-ver, @notify-padding-hoz);
+    padding: @item-padding;
+  }
+
+  &__title {
+    .notify-title;
+    margin-bottom: @notify-title-margin;
+  }
+
+  &__body {
+    margin-bottom: @notify-body-margin;
+  }
+
+  &__btn {
+    margin-top: @btn-margin;
+  }
+
+  &__btn-icon {
+    .ui-btn-ctrl;
+
+    & when (@notify-ui-btn-ctrl-color-style = filled) {
+      .notify-ui-btn-ctrl-color;
+
+      .no-touch &:not(.is-disabled):not(.is-locked):hover {
+        .notify-ui-btn-ctrl-color-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .notify-ui-btn-ctrl-color-focus;
+      }
+    }
+
+    & when (@notify-ui-btn-ctrl-color-style = outline) {
+      .notify-ui-btn-ctrl-color-outline;
+
+      .no-touch &:not(.is-disabled):not(.is-locked):hover {
+        .notify-ui-btn-ctrl-color-outline-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .notify-ui-btn-ctrl-color-outline-focus;
+      }
+    }
+  }
+
+  // overlay
+  // --------------------------------------------------
+  &-type-overlay &__inner {
+    background-color: @notify;
+    color: @notify-inverted;
+  }
+
+  &-type-overlay &__title {
+    padding-inline-end: @icon-size + @icon-padding;
+  }
+
+  &-type-overlay &__body a {
+    .link-text;
+    color: @notify-link;
+
+    .no-touch &:hover {
+      color: @notify-link-hover;
+      .transition(color @duration ease-in);
+    }
+  }
+
+  & when (@notify-btn-color-style = filled) {
+    &-type-overlay &__btn {
+      .notify-btn-color;
+
+      .no-touch &:hover {
+        .notify-btn-color-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .notify-btn-color-focus;
+      }
+    }
+
+    &-type-overlay &__btn-icon {
+      .notify-ui-btn-ctrl-color;
+
+      .no-touch &:hover {
+        .notify-ui-btn-ctrl-color-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .notify-ui-btn-ctrl-color-focus;
+      }
+    }
+  }
+
+  & when (@notify-btn-color-style = outline) {
+    &-type-overlay &__btn {
+      .notify-btn-color-outline;
+
+      .no-touch &:hover {
+        .notify-btn-color-outline-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .notify-btn-color-outline-focus;
+      }
+    }
+
+    &-type-overlay &__btn-icon {
+      .notify-ui-btn-ctrl-color-outline;
+
+      .no-touch &:hover {
+        .notify-ui-btn-ctrl-color-outline-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .notify-ui-btn-ctrl-color-outline-focus;
+      }
+    }
+  }
+}

@@ -1,0 +1,125 @@
+.narrative {
+  &__content-title {
+    margin-bottom: @item-title-margin;
+    .item-title;
+  }
+
+  &__content-body a {
+    .link-text;
+  }
+
+  & when (@item-ui-color-style = filled) {
+    &__controls {
+      .item-ui-color;
+
+      .no-touch &:not(.is-disabled):not(.is-locked):hover {
+        .item-ui-color-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .item-ui-color-focus;
+      }
+    }
+
+    &__controls.is-disabled {
+      .item-ui-color-disabled;
+    }
+  }
+
+  & when (@item-ui-color-style = outline) {
+    &__controls {
+      .item-ui-color-outline;
+
+      .no-touch &:not(.is-disabled):not(.is-locked):hover {
+        .item-ui-color-outline-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .item-ui-color-outline-focus;
+      }
+    }
+
+    &__controls.is-disabled {
+      .item-ui-color-outline-disabled;
+    }
+  }
+
+  &__progress {
+    background-color: @item-color;
+    color: @item-color-inverted;
+    border-color: @item-color-inverted;
+    border-radius: 50%;
+  }
+
+  &__progress.is-visited {
+    background-color: @visited;
+    color: @visited-inverted;
+    border-color: @visited-inverted;
+  }
+
+  &__progress.is-selected {
+    background-color: @item-color-selected;
+    color: @item-color-inverted-selected;
+    border-color: @item-color-selected;
+  }
+
+  &__strapline-btn {
+    text-align: start;
+  }
+
+  & when (@item-ui-color-style = filled) {
+    &__strapline-btn {
+      .item-ui-color;
+    }
+
+    .no-touch &__strapline-btn:not(.is-disabled):not(.is-locked):hover {
+      .item-ui-color-hover;
+    }
+
+    html:not(.a11y-disable-focusoutline) &__strapline-btn:focus-visible {
+      .item-ui-color-focus;
+    }
+
+    &__strapline-btn.is-visited {
+      .item-ui-color-visited;
+    }
+  }
+
+  & when (@item-ui-color-style = outline) {
+    &__strapline-btn {
+      .item-ui-color-outline;
+    }
+
+    .no-touch &__strapline-btn:not(.is-disabled):not(.is-locked):hover {
+      .item-ui-color-outline-hover;
+    }
+
+    html:not(.a11y-disable-focusoutline) &__strapline-btn:focus-visible {
+      .item-ui-color-outline-focus;
+    }
+
+    &__strapline-btn.is-visited {
+      .item-ui-color-outline-visited;
+    }
+  }
+
+  // set icon background color to transparent to 'inherit' strapline styling
+  // prevents icon background obscuring the btn focus outline
+  &__strapline-icon {
+    background-color: transparent;
+    color: inherit;
+  }
+
+  &.has-img-zoom &__slider-image-container {
+    .img-zoom();
+  }
+
+  // mobile stacked layout
+  &__inner.is-stacked &__content-item {
+    margin-bottom: (@item-margin * 4);
+  }
+
+  &__inner.is-stacked &__content-image {
+    margin-bottom: @item-title-margin;
+  }
+}

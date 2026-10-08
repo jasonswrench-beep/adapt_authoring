@@ -1,0 +1,18 @@
+.loading {
+  background-color: fade(@shadow, @shadow-opacity);
+  color: @shadow-inverted;
+
+  &__inner {
+    .l-fill-viewport-absolute;
+    text-indent: -9999rem;
+  }
+
+  &__inner {
+    width: 3rem;
+    height: 3rem;
+    border: .25rem solid fade(@loading, 50%);
+    border-top-color: @loading-inverted;
+    border-radius: 50%;
+    .effect-spin;
+  }
+}

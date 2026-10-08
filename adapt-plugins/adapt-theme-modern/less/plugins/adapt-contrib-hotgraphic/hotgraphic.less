@@ -1,0 +1,79 @@
+.hotgraphic {
+  &__pin.has-pin-image {
+    background-color: transparent;
+
+    .no-touch &:not(.is-disabled):not(.is-locked):hover {
+      background-color: transparent;
+    }
+  }
+
+  & when (@item-ui-color-style = filled) {
+    &__pin:not(.has-pin-image) {
+      .item-ui-color;
+      border-radius: 50%;
+
+      .no-touch &:not(.is-disabled):not(.is-locked):hover {
+        .item-ui-color-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .item-ui-color-focus;
+      }
+    }
+
+    &__pin:not(.has-pin-image).is-visited {
+      .item-ui-color-visited;
+    }
+  }
+
+  & when (@item-ui-color-style = outline) {
+    &__pin:not(.has-pin-image) {
+      .item-ui-color-outline;
+      border-radius: 50%;
+
+      .no-touch &:not(.is-disabled):not(.is-locked):hover {
+        .item-ui-color-outline-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .item-ui-color-outline-focus;
+      }
+    }
+
+    &__pin:not(.has-pin-image).is-visited {
+      .item-ui-color-outline-visited;
+    }
+  }
+
+  // Numbered pins
+  // --------------------------------------------------
+  &__pin-number {
+    height: @icon-size;
+    width: @icon-size;
+    font-size: @icon-size;
+    line-height: 1;
+    text-align: center;
+  }
+
+  // Hotgraphic with pin images
+  // --------------------------------------------------
+  &__pin.has-pin-image &__pin-number,
+  &__pin.has-pin-image.is-visited .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: @visited;
+    color: @visited-inverted;
+    border-radius: 50%;
+    height: @icon-size * 2;
+    width: @icon-size * 2;
+  }
+
+  // Hotgraphic as tiles
+  // --------------------------------------------------
+  &__tile.is-visited .icon {
+    background-color: @visited;
+    color: @visited-inverted;
+    border-radius: 50%;
+  }
+}

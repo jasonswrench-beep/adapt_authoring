@@ -1,6 +1,6 @@
 /**
- * Installs the plugins listed in conf/plugin-bundle.json directly from GitHub,
- * bypassing the Bower registry. Each plugin is registered through the same
+ * Installs the plugins listed in conf/plugin-bundle.json directly from GitHub (or, for entries with
+ * a `path`, from this repository), bypassing the Bower registry. Each plugin is registered through the same
  * BowerManager#importPackage code path the tool uses for registry installs.
  *
  * Usage (run from the repo root, with the server STOPPED and the framework installed):
@@ -39,8 +39,8 @@ app.on('serverStarted', function() {
     async.eachSeries(entries, function(entry, next) {
       installEntry(entry, frameworkVersion, function(err, label) {
         if (err) {
-          failures.push(entry.repo);
-          console.log('  FAIL  ' + entry.repo + ' - ' + (err.message || err));
+          failures.push(entry.repo || entry.path);
+          console.log('  FAIL  ' + (entry.repo || entry.path) + ' - ' + (err.message || err));
         } else {
           console.log('  ok    ' + label);
         }
@@ -75,7 +75,19 @@ function checkout(repoUrl, ref, dir, cb) {
   });
 }
 
+/** A plugin that lives in this repository (entry.path) instead of on GitHub. */
+function installLocalEntry(entry, frameworkVersion, cb) {
+  var dir = path.resolve(ROOT, entry.path);
+  var meta;
+  try { meta = fs.readJSONSync(path.join(dir, 'bower.json')); } catch (e) { return cb(new Error('no readable bower.json in ' + entry.path)); }
+  if (meta.framework && !semver.satisfies(semver.clean(frameworkVersion), meta.framework, { includePrerelease: true })) {
+    return cb(new Error('requires framework ' + meta.framework));
+  }
+  register(dir, meta, function(err) { cb(err, meta.name + ' ' + meta.version + ' (local)'); });
+}
+
 function installEntry(entry, frameworkVersion, cb) {
+  if (entry.path) return installLocalEntry(entry, frameworkVersion, cb);
   var repoUrl = 'https://github.com/' + entry.repo + '.git';
   var dir = path.join(CACHE, entry.repo.replace('/', '__'));
   var attempt = function(ref, done) {

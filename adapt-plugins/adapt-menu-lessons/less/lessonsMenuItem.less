@@ -1,0 +1,20 @@
+.lessons-item {
+  width: 100%;
+
+  &.is-locked &__status .icon {
+    .icon-padlock-locked;
+  }
+
+  &.is-complete &__status .icon {
+    .icon-tick;
+  }
+
+  &__button {
+    display: flex;
+    column-gap: (@icon-padding / 4);
+
+    &.has-icon-right {
+      flex-direction: row-reverse;
+    }
+  }
+}

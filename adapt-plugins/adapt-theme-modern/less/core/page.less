@@ -1,0 +1,83 @@
+.page {
+  position: relative;
+  .l-container-padding(@page-padding-ver, @page-padding-hoz);
+
+  &.has-bg-image > .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+  }
+
+  &__inner {
+    position: relative;
+  }
+
+  &__header {
+    position: relative;
+    background-color: @page-header-background-color;
+  }
+
+  &__header.has-bg-image > .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+  }
+
+  &__header-inner {
+    position: relative;
+    .l-container-padding(@page-header-padding-ver, @page-header-padding-hoz);
+  }
+
+  &__image-container {
+    margin-bottom: @page-title-margin;
+  }
+
+  &__image {
+    min-width: auto;
+  }
+
+  &__priority {
+    .priority-label;
+    margin-bottom: @page-priority-margin;
+    .page-priority;
+  }
+
+  &__title {
+    margin-bottom: @page-title-margin;
+    .page-title;
+    color: @page-header-title-color;
+  }
+
+  &__subtitle {
+    margin-bottom: @page-subtitle-margin;
+    .page-subtitle;
+    color: @page-header-subtitle-color;
+  }
+
+  &__body {
+    margin-bottom: @page-body-margin;
+    .page-body;
+    color: @page-header-body-color;
+  }
+
+  &__instruction {
+    margin-bottom: @page-instruction-margin;
+    .page-instruction;
+    color: @page-header-instruction-color;
+  }
+
+  &__body a,
+  &__instruction a {
+    .link-text;
+  }
+}

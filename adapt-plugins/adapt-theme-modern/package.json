@@ -1,0 +1,17 @@
+{
+  "name": "adapt-theme-modern",
+  "version": "1.0.0",
+  "framework": ">=5.48.4",
+  "homepage": "https://github.com/jasonswrench-beep/adapt_authoring",
+  "bugs": "https://github.com/jasonswrench-beep/adapt_authoring/issues",
+  "theme": "modern",
+  "displayName": "Modern",
+  "description": "A clean, modern, accessible theme with a system font stack (no external font requests)",
+  "main": "js/theme.js",
+  "keywords": [
+    "adapt-plugin",
+    "adapt-theme"
+  ],
+  "license": "GPL-3.0",
+  "targetAttribute": "_modern"
+}

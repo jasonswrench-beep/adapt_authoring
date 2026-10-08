@@ -1,0 +1,141 @@
+// Allows the progress lozenge to appear alongside the title
+// --------------------------------------------------
+.js-heading + .pagelevelprogress__indicator {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+// Global progress lozenge
+// --------------------------------------------------
+.pagelevelprogress {
+  &__indicator {
+    border-radius: @progress-border-radius;
+    border-color: @progress-border;
+  }
+
+  &__indicator-inner {
+    border-radius: @progress-border-radius;
+    background-color: @progress-inverted;
+  }
+
+  &__indicator-bar {
+    background-color: @progress;
+    .transition(width @progress-duration linear);
+  }
+}
+
+// Menu overrides
+// --------------------------------------------------
+.menu-item__progress {
+  .pagelevelprogress__indicator {
+    border-color: @menu-item-progress-border;
+  }
+
+  .pagelevelprogress__indicator-inner {
+    background-color: @menu-item-progress-inverted;
+  }
+
+  .pagelevelprogress__indicator-bar {
+    background-color: @menu-item-progress;
+  }
+}
+
+// Nav overrides
+// --------------------------------------------------
+.pagelevelprogress__nav-btn {
+  .pagelevelprogress__indicator {
+    border-color: @nav-progress-border;
+
+    & when (@nav-ui-btn-ctrl-color-style = outline) {
+      border-color: @nav-progress-inverted;
+    }
+  }
+
+  .pagelevelprogress__indicator-inner {
+    background-color: @nav-progress-inverted;
+  }
+
+  .pagelevelprogress__indicator-bar {
+    background-color: @nav-progress;
+  }
+
+  .no-touch &:hover {
+    .pagelevelprogress__indicator {
+      border-color: @nav-progress-border-hover;
+      .transition(border-color @duration ease-in);
+    }
+
+    .pagelevelprogress__indicator-inner {
+      background-color: @nav-progress-inverted-hover;
+      .transition(background-color @duration ease-in);
+    }
+
+    .pagelevelprogress__indicator-bar {
+      background-color: @nav-progress-hover;
+      .transition(background-color @duration ease-in);
+    }
+  }
+}
+
+// Drawer overrides
+// --------------------------------------------------
+.pagelevelprogress__item-btn:not(.is-disabled) {
+  & when (@drawer-item-color-style = filled) {
+    .pagelevelprogress__indicator {
+      border-color: @drawer-progress-border;
+    }
+
+    .pagelevelprogress__indicator-inner {
+      background-color: @drawer-progress-inverted;
+    }
+
+    .pagelevelprogress__indicator-bar {
+      background-color: @drawer-progress;
+    }
+  }
+
+  & when (@drawer-item-color-style = outline) {
+    .pagelevelprogress__indicator {
+      border-color: @drawer-progress-inverted;
+    }
+
+    .pagelevelprogress__indicator-inner {
+      background-color: @drawer-progress;
+    }
+
+    .pagelevelprogress__indicator-bar {
+      background-color: @drawer-progress-inverted;
+    }
+  }
+
+  .no-touch &:hover {
+    .pagelevelprogress__indicator {
+      border-color: @drawer-progress-border-hover;
+      .transition(border-color @duration ease-in);
+    }
+
+    .pagelevelprogress__indicator-inner {
+      background-color: @drawer-progress-inverted-hover;
+      .transition(background-color @duration ease-in);
+    }
+
+    .pagelevelprogress__indicator-bar {
+      background-color: @drawer-progress-hover;
+      .transition(background-color @duration ease-in);
+    }
+  }
+}
+
+.pagelevelprogress__item-btn.is-disabled {
+  .pagelevelprogress__indicator {
+    border-color: @disabled-inverted;
+  }
+
+  .pagelevelprogress__indicator-inner {
+    background-color: @disabled;
+  }
+
+  .pagelevelprogress__indicator-bar {
+    background-color: @disabled-inverted;
+  }
+}

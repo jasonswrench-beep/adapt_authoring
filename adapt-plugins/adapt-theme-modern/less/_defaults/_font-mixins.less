@@ -1,0 +1,394 @@
+// Smooths the font on the pixel level rather than the subpixel.
+// Switching from subpixel rendering to antialiasing for
+// light text on dark backgrounds makes it look lighter.
+// --------------------------------------------------
+.font-smoothing() {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Globals
+// --------------------------------------------------
+body {
+  .font-smoothing;
+  font-family: @body-family;
+  font-size: @body-size;
+  font-weight: @body-weight;
+  line-height: @body-line-height;
+  color: @font-color;
+
+  // Set up a language specific font override.
+  // This will need to be uncommented out, duplicated and updated if there are
+  // more languages that require overriding. All overrides must be duplicated
+  // and added to each of the font mixins below.
+  // html[lang="de"] & {
+  //   font-family: Impact;
+  // }
+}
+
+.instruction-text() {
+  font-family: @instruction-family;
+  font-size: @instruction-size;
+  font-weight: @instruction-weight;
+  line-height: @instruction-line-height;
+  font-style: @instruction-font-style;
+  text-transform: @instruction-text-transform;
+}
+
+.button-text() {
+  font-family: @btn-family;
+  font-size: @btn-size;
+  font-weight: @btn-weight;
+  line-height: @btn-line-height;
+  letter-spacing: @btn-letter-spacing;
+  text-transform: @btn-text-transform;
+}
+
+.link-text() {
+  font-family: @link-family;
+  font-size: @link-size;
+  font-weight: @link-weight;
+  line-height: @link-line-height;
+  color: @link;
+
+  .no-touch &:hover {
+    color: @link-hover;
+    .transition(color @duration ease-in);
+  }
+}
+
+b,
+strong {
+  font-weight: @font-weight-bold;
+}
+
+// Menu header
+// --------------------------------------------------
+.menu-title() {
+  font-family: @menu-title-family;
+  font-size: @menu-title-size * @menu-title-mobile-percentage;
+  font-weight: @menu-title-weight;
+  line-height: @menu-title-line-height;
+  letter-spacing: @menu-title-letter-spacing;
+  text-transform: @menu-title-text-transform;
+
+  @media (min-width: @device-width-medium) {
+    font-size: @menu-title-size;
+  }
+}
+
+.menu-subtitle() {
+  font-family: @menu-subtitle-family;
+  font-size: @menu-subtitle-size * @menu-subtitle-mobile-percentage;
+  font-weight: @menu-subtitle-weight;
+  line-height: @menu-subtitle-line-height;
+  letter-spacing: @menu-subtitle-letter-spacing;
+  text-transform: @menu-subtitle-text-transform;
+
+  @media (min-width: @device-width-medium) {
+    font-size: @menu-subtitle-size;
+  }
+}
+
+.menu-body() {
+  font-family: @menu-body-family;
+  font-size: @menu-body-size;
+  font-weight: @menu-body-weight;
+  line-height: @menu-body-line-height;
+}
+
+.menu-instruction() {
+  font-family: @menu-instruction-family;
+  font-size: @menu-instruction-size;
+  font-weight: @menu-instruction-weight;
+  line-height: @menu-instruction-line-height;
+  font-style: @menu-instruction-font-style;
+  text-transform: @menu-instruction-text-transform;
+}
+
+.menu-priority() {
+  font-family: @menu-priority-family;
+  font-size: @menu-priority-size;
+  font-weight: @menu-priority-weight;
+  line-height: @menu-priority-line-height;
+  letter-spacing: @menu-priority-letter-spacing;
+  text-transform: @menu-priority-text-transform;
+}
+
+// Menu item
+// --------------------------------------------------
+.menu-item-title() {
+  font-family: @menu-item-title-family;
+  font-size: @menu-item-title-size;
+  font-weight: @menu-item-title-weight;
+  line-height: @menu-item-title-line-height;
+  letter-spacing: @menu-item-title-letter-spacing;
+  text-transform: @menu-item-title-text-transform;
+}
+
+.menu-item-body() {
+  font-family: @menu-item-body-family;
+  font-size: @menu-item-body-size;
+  font-weight: @menu-item-body-weight;
+  line-height: @menu-item-body-line-height;
+}
+
+.menu-item-priority() {
+  font-family: @menu-item-priority-family;
+  font-size: @menu-item-priority-size;
+  font-weight: @menu-item-priority-weight;
+  line-height: @menu-item-priority-line-height;
+  letter-spacing: @menu-item-priority-letter-spacing;
+  text-transform: @menu-item-priority-text-transform;
+}
+
+// Page header
+// --------------------------------------------------
+.page-title() {
+  font-family: @page-title-family;
+  font-size: @page-title-size * @page-title-mobile-percentage;
+  font-weight: @page-title-weight;
+  line-height: @page-title-line-height;
+  letter-spacing: @page-title-letter-spacing;
+  text-transform: @page-title-text-transform;
+
+  @media (min-width: @device-width-medium) {
+    font-size: @page-title-size;
+  }
+}
+
+.page-subtitle() {
+  font-family: @page-subtitle-family;
+  font-size: @page-subtitle-size * @page-subtitle-mobile-percentage;
+  font-weight: @page-subtitle-weight;
+  line-height: @page-subtitle-line-height;
+  letter-spacing: @page-subtitle-letter-spacing;
+  text-transform: @page-subtitle-text-transform;
+
+  @media (min-width: @device-width-medium) {
+    font-size: @page-subtitle-size;
+  }
+}
+
+.page-body() {
+  font-family: @page-body-family;
+  font-size: @page-body-size;
+  font-weight: @page-body-weight;
+  line-height: @page-body-line-height;
+}
+
+.page-instruction() {
+  font-family: @page-instruction-family;
+  font-size: @page-instruction-size;
+  font-weight: @page-instruction-weight;
+  line-height: @page-instruction-line-height;
+  font-style: @page-instruction-font-style;
+  text-transform: @page-instruction-text-transform;
+}
+
+.page-priority() {
+  font-family: @page-priority-family;
+  font-size: @page-priority-size;
+  font-weight: @page-priority-weight;
+  line-height: @page-priority-line-height;
+  letter-spacing: @page-priority-letter-spacing;
+  text-transform: @page-priority-text-transform;
+}
+
+// Page
+// --------------------------------------------------
+.article-title() {
+  font-family: @article-title-family;
+  font-size: @article-title-size * @article-title-mobile-percentage;
+  font-weight: @article-title-weight;
+  line-height: @article-title-line-height;
+  letter-spacing: @article-title-letter-spacing;
+  text-transform: @article-title-text-transform;
+
+  @media (min-width: @device-width-medium) {
+    font-size: @article-title-size;
+  }
+}
+
+.article-priority() {
+  font-family: @article-priority-family;
+  font-size: @article-priority-size;
+  font-weight: @article-priority-weight;
+  line-height: @article-priority-line-height;
+  letter-spacing: @article-priority-letter-spacing;
+  text-transform: @article-priority-text-transform;
+}
+
+.block-title() {
+  font-family: @block-title-family;
+  font-size: @block-title-size * @block-title-mobile-percentage;
+  font-weight: @block-title-weight;
+  line-height: @block-title-line-height;
+  letter-spacing: @block-title-letter-spacing;
+  text-transform: @block-title-text-transform;
+
+  @media (min-width: @device-width-medium) {
+    font-size: @block-title-size;
+  }
+}
+
+.block-priority() {
+  font-family: @block-priority-family;
+  font-size: @block-priority-size;
+  font-weight: @block-priority-weight;
+  line-height: @block-priority-line-height;
+  letter-spacing: @block-priority-letter-spacing;
+  text-transform: @block-priority-text-transform;
+}
+
+.component-title() {
+  font-family: @component-title-family;
+  font-size: @component-title-size * @component-title-mobile-percentage;
+  font-weight: @component-title-weight;
+  line-height: @component-title-line-height;
+  letter-spacing: @component-title-letter-spacing;
+  text-transform: @component-title-text-transform;
+
+  @media (min-width: @device-width-medium) {
+    font-size: @component-title-size;
+  }
+}
+
+.component-priority() {
+  font-family: @component-priority-family;
+  font-size: @component-priority-size;
+  font-weight: @component-priority-weight;
+  line-height: @component-priority-line-height;
+  letter-spacing: @component-priority-letter-spacing;
+  text-transform: @component-priority-text-transform;
+}
+
+.notify-title() {
+  font-family: @notify-title-family;
+  font-size: @notify-title-size * @notify-title-mobile-percentage;
+  font-weight: @notify-title-weight;
+  line-height: @notify-title-line-height;
+  letter-spacing: @notify-title-letter-spacing;
+  text-transform: @notify-title-text-transform;
+
+  @media (min-width: @device-width-medium) {
+    font-size: @notify-title-size;
+  }
+}
+
+// Drawer
+// --------------------------------------------------
+.drawer-title() {
+  font-family: @drawer-title-family;
+  font-size: @drawer-title-size * @drawer-title-mobile-percentage;
+  font-weight: @drawer-title-weight;
+  line-height: @drawer-title-line-height;
+  letter-spacing: @drawer-title-letter-spacing;
+  text-transform: @drawer-title-text-transform;
+
+  @media (min-width: @device-width-medium) {
+    font-size: @drawer-title-size;
+  }
+}
+
+.drawer-item-title() {
+  font-family: @drawer-item-title-family;
+  font-size: @drawer-item-title-size;
+  font-weight: @drawer-item-title-weight;
+  line-height: @drawer-item-title-line-height;
+  letter-spacing: @drawer-item-title-letter-spacing;
+}
+
+.drawer-item-body() {
+  font-family: @drawer-item-body-family;
+  font-size: @drawer-item-body-size;
+  font-weight: @drawer-item-body-weight;
+  line-height: @drawer-item-body-line-height;
+}
+
+.resources-filter-btn() {
+  font-family: @resources-filter-btn-family;
+  font-size: @resources-filter-btn-size;
+  font-weight: @resources-filter-btn-weight;
+  line-height: @resources-filter-btn-line-height;
+}
+
+// Components
+// --------------------------------------------------
+.item-title() {
+  font-family: @item-title-family;
+  font-size: @item-title-size;
+  font-weight: @item-title-weight;
+  line-height: @item-title-line-height;
+  letter-spacing: @item-title-letter-spacing;
+  text-transform: @item-title-text-transform;
+}
+
+// Quote
+// --------------------------------------------------
+.quote-body() {
+  font-size: @quote-body-size;
+  font-family: @quote-body-family;
+  font-weight: @quote-body-weight;
+  line-height: @quote-body-line-height;
+  font-style: @quote-body-font-style;
+  letter-spacing: @quote-body-letter-spacing;
+}
+
+.quote-attribution() {
+  font-size: @quote-attribution-size;
+  font-family: @quote-attribution-family;
+  font-weight: @quote-attribution-weight;
+  line-height: @quote-attribution-line-height;
+  font-style: @quote-attribution-font-style;
+  letter-spacing: @quote-attribution-letter-spacing;
+}
+
+// Pull quote
+// --------------------------------------------------
+.pull-quote-body() {
+  font-size: @pull-quote-body-size * @pull-quote-body-mobile-percentage;
+  font-family: @pull-quote-body-family;
+  font-weight: @pull-quote-body-weight;
+  line-height: @pull-quote-body-line-height;
+  font-style: @pull-quote-body-font-style;
+  letter-spacing: @pull-quote-body-letter-spacing;
+
+  @media (min-width: @device-width-medium) {
+    font-size: @pull-quote-body-size;
+  }
+}
+
+// Priority labels - optional or required
+// --------------------------------------------------
+.priority-label() {
+  display: flex;
+  align-items: center;
+  column-gap: (@icon-padding / 4);
+}
+
+// Left over - to sort
+// --------------------------------------------------
+// p {
+//   // Override base.less <p> tag margin
+//   margin-top: 0;
+//   margin-bottom: 0;
+// }
+
+// html {
+// 	// preserve HTML font-size (iPhone orientation change)
+// 	-ms-text-size-adjust: 100%;
+// 	-webkit-text-size-adjust: 100%;
+// }
+
+// select {
+// 	font-family: @body-text-font-family;
+// 	font-size: @body-text-font-size;
+// 	font-weight: @body-text-font-weight;
+// 	line-height: @body-text-line-height;
+// }
+
+// button::-moz-focus-inner {
+// 	border: 0;
+// 	padding: 0;
+// }

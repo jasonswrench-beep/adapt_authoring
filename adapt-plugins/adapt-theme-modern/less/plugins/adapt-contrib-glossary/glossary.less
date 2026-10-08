@@ -1,0 +1,53 @@
+.glossary {
+  &__textbox-container {
+    padding: @drawer-item-padding-ver @drawer-item-padding-hoz;
+  }
+
+  &__textbox {
+    line-height: @drawer-item-body-line-height;
+  }
+
+  &__checkbox-container {
+    padding: 0 @drawer-item-padding-hoz @drawer-item-padding-ver;
+  }
+
+  &__checkbox-input,
+  &__checkbox-label {
+    vertical-align: middle;
+  }
+
+  &__checkbox-label {
+    margin-inline-start: @item-margin;
+    color: @drawer-item-inverted;
+  }
+
+  &__search-container,
+  &__index-container {
+    background-color: @drawer;
+    border-bottom: 1px solid @drawer-item-hover;
+  }
+
+  &__index-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    width: 3rem;
+  }
+
+  &__index-link {
+    .link-text;
+    color: @drawer-link;
+
+    .no-touch &:hover {
+      color: @drawer-link-hover;
+      .transition(color @duration ease-in);
+    }
+  }
+
+  &__items-group-header {
+    background-color: @drawer-item-hover;
+    color: @drawer-item-inverted-hover;
+    text-align: center;
+  }
+}

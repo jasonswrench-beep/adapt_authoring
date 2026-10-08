@@ -1,6 +1,18 @@
 {
-  "_comment": "Curated plugin bundle for a Rise-style authoring experience. Installed straight from GitHub by scripts/install-plugin-bundle.js (no Bower registry needed). 'ref' is optional: omit it to use the newest release tag compatible with the installed framework. Repos marked community are not maintained by adaptlearning; review before use.",
+  "_comment": "Curated plugin bundle for a Rise-style authoring experience. Installed straight from GitHub by scripts/install-plugin-bundle.js (no Bower registry needed). 'ref' is optional: omit it to use the newest release tag compatible with the installed framework. Repos marked community are not maintained by adaptlearning; review before use. Entries with a 'path' are plugins that live in this repository (adapt-plugins/).",
   "plugins": [
+    {
+      "group": "Core look & menus",
+      "name": "adapt-theme-modern",
+      "path": "adapt-plugins/adapt-theme-modern",
+      "riseEquivalent": "Rise-style look: modern type, indigo palette, rounded cards (default for new courses)"
+    },
+    {
+      "group": "Core look & menus",
+      "name": "adapt-menu-lessons",
+      "path": "adapt-plugins/adapt-menu-lessons",
+      "riseEquivalent": "Rise-style course home: numbered lesson cards with Start / Continue / Review (default for new courses)"
+    },
     {
       "group": "Core look & menus",
       "name": "adapt-contrib-vanilla",

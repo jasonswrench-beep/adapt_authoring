@@ -19,6 +19,8 @@ Then in the authoring tool: **Import source** → choose the zip.
 | `--notes` | Add speaker notes under each slide |
 | `--include-hidden` | Keep hidden slides (skipped by default) |
 | `--title "..."` | Course title (default: the deck's title property, else first slide title) |
+| `--theme name` / `--menu name` | Theme and menu plugins for the course (default: `adapt-theme-modern` and `adapt-menu-lessons`; they must be installed on the server) |
+| `--classic` | Use the stock `adapt-contrib-vanilla` theme and `adapt-contrib-boxMenu` menu instead |
 | `--lang en` / `--framework 5.56.3` | Two-letter language folder / framework version recorded in the zip (must share a major version with the installed framework) |
 
 ## What converts

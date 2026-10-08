@@ -1,0 +1,121 @@
+.dropdown {
+  &__btn {
+    position: relative;
+    padding-top: @item-padding;
+    padding-bottom: @item-padding;
+    padding-inline: @item-padding (@icon-size + (@item-padding * 2));
+    line-height: @body-line-height;
+    text-align: start;
+  }
+
+  & when (@item-color-style = filled) {
+    &__btn {
+      .item-color;
+      border-radius: 0;
+
+      .no-touch &:not(.is-disabled):not([aria-expanded="true"]):hover {
+        .item-color-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .item-color-focus;
+      }
+    }
+
+    &__btn.is-disabled {
+      .item-color-disabled;
+    }
+
+    &__btn[aria-expanded="true"] {
+      .item-color-selected;
+    }
+  }
+
+  & when (@item-color-style = outline) {
+    &__btn {
+      .item-color-outline;
+      border-radius: 0;
+
+      .no-touch &:not(.is-disabled):not([aria-expanded="true"]):hover {
+        .item-color-outline-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .item-color-outline-focus;
+      }
+    }
+
+    &__btn.is-disabled {
+      .item-color-outline-disabled;
+    }
+
+    &__btn[aria-expanded="true"] {
+      .item-color-outline-selected;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    right: @item-padding;
+    .transform(translateY(-50%));
+
+    .dir-rtl & {
+      right: inherit;
+      left: @item-padding;
+    }
+  }
+}
+
+.dropdown__list {
+  border: 0.19rem solid @item-color-selected;
+}
+
+.dropdown-item {
+  padding: @item-padding;
+
+  & when (@item-color-style = filled) {
+    .item-color;
+    border-radius: 0;
+    border-bottom: 1px solid @item-color-hover;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .no-touch &:not(:focus-visible):not([aria-selected="true"]):hover {
+      .item-color-hover;
+    }
+
+    &:focus-visible,
+    &[aria-selected="true"] {
+      // This code can be used to style a non-native dropdown as closely
+      // as possible to the default browser settings
+      // background-color: Highlight;
+      // background-color: -webkit-focus-ring-color;
+      // color: white;
+
+      .item-color-selected;
+    }
+  }
+
+  & when (@item-color-style = outline) {
+    .item-color-outline;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 1px solid @item-color-hover;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .no-touch &:not(:focus-visible):not([aria-selected="true"]):hover {
+      .item-color-outline-hover;
+    }
+
+    &:focus-visible,
+    &[aria-selected="true"] {
+      .item-color-outline-selected;
+    }
+  }
+}

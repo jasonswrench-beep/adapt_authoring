@@ -1,0 +1,276 @@
+// Overrides for mejs player
+// --------------------------------------------------
+@mejs-color: @black;
+@mejs-color-inverted: @white;
+
+@mejs-icon: @white;
+@mejs-icon-size: 1.25rem;
+
+@mejs-time-current: @white;
+@mejs-time-loaded: darken(@white, 25%);
+@mejs-time-total: darken(@white, 50%);
+
+@mejs-controls-height: 2rem;
+@mejs-time-rail-height: 0.5rem;
+@mejs-margin: 0.5rem;
+
+@mejs-time-size: 0.75rem;
+
+@mejs-time-float-size: 0.75rem;
+@mejs-time-float-width: 2.375rem;
+
+@mejs-cc-size: 0.75rem;
+
+.mejs__container {
+  // Play icon override
+  // --------------------------------------------------
+  .mejs__overlay {
+    .mejs__overlay-button {
+      height: (@icon-size * 2) + @icon-padding;
+      width: (@icon-size * 2) + @icon-padding;
+      box-shadow: 0 0 0 0.1875rem @white;
+      border-radius: 50%;
+      color: @white;
+      opacity: 0.75;
+      .icon;
+      .icon-video-play;
+
+      @media (min-width: @device-width-small) {
+        height: (@icon-size * 3) + @icon-padding;
+        width: (@icon-size * 3) + @icon-padding;
+      }
+
+      &::before {
+        font-size: @icon-size * 2;
+
+        @media (min-width: @device-width-small) {
+          font-size: @icon-size * 3;
+        }
+      }
+
+      svg { display: none }
+    }
+
+    .invert-play-icon & .mejs__overlay-button {
+      color: @black;
+      box-shadow: 0 0 0 0.1875rem @black;
+    }
+
+    .no-touch &:hover .mejs__overlay-button {
+      opacity: 1;
+      .transition(opacity @duration ease-in);
+    }
+  }
+
+  // Colour overrides
+  // --------------------------------------------------
+  .mejs__controls {
+    background: none;
+    background-color: @mejs-color;
+
+    .mejs__time,
+    .mejs__captions-button .mejs__captions-selector ul li {
+      color: @mejs-color-inverted;
+    }
+  
+    .mejs__button button {
+      color: @mejs-icon;
+    }
+  
+    .mejs__time-rail .mejs__time-total,
+    .mejs__volume-button .mejs__volume-slider .mejs__volume-total {
+      background: none;
+      background-color: @mejs-time-total;
+    }
+  
+    .mejs__time-rail .mejs__time-loaded {
+      background: none;
+      background-color: @mejs-time-loaded;
+    }
+  
+    .mejs__time-rail .mejs__time-current,
+    .mejs__volume-button .mejs__volume-slider .mejs__volume-current {
+      background: none;
+      background-color: @mejs-time-current;
+    }
+  
+    .mejs__captions-button .mejs__captions-selector,
+    .mejs__volume-button .mejs__volume-slider {
+      background: none;
+      background-color: @mejs-color;
+    }
+  
+    .mejs__volume-button .mejs__volume-slider .mejs__volume-handle {
+      background: none;
+      background-color: @mejs-time-current;
+    }
+  }
+
+  // Icon overrides
+  // Icon classes must be defined in core/fonts/vanilla or
+  // a custom font must be set up in the theme
+  // --------------------------------------------------
+  .mejs__playpause-button,
+  .mejs__fullscreen-button,
+  .mejs__volume-button,
+  .mejs__captions-button {
+    svg { display: none }
+
+    button {
+      .icon;
+
+      &::before { font-size: @mejs-icon-size }
+    }
+  }
+
+  .mejs__controls {
+    .mejs__play button {
+      .icon-video-play;
+    }
+
+    .mejs__pause button {
+      .icon-video-pause;
+    }
+
+    .mejs__replay button {
+      .icon-video-replay;
+    }
+
+    .mejs__fullscreen-button button {
+      .icon-video-fullscreen;
+    }
+
+    .mejs__unfullscreen button {
+      .icon-video-exit-fullscreen;
+    }
+
+    .mejs__mute button {
+      .icon-sound;
+    }
+
+    .mejs__unmute button {
+      .icon-sound-mute;
+    }
+  }
+
+  .mejs__captions-button-toggle {
+    opacity: 1;
+  }
+
+  .mejs__captions-button.mejs__captions-enabled button {
+    .icon-video-captions;
+  }
+
+  .mejs__captions-button:not(.mejs__captions-enabled) button {
+    .icon-video-captions-off-2;
+  }
+
+  // Player controls
+  // --------------------------------------------------
+  .mejs__controls {
+    padding: 0;
+    height: @mejs-controls-height;
+    align-items: center;
+
+    .mejs__time-rail {
+      height: @mejs-time-rail-height;
+      margin: ((@mejs-controls-height - @mejs-time-rail-height) / 2) @mejs-margin;
+      padding: 0;
+    }
+
+    .mejs__time-rail span {
+      height: @mejs-time-rail-height;
+    }
+
+    .mejs__time-rail .mejs__time-total {
+      height: @mejs-time-rail-height;
+      margin: 0;
+    }
+
+    .mejs__time {
+      height: @mejs-time-size;
+      margin: ((@mejs-time-size / 2) + (@mejs-margin / 2)) @mejs-margin;
+      padding: 0;
+      font-size: @mejs-time-size;
+      line-height: 1;
+    }
+  }
+
+  // Button icon style overrides
+  // --------------------------------------------------
+  .mejs__controls .mejs__button {
+    height: @icon-size;
+    width: @icon-size;
+    margin: @mejs-margin / 2;
+
+    button {
+      height: @icon-size;
+      width: @icon-size;
+      margin: 0;
+    }
+  }
+
+  .mejs__controls .mejs__button.mejs__speed-button,
+  .mejs__controls .mejs__button.mejs__speed-button button {
+    width: 2.25rem;
+  }
+
+  // Current time pop float on time rail hover
+  // --------------------------------------------------
+  .mejs__controls {
+    .mejs__time-rail .mejs__time-float {
+      height: calc(~'@{mejs-time-float-size} + 0.375rem');
+      width: @mejs-time-float-width;
+      background-color: @white;
+      color: @black;
+      border-color: @black;
+    }
+
+    .mejs__time-rail .mejs__time-float-current {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      font-size: @mejs-time-float-size;
+      line-height: 1;
+    }
+
+    .mejs__time-rail .mejs__time-float-corner {
+      border-color: @white transparent transparent transparent;
+    }
+
+    .mejs__time-rail span {
+      border-radius: 0;
+    }
+  }
+
+  // Closed captions pop up selector
+  // --------------------------------------------------
+  .mejs__captions-selector-label,
+  .mejs__chapters-selector-label {
+    font-size: @mejs-cc-size; 
+  }
+
+  // Closed captions
+  // --------------------------------------------------
+  &:not(.mejs__container-fullscreen) video::cue {
+    font-size: @body-size;
+    line-height: @body-line-height;
+    background-color: @black;
+    color: @white;
+  }
+}
+
+// Offset player controls
+// --------------------------------------------------
+.offset-media-controls {
+  .media__widget {
+    padding-bottom: @mejs-controls-height;
+  }
+
+  .mejs__video:not(.mejs__container-fullscreen) .mejs__controls {
+    bottom: -@mejs-controls-height;
+  }
+}

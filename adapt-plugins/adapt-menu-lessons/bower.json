@@ -1,0 +1,17 @@
+{
+  "name": "adapt-menu-lessons",
+  "version": "1.0.0",
+  "framework": ">=5.48.4",
+  "homepage": "https://github.com/jasonswrench-beep/adapt_authoring",
+  "bugs": "https://github.com/jasonswrench-beep/adapt_authoring/issues",
+  "menu": "lessonsMenu",
+  "displayName": "Lessons Menu",
+  "description": "A course home page that lists lessons as numbered cards with progress and a Start/Continue/Review button",
+  "main": "js/adapt-menu-lessons.js",
+  "keywords": [
+    "adapt-plugin",
+    "adapt-menu"
+  ],
+  "license": "GPL-3.0",
+  "targetAttribute": "_lessonsMenu"
+}

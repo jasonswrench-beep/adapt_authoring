@@ -1,0 +1,56 @@
+{
+  "$anchor": "modern-course",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "$patch": {
+    "source": {
+      "$ref": "course"
+    },
+    "with": {
+      "properties": {
+        "_modern": {
+          "type": "object",
+          "title": "Theme",
+          "default": {},
+          "properties": {
+            "_favIcon": {
+              "type": "object",
+              "default": {},
+              "title": "Favicon",
+              "description": "Favicons appear in browser tabs, bookmarks, and on mobile devices when learners add your course to their home screen. The Image below is used as the base favicon and as a fallback for the Apple touch icon. Optionally provide an SVG for sharper rendering at any size, or a dedicated Apple touch icon for iOS home screens.",
+              "properties": {
+                "_src": {
+                  "type": "string",
+                  "title": "Image",
+                  "description": "Base favicon used in browser tabs and bookmarks. If a separate Apple touch icon is set below, use a 32 x 32 PNG. Otherwise this image is also used as the Apple touch icon, so use a 180 x 180 PNG.",
+                  "_backboneForms": {
+                    "type": "Asset",
+                    "media": "image"
+                  }
+                },
+                "_svg": {
+                  "type": "string",
+                  "title": "SVG icon",
+                  "description": "Optional vector favicon. Modern browsers prefer this over the PNG when set, producing a sharper icon at any size. SVG only.",
+                  "_backboneForms": {
+                    "type": "Asset",
+                    "media": "image"
+                  }
+                },
+                "_appleTouch": {
+                  "type": "string",
+                  "title": "Apple touch icon",
+                  "description": "Optional dedicated icon for iOS home screens. PNG only, 180 x 180 pixels recommended. If empty, the Image above is used.",
+                  "_backboneForms": {
+                    "type": "Asset",
+                    "media": "image"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

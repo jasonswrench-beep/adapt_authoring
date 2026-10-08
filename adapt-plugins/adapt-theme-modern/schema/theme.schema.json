@@ -1,0 +1,1216 @@
+{
+  "$anchor": "modern-theme",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+
+    "_global": {
+      "type": "object",
+      "title": "Global",
+      "default": {},
+      "properties": {
+        "font-color": {
+          "type": "string",
+          "title": "Font colour",
+          "description": "Global body font colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "font-color-inverted": {
+          "type": "string",
+          "title": "Font colour - inverted",
+          "description": "Global body font colour inverted. Either a lightened / darkened alternative to Font colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "link": {
+          "type": "string",
+          "title": "Link font colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "link-inverted": {
+          "type": "string",
+          "title": "Link font colour - inverted",
+          "description": "Global link font colour inverted. Either a lightened / darkened alternative to Link colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "link-hover": {
+          "type": "string",
+          "title": "Link font colour - hover",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "link-inverted-hover": {
+          "type": "string",
+          "title": "Link font colour - inverted hover",
+          "description": "Global link font colour when hovered over inverted. Either a lightened / darkened alternative to Link hover colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "heading-color": {
+          "type": "string",
+          "title": "Heading colour",
+          "description": "Global title colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "heading-color-inverted": {
+          "type": "string",
+          "title": "Heading colour - inverted",
+          "description": "Global title colour inverted. Either a lightened / darkened alternative to Title colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "body-background-color": {
+          "type": "string",
+          "title": "Body background colour",
+          "description": "The background colour of the main body element.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        }
+      }
+    },
+
+    "_items": {
+      "type": "object",
+      "title": "Content Items (components)",
+      "default": {},
+      "properties": {
+        "item-color": {
+          "type": "string",
+          "title": "Item colour",
+          "description": "Defines the selectable areas or points of interest in components.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-color-inverted": {
+          "type": "string",
+          "title": "Item colour - inverted",
+          "description": "Defines the item text / icon colour. Should be a colour that provides good contrast against the item colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-color-hover": {
+          "type": "string",
+          "title": "Item colour - hover",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-color-inverted-hover": {
+          "type": "string",
+          "title": "Item colour - inverted hover",
+          "description": "Defines the item text / icon colour when hovered over. Should be a colour that provides good contrast against the item hover colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-color-focus": {
+          "type": "string",
+          "title": "Item colour - focus",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-color-inverted-focus": {
+          "type": "string",
+          "title": "Item colour - inverted focus",
+          "description": "Defines the item text / icon colour when focused. Should be a colour that provides good contrast against the item focus colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-color-selected": {
+          "type": "string",
+          "title": "Item colour - selected",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-color-inverted-selected": {
+          "type": "string",
+          "title": "Item colour - inverted selected",
+          "description": "Defines the item text / icon colour when selected. Should be a colour that provides good contrast against the item selected colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "visited": {
+          "type": "string",
+          "title": "Item colour - visited",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "visited-inverted": {
+          "type": "string",
+          "title": "Item colour - inverted visited",
+          "description": "Defines the item text / icon colour when visited. Should be a colour that provides good contrast against the item visited colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-color-disabled": {
+          "type": "string",
+          "title": "Item colour - disabled",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-color-inverted-disabled": {
+          "type": "string",
+          "title": "Item colour - inverted disabled",
+          "description": "Defines the item text / icon colour when disabled. Should be a colour that provides good contrast against the item disabled colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        }
+      }
+    },
+
+    "_itemsUi": {
+      "type": "object",
+      "title": "Content Items UI (action not content)",
+      "default": {},
+      "properties": {
+        "item-ui-color": {
+          "type": "string",
+          "title": "Item UI colour",
+          "description": "Defines the selectable areas in components that don't contain course content.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-ui-color-inverted": {
+          "type": "string",
+          "title": "Item UI colour - inverted",
+          "description": "Defines the item UI text / icon colour. Should be a colour that provides good contrast against the item UI colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-ui-color-hover": {
+          "type": "string",
+          "title": "Item UI colour - hover",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-ui-color-inverted-hover": {
+          "type": "string",
+          "title": "Item UI colour - inverted hover",
+          "description": "Defines the item UI text / icon colour when hovered over. Should be a colour that provides good contrast against the item UI hover colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-ui-color-focus": {
+          "type": "string",
+          "title": "Item UI colour - focus",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-ui-color-inverted-focus": {
+          "type": "string",
+          "title": "Item UI colour - inverted focus",
+          "description": "Defines the item UI text / icon colour when focused. Should be a colour that provides good contrast against the item UI focus colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-ui-color-selected": {
+          "type": "string",
+          "title": "Item UI colour - selected",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-ui-color-inverted-selected": {
+          "type": "string",
+          "title": "Item UI colour - inverted selected",
+          "description": "Defines the item UI text / icon colour when selected. Should be a colour that provides good contrast against the item UI selected colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-ui-color-visited": {
+          "type": "string",
+          "title": "Item UI colour - visited",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-ui-color-inverted-visited": {
+          "type": "string",
+          "title": "Item UI colour - inverted visited",
+          "description": "Defines the item UI text / icon colour when visited. Should be a colour that provides good contrast against the item UI visited colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-ui-color-locked": {
+          "type": "string",
+          "title": "Item UI colour - locked",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-ui-color-inverted-locked": {
+          "type": "string",
+          "title": "Item UI colour - inverted locked",
+          "description": "Defines the item UI text / icon colour when locked. Should be a colour that provides good contrast against the item UI locked colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-ui-color-disabled": {
+          "type": "string",
+          "title": "Item UI colour - disabled",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "item-ui-color-inverted-disabled": {
+          "type": "string",
+          "title": "Item UI colour - inverted disabled",
+          "description": "Defines the item UI text / icon colour when disabled. Should be a colour that provides good contrast against the item UI disabled colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        }
+      }
+    },
+
+    "_buttons": {
+      "type": "object",
+      "title": "Buttons",
+      "default": {},
+      "properties": {
+        "btn-color": {
+          "type": "string",
+          "title": "Button colour",
+          "description": "Defines component question buttons and navigational elements.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "btn-color-inverted": {
+          "type": "string",
+          "title": "Button colour - inverted",
+          "description": "Defines the button text / icon colour. Should be a colour that provides good contrast against the button colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "btn-color-hover": {
+          "type": "string",
+          "title": "Button colour - hover",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "btn-color-inverted-hover": {
+          "type": "string",
+          "title": "Button colour - inverted hover",
+          "description": "Defines the button text / icon colour when hovered over. Should be a colour that provides good contrast against the button hover colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "btn-color-focus": {
+          "type": "string",
+          "title": "Button colour - focus",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "btn-color-inverted-focus": {
+          "type": "string",
+          "title": "Button colour - inverted focus",
+          "description": "Defines the button text / icon colour when focused. Should be a colour that provides good contrast against the button focus colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "btn-color-selected": {
+          "type": "string",
+          "title": "Button colour - selected",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "btn-color-inverted-selected": {
+          "type": "string",
+          "title": "Button colour - inverted selected",
+          "description": "Defines the button text / icon colour when selected. Should be a colour that provides good contrast against the button selected colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "btn-color-locked": {
+          "type": "string",
+          "title": "Button colour - locked",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "btn-color-inverted-locked": {
+          "type": "string",
+          "title": "Button colour - inverted locked",
+          "description": "Defines the button text / icon colour when locked. Should be a colour that provides good contrast against the button locked colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "disabled": {
+          "type": "string",
+          "title": "Button colour - disabled",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "disabled-inverted": {
+          "type": "string",
+          "title": "Button colour - inverted disabled",
+          "description": "Defines the button text / icon colour when disabled. Should be a colour that provides good contrast against the button disabled colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "btn-icon-color": {
+          "type": "string",
+          "title": "Button icon colour",
+          "description": "Defines the standardised icon button background colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "btn-icon-color-inverted": {
+          "type": "string",
+          "title": "Button icon colour - inverted",
+          "description": "Defines the button icon colour. Should be a colour that provides good contrast against the button colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "btn-icon-color-hover": {
+          "type": "string",
+          "title": "Button icon colour - hover",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "btn-icon-color-inverted-hover": {
+          "type": "string",
+          "title": "Button icon colour - inverted hover",
+          "description": "Defines the button icon colour when hovered over. Should be a colour that provides good contrast against the button hover colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        }
+      }
+    },
+
+    "_globalUi": {
+      "type": "object",
+      "title": "Global UI",
+      "default": {},
+      "properties": {
+        "ui-color": {
+          "type": "string",
+          "title": "UI colour",
+          "description": "Defines the global UI colour scheme for nav, notify, and drawer.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "ui-color-inverted": {
+          "type": "string",
+          "title": "UI colour - inverted",
+          "description": "Defines the global UI text / icon colour. Should be a colour that provides good contrast against the global UI colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        }
+      }
+    },
+
+    "_validation": {
+      "type": "object",
+      "title": "Validation states",
+      "default": {},
+      "properties": {
+        "validation-success": {
+          "type": "string",
+          "title": "Validation success colour",
+          "description": "Defines the question marking success colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "validation-success-inverted": {
+          "type": "string",
+          "title": "Validation success colour - inverted",
+          "description": "Defines the question marking success text / icon colour. Should be a colour that provides good contrast against the question marking success colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "validation-error": {
+          "type": "string",
+          "title": "Validation error colour",
+          "description": "Defines the question marking error colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "validation-error-inverted": {
+          "type": "string",
+          "title": "Validation error colour - inverted",
+          "description": "Defines the question marking error text / icon colour. Should be a colour that provides good contrast against the question marking error colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        }
+      }
+    },
+
+    "_progress": {
+      "type": "object",
+      "title": "Progress bars",
+      "default": {},
+      "properties": {
+        "progress": {
+          "type": "string",
+          "title": "Progress fill colour",
+          "description": "Defines the global progress width fill colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "progress-inverted": {
+          "type": "string",
+          "title": "Progress background colour",
+          "description": "Defines the global progress fill background colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "progress-border": {
+          "type": "string",
+          "title": "Progress border colour",
+          "description": "Defines the global border colour that appears around the progress fill bar.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        }
+      }
+    },
+
+    "_page": {
+      "type": "object",
+      "title": "Page",
+      "default": {},
+      "properties": {
+        "page-header-background-color": {
+          "type": "string",
+          "title": "Page header background colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "page-header-title-color": {
+          "type": "string",
+          "title": "Page header title colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "page-header-subtitle-color": {
+          "type": "string",
+          "title": "Page header subtitle colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "page-header-body-color": {
+          "type": "string",
+          "title": "Page header body colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "page-header-instruction-color": {
+          "type": "string",
+          "title": "Page header instruction colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        }
+      }
+    },
+
+    "_menu": {
+      "type": "object",
+      "title": "Menu",
+      "default": {},
+      "properties": {
+        "menu-header-background-color": {
+          "type": "string",
+          "title": "Menu header background colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-header-title-color": {
+          "type": "string",
+          "title": "Menu header title colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-header-subtitle-color": {
+          "type": "string",
+          "title": "Menu header subtitle colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-header-body-color": {
+          "type": "string",
+          "title": "Menu header body colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-header-instruction-color": {
+          "type": "string",
+          "title": "Menu header instruction colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-item": {
+          "type": "string",
+          "title": "Menu item colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-item-inverted": {
+          "type": "string",
+          "title": "Menu item colour - inverted",
+          "description": "Defines the menu item text colour. Should be a colour that provides good contrast against the menu item colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-item-border-color": {
+          "type": "string",
+          "title": "Menu item border colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-item-progress": {
+          "type": "string",
+          "title": "Menu item progress fill colour",
+          "description": "Defines the menu-item-specific progress width fill override colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-item-progress-inverted": {
+          "type": "string",
+          "title": "Menu item progress background colour",
+          "description": "Defines the menu-item-specific progress fill background override colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-item-progress-border": {
+          "type": "string",
+          "title": "Menu item progress border colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-item-btn-color": {
+          "type": "string",
+          "title": "Menu item button background colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-item-btn-color-inverted": {
+          "type": "string",
+          "title": "Menu item button background colour - inverted",
+          "description": "Defines the menu item button text colour. Should be a colour that provides good contrast against the menu item button colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-item-btn-color-hover": {
+          "type": "string",
+          "title": "Menu item button background colour - hover",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-item-btn-color-inverted-hover": {
+          "type": "string",
+          "title": "Menu item button background colour - inverted hover",
+          "description": "Defines the menu item button text colour when hovered over. Should be a colour that provides good contrast against the menu item button hover colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-item-btn-color-focus": {
+          "type": "string",
+          "title": "Menu item button background colour - focus",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-item-btn-color-inverted-focus": {
+          "type": "string",
+          "title": "Menu item button background colour - inverted focus",
+          "description": "Defines the menu item button text colour when focused. Should be a colour that provides good contrast against the menu item button focus colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-item-btn-color-locked": {
+          "type": "string",
+          "title": "Menu item button background colour - locked",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "menu-item-btn-color-inverted-locked": {
+          "type": "string",
+          "title": "Menu item button background colour - inverted locked",
+          "description": "Defines the menu item button text colour when locked. Should be a colour that provides good contrast against the menu item button locked colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        }
+      }
+    },
+
+    "_nav": {
+      "type": "object",
+      "title": "Navigation bar",
+      "default": {},
+      "properties": {
+        "nav": {
+          "type": "string",
+          "title": "Navigation background colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "nav-inverted": {
+          "type": "string",
+          "title": "Navigation background colour - inverted",
+          "description": "Defines the general navigation inverted colour. Should be a colour that provides good contrast against the navigation colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "nav-icon": {
+          "type": "string",
+          "title": "Navigation button background colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "nav-icon-inverted": {
+          "type": "string",
+          "title": "Navigation button background colour - inverted",
+          "description": "Defines the navigation button text / icon colour. Should be a colour that provides good contrast against the navigation button colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "nav-icon-hover": {
+          "type": "string",
+          "title": "Navigation button background colour - hover",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "nav-icon-inverted-hover": {
+          "type": "string",
+          "title": "Navigation button background colour - inverted hover",
+          "description": "Defines the navigation button text / icon colour when hovered over. Should be a colour that provides good contrast against the navigation button hover colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "nav-icon-focus": {
+          "type": "string",
+          "title": "Navigation button background colour - focus",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "nav-icon-inverted-focus": {
+          "type": "string",
+          "title": "Navigation button background colour - inverted focus",
+          "description": "Defines the navigation button text / icon colour when focused. Should be a colour that provides good contrast against the navigation button focus colour,",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "nav-icon-locked": {
+          "type": "string",
+          "title": "Navigation button background colour - locked",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "nav-icon-inverted-locked": {
+          "type": "string",
+          "title": "Navigation button background colour - inverted locked",
+          "description": "Defines the navigation button text / icon colour when locked. Should be a colour that provides good contrast against the navigation button locked colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "nav-icon-disabled": {
+          "type": "string",
+          "title": "Navigation button background colour - disabled",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "nav-icon-inverted-disabled": {
+          "type": "string",
+          "title": "Navigation button background colour - inverted disabled",
+          "description": "Defines the navigation button text / icon colour when disabled. Should be a colour that provides good contrast against the navigation button disabled colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "nav-progress": {
+          "type": "string",
+          "title": "Navigation progress fill color",
+          "description": "Defines the navigation-specific progress width fill override colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "nav-progress-inverted": {
+          "type": "string",
+          "title": "Navigation progress background color - inverted",
+          "description": "Defines the navigation-specific progress fill background override colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "nav-progress-border": {
+          "type": "string",
+          "title": "Navigation progress border colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "nav-progress-hover": {
+          "type": "string",
+          "title": "Navigation progress fill color - hover",
+          "description": "Defines the navigation-specific progress width fill override colour when hovered over.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "nav-progress-inverted-hover": {
+          "type": "string",
+          "title": "Navigation progress background color - inverted hover",
+          "description": "Defines the navigation-specific progress fill background override colour when hovered over.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "nav-progress-border-hover": {
+          "type": "string",
+          "title": "Navigation progress border colour - hover",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        }
+      }
+    },
+
+    "_notify": {
+      "type": "object",
+      "title": "Notify (popup)",
+      "default": {},
+      "properties": {
+        "notify": {
+          "type": "string",
+          "title": "Notify background colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-inverted": {
+          "type": "string",
+          "title": "Notify background colour - inverted",
+          "description": "Defines the notify text colour. Should be a colour that provides good contrast against the notify colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-title-color": {
+          "type": "string",
+          "title": "Notify title colour",
+          "description": "Defines the notify title text colour. Should be a colour that provides good contrast against the notify colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-link": {
+          "type": "string",
+          "title": "Notify link font colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-link-hover": {
+          "type": "string",
+          "title": "Notify link font colour - hover",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-icon": {
+          "type": "string",
+          "title": "Notify icon button background colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-icon-inverted": {
+          "type": "string",
+          "title": "Notify icon button background colour - inverted",
+          "description": "Defines the notify icon inverse colour. Should be a colour that provides good contrast against the notify icon colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-icon-hover": {
+          "type": "string",
+          "title": "Notify icon button background colour - hover",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-icon-inverted-hover": {
+          "type": "string",
+          "title": "Notify icon button background colour - inverted hover",
+          "description": "Defines the notify icon colour when hovered over. Should be a colour that provides good contrast against the notify icon hover colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-icon-focus": {
+          "type": "string",
+          "title": "Notify icon button background colour - focus",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-icon-inverted-focus": {
+          "type": "string",
+          "title": "Notify icon button background colour - inverted focus",
+          "description": "Defines the notify icon colour when focused. Should be a colour that provides good contrast against the notify icon focus colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-icon-disabled": {
+          "type": "string",
+          "title": "Notify icon button background colour - disabled",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-icon-inverted-disabled": {
+          "type": "string",
+          "title": "Notify icon button background colour - inverted disabled",
+          "description": "Defines the notify icon colour when disabled. Should be a colour that provides good contrast against the notify icon disabled colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-btn": {
+          "type": "string",
+          "title": "Notify button background colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-btn-inverted": {
+          "type": "string",
+          "title": "Notify button background colour - inverted",
+          "description": "Defines the notify button text / icon colour. Should be a colour that provides good contrast against the notify button colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-btn-hover": {
+          "type": "string",
+          "title": "Notify button background colour - hover",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-btn-inverted-hover": {
+          "type": "string",
+          "title": "Notify button background colour - inverted hover",
+          "description": "Defines the notify button text / icon colour when hovered over. Should be a colour that provides good contrast against the notify button hover colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-btn-focus": {
+          "type": "string",
+          "title": "Notify button background colour - focus",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-btn-inverted-focus": {
+          "type": "string",
+          "title": "Notify button background colour - inverted focus",
+          "description": "Defines the notify button text / icon colour when focused. Should be a colour that provides good contrast against the notify button focus colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-btn-selected": {
+          "type": "string",
+          "title": "Notify button background colour - selected",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-btn-inverted-selected": {
+          "type": "string",
+          "title": "Notify button background colour - inverted selected",
+          "description": "Defines the notify button text / icon colour when selected. Should be a colour that provides good contrast against the notify button selected colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-btn-locked": {
+          "type": "string",
+          "title": "Notify button background colour - locked",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-btn-inverted-locked": {
+          "type": "string",
+          "title": "Notify button background colour - inverted locked",
+          "description": "Defines the notify button text / icon colour when locked. Should be a colour that provides good contrast against the notify button locked colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-btn-disabled": {
+          "type": "string",
+          "title": "Notify button background colour - disabled",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "notify-btn-inverted-disabled": {
+          "type": "string",
+          "title": "Notify button background colour - inverted disabled",
+          "description": "Defines the notify button text / icon colour when disabled. Should be a colour that provides good contrast against the notify button disabled colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        }
+      }
+    },
+
+    "_drawer": {
+      "type": "object",
+      "title": "Drawer",
+      "default": {},
+      "properties": {
+        "drawer": {
+          "type": "string",
+          "title": "Drawer background colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-inverted": {
+          "type": "string",
+          "title": "Drawer background colour - inverted",
+          "description": "Defines the drawer text colour. Should be a colour that provides good contrast against the drawer colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-link": {
+          "type": "string",
+          "title": "Drawer link font colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-link-hover": {
+          "type": "string",
+          "title": "Drawer link font colour - hover",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-icon": {
+          "type": "string",
+          "title": "Drawer icon button background colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-icon-inverted": {
+          "type": "string",
+          "title": "Drawer icon button background colour - inverted",
+          "description": "Defines the drawer icon button inverse colour. Should be a colour that provides good contrast against the drawer icon button colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-icon-hover": {
+          "type": "string",
+          "title": "Drawer icon button background colour - hover",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-icon-inverted-hover": {
+          "type": "string",
+          "title": "Drawer icon button background colour - inverted hover",
+          "description": "Defines the drawer icon button inverse colour when hovered over. Should be a colour that provides good contrast against the drawer icon button hover colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-icon-focus": {
+          "type": "string",
+          "title": "Drawer icon button background colour - focus",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-icon-inverted-focus": {
+          "type": "string",
+          "title": "Drawer icon button background colour - inverted focus",
+          "description": "Defines the drawer icon button inverse colour when focused. Should be a colour that provides good contrast against the drawer icon button focus colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-item": {
+          "type": "string",
+          "title": "Drawer item background colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-item-inverted": {
+          "type": "string",
+          "title": "Drawer item background colour - inverted",
+          "description": "Defines the drawer item text / icon colour. Should be a colour that provides good contrast against the drawer item colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-item-hover": {
+          "type": "string",
+          "title": "Drawer item background colour - hover",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-item-inverted-hover": {
+          "type": "string",
+          "title": "Drawer item background colour - inverted hover",
+          "description": "Defines the drawer item text / icon colour when hovered over. Should be a colour that provides good contrast against the drawer item hover colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-item-focus": {
+          "type": "string",
+          "title": "Drawer item background colour - focus",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-item-inverted-focus": {
+          "type": "string",
+          "title": "Drawer item background colour - inverted focus",
+          "description": "Defines the drawer item text / icon colour when focused. Should be a colour that provides good contrast against the drawer item focus colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-item-selected": {
+          "type": "string",
+          "title": "Drawer item background colour - selected",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-item-inverted-selected": {
+          "type": "string",
+          "title": "Drawer item background colour - inverted selected",
+          "description": "Defines the drawer item text / icon colour when selected. Should be a colour that provides good contrast against the drawer item selected colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-item-selected-underline": {
+          "type": "string",
+          "title": "Drawer item colour - selected underline",
+          "description": "Defines the colour of the underline that appears beneath the selected drawer item.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-item-locked": {
+          "type": "string",
+          "title": "Drawer item background colour - locked",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-item-inverted-locked": {
+          "type": "string",
+          "title": "Drawer item background colour - inverted locked",
+          "description": "Defines the drawer item text / icon colour when locked. Should be a colour that provides good contrast against the drawer item locked colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-progress": {
+          "type": "string",
+          "title": "Drawer progress fill colour",
+          "description": "Defines the drawer-specific progress width fill override colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-progress-inverted": {
+          "type": "string",
+          "title": "Drawer progress background colour",
+          "description": "Defines the drawer-specific progress fill background override colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-progress-border": {
+          "type": "string",
+          "title": "Drawer progress border colour",
+          "description": "Defines the drawer-specific border override colour that appears around the progress fill bar.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-progress-hover": {
+          "type": "string",
+          "title": "Drawer progress colour - hover",
+          "description": "Defines the drawer-specific progress width fill override colour when hovered over.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-progress-inverted-hover": {
+          "type": "string",
+          "title": "Drawer progress colour - inverted hover",
+          "description": "Defines the drawer-specific progress fill background override colour when hovered over.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "drawer-progress-border-hover": {
+          "type": "string",
+          "title": "Drawer progress border colour - hover",
+          "description": "Defines the drawer-specific border override colour that appears around the progress fill bar when hovered over.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        }
+      }
+    },
+
+    "_pullQuote": {
+      "type": "object",
+      "title": "Pull Quote",
+      "default": {},
+      "properties": {
+        "pull-quote": {
+          "type": "string",
+          "title": "Pull quote background colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "pull-quote-inverted": {
+          "type": "string",
+          "title": "Pull quote text colour",
+          "description": "The text colour for pull quote elements. Should provide good contrast against the pull quote background colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "pull-quote-border": {
+          "type": "string",
+          "title": "Pull quote border colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        }
+      }
+    },
+
+    "_misc": {
+      "type": "object",
+      "title": "Miscellaneous",
+      "default": {},
+      "properties": {
+        "background": {
+          "type": "string",
+          "title": "Background colour",
+          "description": "Sets the generic background colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "background-inverted": {
+          "type": "string",
+          "title": "Background colour - inverted",
+          "description": "Defines the background text / icon colour. Should be a colour that provides good contrast against the background colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "shadow": {
+          "type": "string",
+          "title": "Shadow background colour (loading / popup background)",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "shadow-inverted": {
+          "type": "string",
+          "title": "Shadow background colour - inverted",
+          "description": "Defines the shadow text / icon colour. Should be a colour that provides good contrast against the shadow colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "shadow-opacity": {
+          "type": "string",
+          "title": "Shadow opacity",
+          "description": "The opacity of the shadow overlay used behind loading indicators and popups. Accepts a percentage value e.g. 50%.",
+          "default": ""
+        },
+        "loading": {
+          "type": "string",
+          "title": "Loading animation background colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "loading-inverted": {
+          "type": "string",
+          "title": "Loading animation colour - inverted",
+          "description": "Defines the loading animation bar colour. Should be a colour that provides good contrast against the loading colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        }
+      }
+    },
+
+    "_tooltip": {
+      "type": "object",
+      "title": "Tooltip",
+      "default": {},
+      "properties": {
+        "tooltip-color": {
+          "type": "string",
+          "title": "Tooltip background colour",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        },
+        "tooltip-text-color": {
+          "type": "string",
+          "title": "Tooltip text colour",
+          "description": "The text colour for tooltip elements. Should provide good contrast against the tooltip background colour.",
+          "default": "",
+          "_backboneForms": "ColourPicker"
+        }
+      }
+    }
+
+  }
+}
