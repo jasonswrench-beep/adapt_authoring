@@ -8,6 +8,9 @@ if [ ! -f /app/.adapt-initialised ]; then
   echo ">> First run: installing authoring tool into /app (this takes several minutes)"
   rsync -a --exclude node_modules /opt/adapt-src/ /app/
   npm install --omit=dev --unsafe-perm --loglevel error
+  # optional: dependencies of the accessibility checker's full (rendered) check; the quick check works without them
+  (cd scripts/a11y-check && npm install --omit=dev --no-audit --no-fund --loglevel error) \
+    || echo "!! Full accessibility check unavailable (npm install failed in scripts/a11y-check)"
 
   : "${ADAPT_SU_EMAIL:?Set ADAPT_SU_EMAIL in .env}"
   : "${ADAPT_SU_PASSWORD:?Set ADAPT_SU_PASSWORD in .env}"

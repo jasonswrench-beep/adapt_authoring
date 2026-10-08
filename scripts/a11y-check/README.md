@@ -1,6 +1,6 @@
 # Accessibility checker for Adapt courses
 
-Checks a **built** course (the Web export) in two layers and writes a plain-language report students can act on.
+Checks a **built** course (the Web export) in two layers and writes a plain-language report students can act on. The same rules power the editor's **Check accessibility** button (quick check on saved content, plus an optional full check that runs this tool on the preview).
 
 ```bash
 cd scripts/a11y-check && npm install            # once
@@ -40,4 +40,4 @@ Automated checking finds only a portion of accessibility problems (commonly cite
 
 ## Testing
 
-`node --test test/content-rules.test.js` covers every content rule. The rendered layer was verified against a real framework build, plus a deliberately broken copy where axe flagged the injected low-contrast text and the image with no alt.
+`node --test test/*.test.js` covers every content rule plus the editor integration (server core and report builder). The rendered layer was verified against a real framework build, plus a deliberately broken copy where axe flagged the injected low-contrast text and the image with no alt.

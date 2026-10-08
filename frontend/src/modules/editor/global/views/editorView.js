@@ -4,8 +4,10 @@
  */
 define(function(require) {
   var Backbone = require('backbone');
+  var _ = require('underscore');
   var Origin = require('core/origin');
   var helpers = require('core/helpers');
+  var AccessibilityReport = require('../accessibilityReport');
 
   var EditorOriginView = require('./editorOriginView');
   var EditorMenuView = require('../../contentObject/views/editorMenuView');
@@ -45,6 +47,7 @@ define(function(require) {
         'editorView:copyID': this.copyIdToClipboard,
         'editorView:paste': this.pasteFromClipboard,
         'editorCommon:download': this.downloadProject,
+        'editorCommon:accessibility': function() { this.checkAccessibility(false); },
         'editorCommon:preview': function(isForceRebuild) {
           var previewWindow = window.open('loading', 'preview');
           this.previewProject(previewWindow, isForceRebuild);
@@ -184,6 +187,58 @@ define(function(require) {
         this.resetDownloadProgress();
         Origin.Notify.alert({ type: 'error', text: Origin.l10n.t('app.errorgeneric') });
       }.bind(this));
+    },
+
+    /**
+     * Checks the saved course for accessibility problems and shows a report. `isFullCheck` also builds the
+     * preview and runs axe-core on the rendered pages (slower, and only offered if the server supports it).
+     */
+    checkAccessibility: function(isFullCheck) {
+      var self = this;
+      if (Origin.editor.isAccessibilityCheckPending) return;
+      Origin.editor.isAccessibilityCheckPending = true;
+      $('.editor-common-sidebar-accessibility-inner').addClass('display-none');
+      $('.editor-common-sidebar-accessibility-checking').removeClass('display-none');
+
+      var url = 'api/output/' + Origin.constants.outputPlugin + '/accessibility/' + this.currentCourseId;
+      if (isFullCheck === true) url += '?deep=true';
+      $.get(url, function(data) {
+        self.resetAccessibilityCheck();
+        if (!data.success) {
+          return Origin.Notify.alert({
+            type: 'error',
+            text: Origin.l10n.t('app.errorgeneric') + Origin.l10n.t('app.debuginfo', { message: data.message })
+          });
+        }
+        self.showAccessibilityReport(data.payload, isFullCheck === true);
+      }).fail(function() {
+        self.resetAccessibilityCheck();
+        Origin.Notify.alert({ type: 'error', text: Origin.l10n.t('app.errorgeneric') });
+      });
+    },
+
+    showAccessibilityReport: function(payload, wasFullCheck) {
+      var self = this;
+      var summary = AccessibilityReport.summarise(payload);
+      var offerFullCheck = !wasFullCheck && payload.deepAvailable === true;
+      Origin.Notify.alert({
+        type: summary.errors ? 'warning' : 'success',
+        title: Origin.l10n.t('app.a11ytitle'),
+        text: AccessibilityReport.buildHtml(payload, function(key, options) { return Origin.l10n.t(key, options); }, _.escape),
+        customClass: 'a11y-report-dialog',
+        showCancelButton: offerFullCheck,
+        confirmButtonText: Origin.l10n.t(offerFullCheck ? 'app.a11yrunfull' : 'app.a11yclose'),
+        cancelButtonText: Origin.l10n.t('app.a11yclose'),
+        callback: function(isConfirm) {
+          if (offerFullCheck && isConfirm) self.checkAccessibility(true);
+        }
+      });
+    },
+
+    resetAccessibilityCheck: function() {
+      $('.editor-common-sidebar-accessibility-inner').removeClass('display-none');
+      $('.editor-common-sidebar-accessibility-checking').addClass('display-none');
+      Origin.editor.isAccessibilityCheckPending = false;
     },
 
     updatePreviewProgress: function(url, previewWindow) {
