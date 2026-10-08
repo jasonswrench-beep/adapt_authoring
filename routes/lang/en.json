@@ -162,6 +162,8 @@
   "app.layoutright": "Right",
   "app.layoutfull": "Full-width",
   "app.download": "Publish course",
+  "app.downloadscorm": "Download SCORM package",
+  "app.downloadweb": "Download Web package",
   "app.downloading": "Downloading...",
   "app.preview": "Preview course",
   "app.previewing": "Previewing...",

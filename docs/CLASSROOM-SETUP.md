@@ -29,10 +29,22 @@ The stock tool installs plugins through a Bower registry hosted on Heroku (`adap
 | Piece | Status |
 |---|---|
 | All 28 bundle plugins resolve to a release compatible with framework 5.56.3, with a schema and a recognised type | Checked against the live GitHub repos |
-| Installer script syntax | Checked |
+| Installer script and export-format changes: JavaScript syntax | Checked |
+| SCORM / Web export buttons | **Not run** |
 | Docker build, first-run install, plugin registration against MongoDB, and the editor UI | **Not run** (no Docker daemon or MongoDB where this was written). Expect to fix small issues on your first deploy. |
 
 Two bundle entries (`adapt-hotgrid`, `adapt-visua11y`) are community plugins by cgkineo, not adaptlearning.
+
+## Exporting: SCORM and Web
+
+The editor sidebar now has two buttons in place of the single Publish button:
+
+- **Download SCORM package** - forces tracking on (Spoor enabled) for this export, giving a zip for an LMS, named `<course>-scorm.zip`.
+- **Download Web package** - forces tracking off, giving a zip you can host on any web server or open from a folder, named `<course>-web.zip`.
+
+Neither changes the course's saved settings; the choice only applies to the exported copy. SCORM export requires the **Spoor** extension to be added to the course (Extensions in the editor); otherwise you get a clear error. Choose SCORM 1.2 or 2004 and the completion/pass criteria in the course's Spoor settings.
+
+Implementation: `format=scorm|web` query parameter handled in `plugins/output/adapt/publish.js`; buttons in `part_editorCommon.hbs`. Not yet tested against a running instance - please try both buttons, and test the SCORM zip in your LMS or SCORM Cloud.
 
 ## What this is and isn't
 

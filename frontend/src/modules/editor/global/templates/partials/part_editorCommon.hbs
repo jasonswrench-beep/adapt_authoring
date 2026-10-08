@@ -16,8 +16,15 @@
     </div>
   </div>
 
-  <button class="editor-common-sidebar-download action-secondary">
-    <span class="editor-common-sidebar-download-inner">{{ t 'app.download'}}</span>
+  <button class="editor-common-sidebar-download action-secondary" data-format="scorm">
+    <span class="editor-common-sidebar-download-inner">{{ t 'app.downloadscorm'}}</span>
+    <span class="editor-common-sidebar-downloading display-none">
+      <i class="fa fa-circle-o-notch fa-spin"></i>{{ t 'app.downloading'}}
+    </span>
+  </button>
+
+  <button class="editor-common-sidebar-download action-secondary" data-format="web">
+    <span class="editor-common-sidebar-download-inner">{{ t 'app.downloadweb'}}</span>
     <span class="editor-common-sidebar-downloading display-none">
       <i class="fa fa-circle-o-notch fa-spin"></i>{{ t 'app.downloading'}}
     </span>

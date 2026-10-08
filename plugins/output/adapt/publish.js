@@ -26,6 +26,7 @@ function publishCourse(courseId, mode, request, response, next) {
   let menuName;
   let frameworkVersion;
   let isForceRebuild;
+  let exportFormat;
 
   let resultObject = {};
 
@@ -98,6 +99,25 @@ function publishCourse(courseId, mode, request, response, next) {
         outputJson = data;
         callback(null);
       });
+    },
+    // SCORM vs Web: only meaningful for downloads. 'scorm' requires the Spoor extension on the course.
+    function(callback) {
+      const format = request && request.query && request.query.format;
+      if (mode !== Constants.Modes.Publish || !format) {
+        return callback(null);
+      }
+      if (format !== 'scorm' && format !== 'web') {
+        return callback({ message: 'Unknown export format: ' + format });
+      }
+      const spoor = outputJson.config._spoor;
+      if (format === 'scorm' && !spoor) {
+        return callback({ message: 'SCORM export needs the Spoor extension. Add it under Extensions, then try again.' });
+      }
+      if (spoor) {
+        spoor._isEnabled = format === 'scorm';
+      }
+      exportFormat = format;
+      callback(null);
     },
     function(callback) {
       self.buildFlagExists(path.join(BUILD_FOLDER, Constants.Filenames.Rebuild), function(err, buildFlagExists) {
@@ -238,7 +258,7 @@ function publishCourse(courseId, mode, request, response, next) {
       }
       // Now zip the build package
       var filename = path.join(COURSE_FOLDER, Constants.Filenames.Download);
-      var zipName = helpers.slugify(outputJson['course'].title);
+      var zipName = helpers.slugify(outputJson['course'].title) + (exportFormat ? '-' + exportFormat : '');
       var output = fs.createWriteStream(filename);
       var archive = archiver('zip');
 

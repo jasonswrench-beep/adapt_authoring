@@ -149,7 +149,7 @@ define(function(require) {
       }
     },
 
-    downloadProject: function() {
+    downloadProject: function(format) {
       if(Origin.editor.isDownloadPending) {
         return;
       }
@@ -157,6 +157,7 @@ define(function(require) {
       $('.editor-common-sidebar-downloading').removeClass('display-none');
 
       var url = 'api/output/' + Origin.constants.outputPlugin + '/publish/' + this.currentCourseId;
+      if (format) url += '?format=' + encodeURIComponent(format);
       $.get(url, function(data, textStatus, jqXHR) {
         if (!data.success) {
           Origin.Notify.alert({
