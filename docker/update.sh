@@ -12,7 +12,7 @@ if [ ! -f /app/.adapt-initialised ]; then
 fi
 
 echo ">> Copying new source into /app (settings and data are kept)"
-rsync -a --exclude node_modules --exclude conf/config.json --exclude conf/migrate.json --exclude data --exclude temp /opt/adapt-src/ /app/
+rsync -a --exclude node_modules --exclude /conf/config.json --exclude /conf/migrate.json --exclude /data --exclude /temp /opt/adapt-src/ /app/
 
 echo ">> Updating dependencies"
 npm install --omit=dev --unsafe-perm --loglevel error
