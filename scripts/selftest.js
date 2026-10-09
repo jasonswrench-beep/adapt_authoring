@@ -286,9 +286,10 @@ async function main() {
       must(/^\/h5p-editor\/edit\//.test(editorUrl), 'unexpected editor address ' + editorUrl);
       const page = await call('GET', editorUrl);
       must(page.status === 200 && /H5PIntegration/.test(page.text) && /adapt-h5p-save/.test(page.text), `editor page returned ${page.status}: ${page.text.slice(0, 160)}`);
-      const libs = await call('GET', '/h5p-editor/ajax?action=libraries');
-      must(libs.status === 200 || libs.status === 405, 'editor ajax endpoint returned ' + libs.status);
-      return 'editor page served';
+      const types = await call('GET', '/h5p-editor/ajax?action=content-type-cache');
+      must(types.status === 200 && types.json && Array.isArray(types.json.libraries), `editor content type list returned ${types.status}: ${types.text.slice(0, 160)}`);
+      must(types.json.libraries.length >= 30, `the editor lists only ${types.json.libraries.length} content types: its libraries may still be installing (docker compose logs h5p-editor)`);
+      return `editor page served; ${types.json.libraries.length} content types to create from`;
     });
     if (editorUrl) {
       await step('H5P editor: the editor is closed to anyone without an editor session', async () => {
