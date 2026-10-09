@@ -79,7 +79,9 @@ Implementation: `format=scorm|web` query parameter handled in `plugins/output/ad
 
 ## Importing PowerPoint and Google Slides
 
-`scripts/pptx-import/` converts a `.pptx` deck (or a Google Slides deck downloaded as .pptx) into a zip for the editor's **Import source** button. See its README for options and for what does and does not convert (layout, animations and charts do not; text, lists, tables, images and alt text do). Not yet tested against a live authoring tool.
+On the dashboard choose **Import source** and select a `.pptx` file (for Google Slides use *File → Download → Microsoft PowerPoint (.pptx)* first). The server converts it and creates a course with one page holding a **Slides** component: one step per slide with Back/Next, the slide's text, bullets and tables, and its first picture (with the alt text from the deck). Hidden slides are skipped. Older `.ppt` files must be re-saved as `.pptx`.
+
+Not converted: animations, transitions, positions, fonts and colours, charts and SmartArt, embedded audio/video, extra pictures on a slide, speaker notes. Pictures without alt text are listed in the server log and the accessibility checker will flag them. The same converter is available on a command line with other layouts (`scripts/pptx-import/README.md`). The server self-test imports a sample deck and previews it. Tested end to end here: the converted course builds with the real framework and steps through correctly in a browser; **the Import source page itself has not been tried by a person yet**.
 
 ## Accessibility
 

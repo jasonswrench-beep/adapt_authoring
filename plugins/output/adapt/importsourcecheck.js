@@ -8,7 +8,9 @@ const database = require("../../../lib/database");
 const fs = require("fs-extra");
 const helpers = require('./outputHelpers');
 const IncomingForm = require('formidable').IncomingForm;
+const installHelpers = require('../../../lib/installHelpers');
 const logger = require("../../../lib/logger");
+const pptxImport = require('./pptxImport');
 const path = require("path");
 const semver = require('semver');
 
@@ -95,22 +97,42 @@ function ImportSourceCheck(req, done) {
           importInfo['formTags'] = (fields.tags && fields.tags.length) ? fields.tags.split(',') : [];
           cleanFormAssetDirs = formAssetDirs.map(item => item.trim());
 
-          // clear any previous import files
-          fs.emptyDir(COURSE_ROOT_FOLDER, function(error) {
-            if(error) return cb2(error);
-            // upzip the uploaded file
-            logger.log('info', 'unzipping');
-            logger.log('info', COURSE_ROOT_FOLDER);
-            logger.log('info', files.file.path)
-            helpers.unzip(files.file.path, COURSE_ROOT_FOLDER, function(error) {
+          // a PowerPoint is converted to a source zip first, then imported like any other
+          prepareUpload(files.file, function(error, uploadPath, extraCleanup) {
+            if (error) return cb2(error);
+            // clear any previous import files
+            fs.emptyDir(COURSE_ROOT_FOLDER, function(error) {
               if(error) return cb2(error);
-              importInfo['cleanupDirs'] = [files.file.path, COURSE_ROOT_FOLDER];
-              cb2();
+              // upzip the uploaded file
+              logger.log('info', 'unzipping');
+              logger.log('info', COURSE_ROOT_FOLDER);
+              logger.log('info', uploadPath)
+              helpers.unzip(uploadPath, COURSE_ROOT_FOLDER, function(error) {
+                if(error) return cb2(error);
+                importInfo['cleanupDirs'] = [files.file.path, COURSE_ROOT_FOLDER].concat(extraCleanup);
+                cb2();
+              });
             });
           });
         });
       }
     ], cb);
+  }
+
+  function prepareUpload(file, cb) {
+    if (!pptxImport.isPptx(file)) return cb(null, file.path, []);
+    installHelpers.getInstalledFrameworkVersion(function(error, frameworkVersion) {
+      if (error) return cb(error);
+      try {
+        var converted = pptxImport.convertToImportZip(file.path, frameworkVersion);
+        var s = converted.summary;
+        logger.log('info', 'PowerPoint converted: "' + s.title + '", ' + s.stats.slides + ' slides, ' + s.stats.images + ' images');
+        s.warnings.forEach(function(w) { logger.log('warn', 'PowerPoint import: ' + w); });
+        cb(null, converted.zipPath, [converted.zipPath]);
+      } catch (e) {
+        cb(new Error(e.message));
+      }
+    });
   }
 
   function findLanguages(cb) {

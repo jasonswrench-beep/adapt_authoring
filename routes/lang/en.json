@@ -385,7 +385,7 @@
   "app.importcoursecheckcourse": "Please check your imported Course.",
   "app.importcourse": "Import source",
   "app.frameworkimporttitle": "Import framework source",
-  "app.importframeworkinstruction": "Select a framework zip for import. Tags will be added to the course and all new assets.",
+  "app.importframeworkinstruction": "Select a framework zip or a PowerPoint (.pptx) for import. A PowerPoint becomes one course with a Slides component, one step per slide. Tags will be added to the course and all new assets.",
   "app.importassetfoldersinstruction": "Enter the names of folders that contain assets. If there are multiple folders enter a comma seperated list. Automatically checks for the following folders if no value is entered: assets, images, video, audio.",
   "app.importassetfolderstitle": "Asset Folders",
   "app.importassetfoldersplaceholder": "assets, images, video, audio",

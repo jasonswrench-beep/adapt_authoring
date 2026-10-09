@@ -165,6 +165,48 @@ async function main() {
     });
   }
 
+  // PowerPoint import through the same web addresses the editor's "Import source" page uses
+  let importedId;
+  await step('import a PowerPoint (.pptx) as a Slides course', async () => {
+    const sample = ['/app/scripts/pptx-import/test/sample.pptx', path.join(__dirname, 'pptx-import', 'test', 'sample.pptx')].find(f => fs.existsSync(f));
+    must(sample, 'sample.pptx not found: run the update routine so the server has the latest files');
+    const post = async (url, withFile) => {
+      const form = new FormData();
+      if (withFile) form.append('file', new Blob([fs.readFileSync(sample)]), 'Study skills deck.pptx');
+      form.append('tags', '');
+      form.append('formAssetFolders', '');
+      const res = await fetch(BASE + url, { method: 'POST', headers: { cookie }, body: form });
+      return { status: res.status, text: await res.text() };
+    };
+    const check = await post('/importsourcecheck', true);
+    must(check.status === 200, `import check returned ${check.status}: ${check.text.slice(0, 200)}`);
+    const done = await post('/importsource', false);
+    must(done.status === 200, `import returned ${done.status}: ${done.text.slice(0, 200)}`);
+    const list = await call('GET', '/api/content/course');
+    must(list.status === 200 && Array.isArray(list.json), 'could not list courses');
+    const imported = list.json.filter(c => c.title === 'Intro to Study Skills').pop();
+    must(imported, 'the imported course is not in the course list');
+    importedId = imported._id;
+    return 'course "Intro to Study Skills" created';
+  });
+  if (importedId) {
+    await step('the imported course previews, with its Slides component', async () => {
+      const r = await call('GET', `/api/output/adapt/preview/${importedId}?force=true`);
+      must(r.json && r.json.success, 'preview failed: ' + ((r.json && r.json.message) || r.text.slice(0, 200)));
+      const i = await fetch(`${BASE}/preview/${tenantId}/${importedId}/index.html`, { headers: { cookie } });
+      must(i.status === 200, 'preview index status ' + i.status);
+      const c = await fetch(`${BASE}/preview/${tenantId}/${importedId}/course/en/components.json`, { headers: { cookie } });
+      const comps = JSON.parse(await c.text());
+      const slides = comps.find(x => x._component === 'slides');
+      must(slides && slides._items && slides._items.length >= 2, 'no Slides component with slides in the imported course');
+      return `${slides._items.length} slides`;
+    });
+    await step('remove the imported course', async () => {
+      const r = await call('DELETE', `/api/content/course/${importedId}`);
+      must(r.status === 200 || r.status === 204, 'delete returned ' + r.status);
+    });
+  }
+
   await step('H5P approvals list is available to the administrator', async () => {
     const r = await call('GET', '/api/h5papproval');
     const lists = r.json && (r.json.payload || r.json);

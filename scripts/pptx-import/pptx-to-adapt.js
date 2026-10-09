@@ -4,7 +4,7 @@
  * authoring tool's "Import source" feature accepts.
  *
  * Usage:
- *   node pptx-to-adapt.js deck.pptx [-o out.zip] [--layout single|pages] [--notes]
+ *   node pptx-to-adapt.js deck.pptx [-o out.zip] [--layout single|pages|slides] [--notes]
  *        [--include-hidden] [--title "Course title"] [--lang en] [--framework 5.56.3]
  *        [--theme adapt-theme-modern] [--menu adapt-menu-lessons] [--classic]
  *
@@ -285,6 +285,8 @@ function buildContent(slides, courseTitle, options) {
   let n = 0;
   const id = prefix => `${prefix}-${String(++n).padStart(3, '0')}`;
 
+  if (options.layout === 'slides') return buildSlidesContent(slides, courseTitle, options, course);
+
   let singlePageId = null;
   if (options.layout === 'single') {
     singlePageId = id('co');
@@ -340,6 +342,47 @@ function buildContent(slides, courseTitle, options) {
   });
 
   return { course, contentObjects, articles, blocks, components };
+}
+
+/**
+ * One page holding one Slides component (adapt-component-slides): every PowerPoint slide becomes a step the learner
+ * moves through with Back/Next. Text, bullets and tables become the slide text; the first picture becomes the slide
+ * image. Further pictures are not carried over (an image inside the text cannot be linked to its uploaded file).
+ */
+function buildSlidesContent(slides, courseTitle, options, course) {
+  const lang = options.lang;
+  const warnings = [];
+  const pageId = 'co-001';
+  const contentObjects = [{
+    _id: pageId, _parentId: 'course', _type: 'page', _classes: '', title: courseTitle,
+    displayTitle: courseTitle, body: '', pageBody: '', instruction: '', linkText: 'View', duration: ''
+  }];
+  const articles = [{ _id: 'a-002', _parentId: pageId, _type: 'article', _classes: '', title: courseTitle, displayTitle: '', body: '', instruction: '' }];
+  const blocks = [{ _id: 'b-003', _parentId: 'a-002', _type: 'block', _classes: '', title: courseTitle, displayTitle: '', body: '', instruction: '' }];
+
+  const items = slides.map(slide => {
+    const texts = slide.items.filter(i => i.kind === 'text').map(i => i.html);
+    if (slide.notes) texts.push(`<p><strong>Notes</strong></p>${slide.notes}`);
+    const images = slide.items.filter(i => i.kind === 'image');
+    if (images.length > 1) warnings.push(`Slide ${slide.number}: ${images.length - 1} more picture(s) were not carried over (a slide holds one picture; add the others in the editor).`);
+    const first = images[0];
+    const src = first ? `course/${lang}/images/${first.file}` : '';
+    return {
+      title: slide.title,
+      body: texts.join(''),
+      _graphic: { src, alt: first ? first.alt : '', attribution: '' },
+      _imagePosition: texts.length ? 'right' : 'top'
+    };
+  });
+
+  const components = [{
+    _id: 'c-004', _parentId: 'b-003', _type: 'component', _component: 'slides', _classes: '', _layout: 'full',
+    title: courseTitle, displayTitle: courseTitle, body: '', instruction: 'Use Next and Back to move through the slides.',
+    _isSequenced: false, _setCompletionOn: 'allSlides', _showProgress: true,
+    _backText: 'Back', _nextText: 'Next', _progressText: 'Slide {{current}} of {{total}}',
+    _items: items
+  }];
+  return { course, contentObjects, articles, blocks, components, warnings };
 }
 
 function buildZip(content, assets, options) {
@@ -400,12 +443,16 @@ function convert(inputPath, options) {
   }
 
   const content = buildContent(slides, courseTitle, options);
-  const out = buildZip(content, assets, options);
+  // only pack pictures the course actually uses (e.g. extra pictures on a slide are dropped in the slides layout)
+  const json = JSON.stringify(content);
+  const used = assets.filter(a => json.includes(a.file));
+  const out = buildZip(content, used, options);
   return {
-    out, courseTitle, warnings: ctx.warnings, noAlt: ctx.noAlt,
+    out, courseTitle, warnings: ctx.warnings.concat(content.warnings || []), noAlt: ctx.noAlt,
     stats: {
-      slides: slides.length, hidden: hidden.length, pages: content.contentObjects.length, images: assets.length,
-      textComponents: content.components.filter(c => c._component === 'text').length
+      slides: slides.length, hidden: hidden.length, pages: content.contentObjects.length, images: used.length,
+      textComponents: content.components.filter(c => c._component === 'text').length,
+      slideItems: content.components.filter(c => c._component === 'slides').reduce((n, c) => n + c._items.length, 0)
     }
   };
 }
@@ -435,10 +482,10 @@ function parseArgs(argv) {
 if (require.main === module) {
   const opts = parseArgs(process.argv.slice(2));
   if (opts.help || !opts.input) {
-    console.log('Usage: node pptx-to-adapt.js deck.pptx [-o out.zip] [--layout single|pages] [--notes] [--include-hidden] [--title "..."] [--lang en] [--framework 5.56.3] [--theme name] [--menu name] [--classic]');
+    console.log('Usage: node pptx-to-adapt.js deck.pptx [-o out.zip] [--layout single|pages|slides] [--notes] [--include-hidden] [--title "..."] [--lang en] [--framework 5.56.3] [--theme name] [--menu name] [--classic]');
     process.exit(opts.help ? 0 : 1);
   }
-  if (!['single', 'pages'].includes(opts.layout)) { console.error('--layout must be "single" or "pages"'); process.exit(1); }
+  if (!['single', 'pages', 'slides'].includes(opts.layout)) { console.error('--layout must be "single", "pages" or "slides"'); process.exit(1); }
   if (!/^[a-z]{2}$/i.test(opts.lang)) { console.error('--lang must be a two-letter code, e.g. "en"'); process.exit(1); }
   try {
     const outPath = opts.outPath || path.join(path.dirname(opts.input), `${path.basename(opts.input, '.pptx')}-adapt.zip`);

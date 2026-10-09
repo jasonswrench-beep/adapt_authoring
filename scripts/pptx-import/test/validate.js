@@ -38,7 +38,8 @@ cos.forEach(pg => { if (!arts.some(a => a._parentId === pg._id)) fail(`page ${pg
 
 const files = new Set(zip.getEntries().map(e => e.entryName));
 comps.forEach(c => {
-  if (!['text', 'graphic'].includes(c._component)) fail(`${c._id} uses non-core component ${c._component}`);
+  // text and graphic are core; slides is this repository's Slides component (in the plugin bundle)
+  if (!['text', 'graphic', 'slides'].includes(c._component)) fail(`${c._id} uses unexpected component ${c._component}`);
   if (!['full', 'left', 'right'].includes(c._layout)) fail(`${c._id} bad _layout ${c._layout}`);
   if (c._component === 'graphic') {
     ['large', 'small'].forEach(k => {

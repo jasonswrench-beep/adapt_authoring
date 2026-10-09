@@ -15,7 +15,7 @@ Your instructor will give you the web address and your login. Work in a current 
 - **H5P activities:** make one at h5p.org or in Lumi, export it as an `.h5p` file, upload it in **Assets**, and add an **H5P Player** component. *Your instructor must approve a new H5P file before it will show.* Preview shows "waiting for approval" until then; you cannot download the course until it is approved, so ask in good time.
 
 ## 3. Start from PowerPoint or Google Slides
-Ask your instructor for the converter, or give them your deck and they will convert it. You then import the result with **Import source** and finish it in the editor.
+On the dashboard choose **Import source**, pick your `.pptx` file (in Google Slides: *File → Download → Microsoft PowerPoint*) and import it. You get a course with a **Slides** component, one step per slide. Then finish it in the editor: add alt text to pictures, add quiz questions, and use other components where a plain slide is not enough.
 
 ## 4. Check before you submit
 1. Click **Check accessibility** and fix what it reports (missing alt text, low contrast, empty headings). Aim for none left.

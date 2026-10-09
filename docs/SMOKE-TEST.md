@@ -34,7 +34,7 @@ You need: the server running (see *Deploy* in `CLASSROOM-SETUP.md`), the super-u
 17. As super user click **Do not approve** on the auto-approved file, rebuild. **Expect:** that activity is blocked again.
 
 ## F. Pptx import
-18. Run the converter on any small .pptx (`scripts/pptx-import/README.md`), then **Import course** in the dashboard. **Expect:** the course appears with one page per section and editable text.
+18. On the dashboard choose **Import source**, select a small `.pptx` (the repo has one at `scripts/pptx-import/test/sample.pptx`) and import it. **Expect:** a course appears with one page holding a Slides component; Preview steps through the slides with Back/Next.
 
 ## G. Before real students
 19. HTTPS reverse proxy is in place and the super-user password has been changed.

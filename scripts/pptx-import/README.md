@@ -1,5 +1,7 @@
 # PowerPoint → Adapt converter
 
+**In the editor you do not need this script:** on the dashboard choose **Import source**, pick your `.pptx` file, and the server converts it for you (one page with a **Slides** component, one step per PowerPoint slide). The script below does the same conversion on a command line, and also offers the other layouts.
+
 Turns a `.pptx` deck into a zip for the authoring tool's **Import source** button, so students can start from a draft instead of an empty course. Google Slides works too: *File → Download → Microsoft PowerPoint (.pptx)*.
 
 ```bash
@@ -14,7 +16,8 @@ Then in the authoring tool: **Import source** → choose the zip.
 | Option | Effect |
 |---|---|
 | `-o out.zip` | Output path |
-| `--layout single` (default) | One scrolling page, each slide a titled section (Rise-like) |
+| `--layout slides` (what the editor uses) | One page with one **Slides** component: Back/Next through the deck. Text, bullets and tables become the slide text, the first picture becomes the slide image (more pictures on one slide are not carried over) |
+| `--layout single` (command-line default) | One scrolling page, each slide a titled section (Rise-like) |
 | `--layout pages` | Each slide is its own page on the course menu |
 | `--notes` | Add speaker notes under each slide |
 | `--include-hidden` | Keep hidden slides (skipped by default) |
