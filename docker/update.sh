@@ -22,6 +22,11 @@ npm install --omit=dev --unsafe-perm --loglevel error
 echo ">> Installing plugin bundle (new plugins are added; unchanged ones are skipped)"
 node scripts/install-plugin-bundle.js || echo "!! Some plugins failed (see above). The server still works with the ones that installed."
 
+echo ">> Installing H5P activity libraries (first run takes a few minutes; later runs only fetch what changed)"
+node h5p-library/install.js /app/data/h5p-libraries /app/temp/h5p-library-work \
+  || echo "!! Some H5P libraries could not be installed (see above). The activity gallery will say so; everything else works."
+rm -rf /app/temp/h5p-library-work
+
 echo ">> Rebuilding the editor"
 grunt build:prod
 

@@ -47,7 +47,7 @@ async function call(method, url, body, opts = {}) {
 
 async function main() {
   console.log(`Self-test against ${BASE}\n`);
-  let tenantId, courseId, textType, slidesType, blockId;
+  let tenantId, courseId, textType, slidesType, h5pType, blockId;
 
   if (!await step('server answers', async () => {
     for (let i = 0; i < 20; i++) {
@@ -72,6 +72,7 @@ async function main() {
     const names = r.json.map(c => c.name);
     textType = r.json.find(c => c.name === 'adapt-contrib-text');
     slidesType = r.json.find(c => c.name === 'adapt-component-slides');
+    h5pType = r.json.find(c => c.name === 'adapt-component-h5p');
     must(textType, 'Text component not installed');
     const want = ['adapt-component-h5p', 'adapt-component-slides'];
     const missing = want.filter(n => !names.includes(n));
@@ -223,6 +224,49 @@ async function main() {
       must(deep && deep.ran, 'browser pass did not run: ' + (deep && deep.reason));
       must(deep.pagesChecked >= 1, 'browser checked no pages');
       return `${deep.pagesChecked} page(s) checked, ${q.json.payload.findings.length} content finding(s)`;
+    });
+  }
+
+  // H5P activity library: pick a ready-made activity for an H5P Player component (what the gallery's button calls)
+  let h5pComponentId;
+  await step('H5P activity library lists the activities and the libraries are installed', async () => {
+    must(h5pType, 'H5P Player component is not installed');
+    const made = await call('POST', '/api/content/component', {
+      _courseId: courseId, _parentId: blockId, _type: 'component', _componentType: h5pType._id, _component: h5pType.component || 'h5pPlayer',
+      _layout: 'full', title: 'Library activity', displayTitle: 'Library activity', version: h5pType.version
+    });
+    must(made.status === 200 && made.json && made.json._id, `create H5P component returned ${made.status}: ${made.text.slice(0, 160)}`);
+    h5pComponentId = made.json._id;
+    const list = await call('GET', `/api/content/component/${h5pComponentId}/h5plibrary`);
+    must(list.status === 200 && list.json && list.json.success, `catalogue returned ${list.status}: ${list.text.slice(0, 160)}`);
+    const all = list.json.payload;
+    const available = all.filter(a => a.available);
+    must(all.length >= 30, `only ${all.length} activities in the catalogue`);
+    must(available.length === all.length, 'the H5P libraries are not installed on this server: run the update routine (docker compose exec adapt update.sh)');
+    const thumb = await fetch(`${BASE}/api/content/component/${h5pComponentId}/h5plibrary/thumb/multiple-choice`, { headers: { cookie } });
+    must(thumb.status === 200 && /image\/jpeg/.test(thumb.headers.get('content-type') || ''), `thumbnail returned ${thumb.status}`);
+    return `${all.length} activities, all available`;
+  });
+  if (h5pComponentId) {
+    await step('choosing "Multiple Choice" fills the component and approves it', async () => {
+      const post = await call('POST', `/api/content/component/${h5pComponentId}/h5plibrary`, { activity: 'multiple-choice' });
+      must(post.status === 200 && post.json && post.json.success, `add returned ${post.status}: ${post.text.slice(0, 240)}`);
+      const r = await call('GET', `/api/content/component/${h5pComponentId}`);
+      const props = (r.json && r.json.properties) || {};
+      must(props._h5p && /^course\/assets\/.+\.h5p$/.test(props._h5p._src), 'the component has no H5P file: ' + JSON.stringify(props._h5p));
+      must(props._setCompletionOn === 'completed', 'completion mode was not set to "completed"');
+      await preview(true);
+      const status = await fetchPreview(`h5p/${h5pComponentId}/status.json`);
+      must(status.status === 200 && JSON.parse(status.text).status === 'approved', `activity is not approved in the build: ${status.status} ${status.text.slice(0, 80)}`);
+      const lib = await fetchPreview(`h5p/${h5pComponentId}/H5P.MultiChoice-1.16/library.json`);
+      must(lib.status === 200, 'the Multiple Choice library is missing from the build (status ' + lib.status + ')');
+      const again = await call('POST', `/api/content/component/${h5pComponentId}/h5plibrary`, { activity: 'multiple-choice' });
+      must(again.status === 200 && again.json.success, 'choosing the same activity twice failed: ' + again.text.slice(0, 160));
+      return 'unpacked and approved';
+    });
+    await step('a made-up activity name is refused', async () => {
+      const r = await call('POST', `/api/content/component/${h5pComponentId}/h5plibrary`, { activity: '../../etc/passwd' });
+      must(r.status === 404, 'expected 404, got ' + r.status);
     });
   }
 

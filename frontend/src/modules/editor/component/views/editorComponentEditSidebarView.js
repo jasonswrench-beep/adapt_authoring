@@ -5,19 +5,27 @@ define(function(require) {
   var Origin = require('core/origin');
   var SidebarItemView = require('modules/sidebar/views/sidebarItemView');
   var SlidesImportReport = require('../../global/slidesImportReport');
+  var H5pLibraryGallery = require('../../global/h5pLibraryGallery');
 
   var EditorComponentEditSidebarView = SidebarItemView.extend({
     events: {
       'click .editor-component-edit-sidebar-save': 'saveEditing',
       'click .editor-component-edit-sidebar-cancel': 'cancelEditing',
       'click .editor-slides-import-button': 'chooseDeck',
-      'change .editor-slides-import-file': 'importDeck'
+      'change .editor-slides-import-file': 'importDeck',
+      'click .editor-h5p-library-button': 'openH5pLibrary'
     },
 
-    // the PowerPoint import is only offered for Slides components
+    // the PowerPoint import is only offered for Slides components, the activity library for H5P Player components
     postRender: function() {
       SidebarItemView.prototype.postRender.apply(this, arguments);
       if (this.model.get('_component') === 'slides') this.$('.editor-slides-import').removeClass('display-none');
+      if (this.model.get('_component') === 'h5pPlayer') this.$('.editor-h5p-library').removeClass('display-none');
+    },
+
+    openH5pLibrary: function(event) {
+      event.preventDefault();
+      H5pLibraryGallery.open(this.model, event.currentTarget);
     },
 
     chooseDeck: function(event) {

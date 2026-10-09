@@ -30,6 +30,11 @@ if [ ! -f /app/.adapt-initialised ]; then
   echo ">> Installing plugin bundle (conf/plugin-bundle.json)"
   node scripts/install-plugin-bundle.js || echo "!! Some plugins failed; re-run: docker compose exec adapt node scripts/install-plugin-bundle.js"
 
+  echo ">> Installing H5P activity libraries (a few minutes)"
+  node h5p-library/install.js /app/data/h5p-libraries /app/temp/h5p-library-work \
+    || echo "!! Some H5P libraries could not be installed; re-run: docker compose exec adapt node h5p-library/install.js /app/data/h5p-libraries"
+  rm -rf /app/temp/h5p-library-work
+
   grunt build:prod
   touch /app/.adapt-initialised
 fi

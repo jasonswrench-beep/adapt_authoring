@@ -1,0 +1,14 @@
+diff --git a/src/scripts/h5p-info-wall-content.js b/src/scripts/h5p-info-wall-content.js
+index 1e73f69..e229607 100644
+--- a/src/scripts/h5p-info-wall-content.js
++++ b/src/scripts/h5p-info-wall-content.js
+@@ -34,7 +34,8 @@ export default class InfoWallContent {
+       const titlebar = new InfoWallTitlebar(
+         {
+           headerText: this.params.headerText,
+-          searchBox: offerFilterField
++          searchBox: offerFilterField,
++          dictionary: this.params.dictionary
+         },
+         {
+           onSearchChange: (query) => {

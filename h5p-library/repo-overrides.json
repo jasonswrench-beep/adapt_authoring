@@ -1,0 +1,11 @@
+{
+  "FontAwesome": "h5p/font-awesome",
+  "jQuery.ui": "h5p/jquery-ui",
+  "TimelineJS": "h5p/TimelineJS",
+  "H5P.SimpleMultiChoice": "h5p/h5p-simple-multiple-choice",
+  "H5P.ImpressPresentation": "h5p/h5p-impressive-presentation",
+  "H5P.ImageSequencing": "https://gitlab.com/icfoss/H5P-ImageSequencing",
+  "Drop": "h5p/drop",
+  "Tether": "h5p/tether",
+  "flowplayer": "h5p/flowplayer"
+}
