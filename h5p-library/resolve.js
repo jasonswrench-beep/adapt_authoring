@@ -61,6 +61,20 @@ function pickTags(tags, major, minor) {
   return releases.length && ![...tags.keys()].some(t => parse(t)) ? [releases[releases.length - 1]] : [];
 }
 
+/** Where a cached clone came from, if it holds the library asked for; otherwise null. */
+function cachedSource(dir, req) {
+  try {
+    const lib = JSON.parse(fs.readFileSync(path.join(dir, 'library.json'), 'utf8'));
+    if (lib.machineName !== req.name || lib.majorVersion !== req.major || lib.minorVersion !== req.minor) return null;
+    const url = git(['remote', 'get-url', 'origin'], { cwd: dir }).trim();
+    let tag;
+    try { tag = git(['describe', '--tags', '--exact-match'], { cwd: dir }).trim(); } catch (e) { tag = git(['rev-parse', '--abbrev-ref', 'HEAD'], { cwd: dir }).trim(); }
+    return { repo: url.replace(/^https:\/\/github.com\//, '').replace(/\.git$/, ''), tag };
+  } catch (error) {
+    return null;
+  }
+}
+
 /** Repositories with no version tags can be pinned to a branch in repo-overrides.json: {"repo": "...", "ref": "master"}. */
 const refFor = name => (OVERRIDES[name] && OVERRIDES[name].ref) || null;
 
@@ -87,7 +101,10 @@ function resolve(cacheDir, requirements) {
     let found = null;
     let lib = null;
     const notes = [];
-    for (const repo of candidates(req.name)) {
+    // a library fetched on an earlier run is reused without asking GitHub again
+    found = cachedSource(dir, req);
+    if (found) lib = JSON.parse(fs.readFileSync(path.join(dir, 'library.json'), 'utf8'));
+    for (const repo of found ? [] : candidates(req.name)) {
       for (const tag of (refFor(req.name) ? [refFor(req.name)] : pickTags(listTags(repo), req.major, req.minor))) {
         fs.rmSync(dir, { recursive: true, force: true });
         try {

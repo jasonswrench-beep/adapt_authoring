@@ -28,6 +28,7 @@ for (const a of catalogue) {
     const ctx = await browser.newContext({ viewport: { width: 1200, height: 1000 } });
     await ctx.route(base + '/**', r => r.continue({ headers: { ...r.request().headers(), ...signedHeaders(SECRET, { id: 'u' }, 'author') } }));
     const page = await ctx.newPage();
+    page.on('dialog', d => { problems.push('dialog: ' + d.message().slice(0, 100)); d.dismiss().catch(() => {}); });
     page.on('pageerror', e => problems.push('script: ' + String(e.message || JSON.stringify(e)).slice(0, 120)));
     page.on('response', r => { if (r.status() >= 400 && !/favicon/.test(r.url())) problems.push(`${r.status()} ${r.url().replace(base, '').slice(0, 90)}`); });
     await page.goto(`${base}/h5p-editor/edit/${contentId}?component=x&return=/`);

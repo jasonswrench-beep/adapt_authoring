@@ -79,6 +79,12 @@ test('an activity can be opened, edited and saved in the editor, and exported wi
     const content = entries.find(e => e.name === 'content/content.json').data.toString('utf8');
     assert.match(content, /Edited answer about blackcurrants/);
     assert.deepStrictEqual(problems, []);
+
+    // course tool step 3: once handed back, the content is removed from the editor
+    const gone = await fetch(`${base}/h5p-editor/internal/content/${contentId}`, { method: 'DELETE', headers: signedHeaders(SECRET, { id: 'u1', name: 'A' }, 'system') });
+    assert.strictEqual(gone.status, 200);
+    const again = await fetch(`${base}/h5p-editor/internal/export/${contentId}`, { headers: signedHeaders(SECRET, { id: 'u1', name: 'A' }, 'system') });
+    assert.notStrictEqual(again.status, 200, 'the content should no longer exist');
   } finally {
     await browser.close();
     server.close();

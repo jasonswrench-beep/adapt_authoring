@@ -16,5 +16,10 @@
   "Shepherd": "h5p/shepherd",
   "H5P.CKEditor": "h5p/h5p-ckeditor",
   "H5PEditor.KewArCode": "otacke/h5p-editor-kewar-code",
-  "H5PEditor.ImpressPresentation": "h5p/h5p-editor-impressive-presentation"
+  "H5PEditor.ImpressPresentation": "h5p/h5p-editor-impressive-presentation",
+  "H5P.SoundJS": "h5p/h5p-soundjs",
+  "H5PEditor.Shape": {
+    "repo": "h5p/h5p-editor-shape",
+    "ref": "master"
+  }
 }
