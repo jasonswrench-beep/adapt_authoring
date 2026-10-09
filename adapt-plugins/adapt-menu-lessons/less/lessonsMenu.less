@@ -47,3 +47,104 @@
 }
 
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Default look of the Lessons menu (numbered cards with a status label and a button). Without this the menu is plain
+// unstyled text under any theme that does not style it itself (such as Vanilla). The Modern theme has its own copy of
+// these rules, which is applied after these. Only variables that every Adapt theme defines are used here.
+// ---------------------------------------------------------------------------------------------------------------------
+.lessons {
+  position: relative;
+  max-width: inherit;
+  .l-container-padding(@menu-padding-ver, @menu-padding-hoz);
+
+  &.has-bg-image > .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+  }
+
+  &__inner {
+    position: relative;
+  }
+
+  &__header {
+    position: relative;
+  }
+
+  &__header.has-bg-image > .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+  }
+
+  &__header-inner {
+    position: relative;
+    .l-container-padding(@menu-header-padding-ver, @menu-header-padding-hoz);
+    background-color: @menu-header-background-color;
+  }
+
+  &__image-container {
+    margin-bottom: @menu-title-margin;
+  }
+
+  &__priority {
+    .priority-label;
+    margin-bottom: @menu-priority-margin;
+    .menu-priority;
+  }
+
+  &__title {
+    margin-bottom: @menu-title-margin;
+    .menu-title;
+    color: @menu-header-title-color;
+
+    // brand accent bar: decorative, carries no information
+    &::after {
+      content: '';
+      display: block;
+      width: 4rem;
+      height: 0.3rem;
+      margin-top: 0.75rem;
+      border-radius: 0.15rem;
+      background-color: @item-color;
+    }
+  }
+
+  &__subtitle {
+    margin-bottom: @menu-subtitle-margin;
+    .menu-subtitle;
+    color: @menu-header-subtitle-color;
+  }
+
+  &__body {
+    margin-bottom: @menu-body-margin;
+    .menu-body;
+    color: @menu-header-body-color;
+  }
+
+  &__instruction {
+    margin-bottom: @menu-instruction-margin;
+    .menu-instruction;
+    color: @menu-header-instruction-color;
+  }
+
+  &__body a,
+  &__instruction a {
+    .link-text;
+  }
+
+  &__item-container {
+    margin-top: @menu-item-container-margin;
+  }
+}
