@@ -174,6 +174,12 @@ function publishCourse(courseId, mode, request, response, next) {
       });
     },
     function(callback) {
+      // The framework build adds defaults (screenSize, theme, menu...) to the course files. When no rebuild is
+      // needed those built files are current, and overwriting them with the raw saved copy would strip the defaults
+      // and leave the course stuck on "Loading..." (a second Preview of an unchanged course used to do exactly that).
+      if (!isRebuildRequired) {
+        return callback(null);
+      }
       self.writeCourseJSON(outputJson, path.join(BUILD_FOLDER, Constants.Folders.Course), function(err) {
         if (err) {
           return callback(err);

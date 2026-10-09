@@ -27,7 +27,7 @@ docker compose run --rm --entrypoint /usr/local/bin/update.sh adapt
 docker compose up -d
 ```
 
-`update.sh` copies the new source into the volume (keeping `conf/config.json`, courses, users and uploads), updates dependencies, installs any new plugins from `conf/plugin-bundle.json`, and rebuilds the editor. It takes a few minutes. A plugin that is already installed at the same version is skipped, so **change a local plugin's version in its `bower.json` and `package.json` whenever you change its `properties.schema`**; otherwise the editor keeps the old settings form. The first Preview after an update is slower than usual.
+`update.sh` copies the new source into the volume (keeping `conf/config.json`, courses, users and uploads), updates dependencies, installs any new plugins from `conf/plugin-bundle.json`, and rebuilds the editor. It takes a few minutes. A plugin that is already installed at the same version is skipped, so **change a local plugin's version in its `bower.json` and `package.json` whenever you change its `properties.schema`**; otherwise the editor keeps the old settings form. The first Preview after an update is slower than usual. After an update, open the arrow next to **Preview** and choose **Force rebuild** once, so the preview is built fresh with the new code.
 
 ## Why a custom plugin installer
 
