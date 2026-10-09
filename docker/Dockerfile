@@ -10,7 +10,8 @@ RUN apt-get update \
 # Pristine copy of the source; the entrypoint syncs it into the persistent /app volume on first run.
 COPY . /opt/adapt-src
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+COPY docker/update.sh /usr/local/bin/update.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh /usr/local/bin/update.sh
 
 ENV CHROME_PATH=/usr/bin/chromium
 

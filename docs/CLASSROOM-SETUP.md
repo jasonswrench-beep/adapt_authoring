@@ -14,11 +14,20 @@ Then open `http://<server>:5000` and log in as the super user. Create student ac
 
 First run does: install authoring tool and framework, install the plugin bundle from GitHub, build the front end. Data lives in the `adapt_app` and `mongo_data` Docker volumes; back both up.
 
-Re-run the plugin installer any time (for example after editing `conf/plugin-bundle.json`):
+## Updating a running server
+
+New code reaches the server in a few steps (source is copied into the persistent volume only on first start, so `git pull` alone changes nothing). Run these on the server:
 
 ```bash
-docker compose stop adapt && docker compose run --rm --entrypoint "" adapt node scripts/install-plugin-bundle.js && docker compose start adapt
+cd ~/adapt_authoring
+git pull
+docker compose build adapt
+docker compose stop adapt
+docker compose run --rm --entrypoint /usr/local/bin/update.sh adapt
+docker compose up -d
 ```
+
+`update.sh` copies the new source into the volume (keeping `conf/config.json`, courses, users and uploads), updates dependencies, installs any new plugins from `conf/plugin-bundle.json`, and rebuilds the editor. It takes a few minutes. A plugin that is already installed at the same version is skipped, so **change a local plugin's version in its `bower.json` and `package.json` whenever you change its `properties.schema`**; otherwise the editor keeps the old settings form. The first Preview after an update is slower than usual.
 
 ## Why a custom plugin installer
 
@@ -75,7 +84,7 @@ Implementation: `format=scorm|web` query parameter handled in `plugins/output/ad
 - **Default changed:** the stock authoring tool created every new course with the framework's accessibility master switch (`_accessibility._isEnabled`) **off**. In framework 5 that switch controls focus management, hiding background content from screen readers behind popups/the drawer, popup focus trapping and keyboard focus outlines. This fork now creates courses with it **on** (`plugins/content/config/index.js` and `model.schema`). Courses created before this change keep their old value; the checker flags them.
 - **"Check accessibility" button:** in the editor sidebar, under the download buttons. It checks the saved course content immediately (missing alt text, videos without transcripts, vague links, tables without headers, missing page titles, framework accessibility switched off, and more) and shows a plain-language report with what to fix. The report offers a **full check** (about a minute): it builds the preview and runs axe-core on every page in a headless browser to catch colour contrast and screen reader markup problems. The full check needs Chromium and the checker's dependencies on the server; the Docker image installs both. If they are missing the quick check still works and the full check is simply not offered. Only one full check runs at a time.
 - **Command line:** `scripts/a11y-check/` does the same on a Web export zip (see its README), useful for grading or CI. Both share one rule set (`scripts/a11y-check/content-rules.js`).
-- **Not yet run in a live editor.** The server logic, report builder and rules have automated tests (`node --test scripts/a11y-check/test/*.test.js`), and the full-check path was run against a real framework build, and the editor front end compiles with the tool's own build (`grunt build:dev`: LESS, Handlebars, RequireJS, Babel) with the new button, module and styles present in the output. The button's behaviour, the dialog's appearance and the route itself have not been exercised in a running editor. For a server deployed before this change, rebuild the image *and* start from a fresh volume (or copy the new files into `/app` and run `npm install` in `scripts/a11y-check`), because source is only copied into the volume on first start.
+- **Not yet run in a live editor.** The server logic, report builder and rules have automated tests (`node --test scripts/a11y-check/test/*.test.js`), and the full-check path was run against a real framework build, and the editor front end compiles with the tool's own build (`grunt build:dev`: LESS, Handlebars, RequireJS, Babel) with the new button, module and styles present in the output. The button's behaviour, the dialog's appearance and the route itself have not been exercised in a running editor. For a server deployed before this change, follow *Updating a running server* (source is only copied into the volume on first start).
 - **Limits:** automated checks cover only part of WCAG. Also test with a keyboard and a screen reader.
 
 ## Other projects reviewed
