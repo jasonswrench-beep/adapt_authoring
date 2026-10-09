@@ -272,6 +272,16 @@
     "completion": "activity"
   },
   {
+    "id": "personality-quiz",
+    "file": "personality-quiz.h5p",
+    "title": "Personality Quiz",
+    "category": "Reflect and respond",
+    "summary": "A set of questions whose answers add up to a \"which type are you?\" result, with no right or wrong answers.",
+    "bestFor": "Self-assessment, learning styles, and career or role-fit activities.",
+    "completion": "viewed",
+    "notes": "Gives a result rather than a score, so it counts as complete once viewed."
+  },
+  {
     "id": "cornell-notes",
     "file": "cornell-notes.h5p",
     "title": "Cornell Notes",
@@ -317,5 +327,15 @@
     "bestFor": "Oral practice with several prompts.",
     "completion": "viewed",
     "notes": "Needs a microphone, and speech recognition works in Chrome and Edge but not in every browser."
+  },
+  {
+    "id": "kewar-code",
+    "file": "kewar-code.h5p",
+    "title": "KewAr Code",
+    "category": "Explore and present",
+    "summary": "Makes a scannable QR code for contact details, a web link, a location, a calendar event or a text message.",
+    "bestFor": "Linking a printed handout, poster or slide to online material, or sharing contact details.",
+    "completion": "viewed",
+    "notes": "Learners need a phone camera to scan it."
   }
 ]

@@ -244,6 +244,17 @@
       "dist/h5p-interactive-video.css"
     ]
   },
+  "H5P.KewArCode-1.2": {
+    "machineName": "H5P.KewArCode",
+    "repo": "otacke/h5p-kewar-code",
+    "tag": "1.2.3",
+    "commit": "febe808aabd40dd9a710ced8d44834a979c5ac0b",
+    "version": "1.2.3",
+    "missingFiles": [
+      "dist/h5p-kewar-code.js",
+      "dist/h5p-kewar-code.css"
+    ]
+  },
   "H5P.MarkTheWords-1.11": {
     "machineName": "H5P.MarkTheWords",
     "repo": "h5p/h5p-mark-the-words",
@@ -286,6 +297,13 @@
       "dist/h5p-open-ended-question.js",
       "dist/h5p-open-ended-question.css"
     ]
+  },
+  "H5P.PersonalityQuiz-1.0": {
+    "machineName": "H5P.PersonalityQuiz",
+    "repo": "h5p/h5p-personality-quiz",
+    "tag": "master",
+    "commit": "a06bff73f808962b5c280a83bee686c2b07b2014",
+    "version": "1.0.7"
   },
   "H5P.QuestionSet-1.20": {
     "machineName": "H5P.QuestionSet",

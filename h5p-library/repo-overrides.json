@@ -7,5 +7,10 @@
   "H5P.ImageSequencing": "https://gitlab.com/icfoss/H5P-ImageSequencing",
   "Drop": "h5p/drop",
   "Tether": "h5p/tether",
-  "flowplayer": "h5p/flowplayer"
+  "flowplayer": "h5p/flowplayer",
+  "H5P.PersonalityQuiz": {
+    "repo": "h5p/h5p-personality-quiz",
+    "ref": "master"
+  },
+  "H5P.KewArCode": "otacke/h5p-kewar-code"
 }

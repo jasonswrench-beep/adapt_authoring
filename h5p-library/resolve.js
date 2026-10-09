@@ -28,7 +28,7 @@ function kebab(name) {
 const git = (args, opts) => execFileSync('git', args, Object.assign({ encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: 120000 }, opts));
 
 function candidates(machineName) {
-  if (OVERRIDES[machineName]) return [OVERRIDES[machineName]];
+  if (OVERRIDES[machineName]) return [typeof OVERRIDES[machineName] === 'string' ? OVERRIDES[machineName] : OVERRIDES[machineName].repo];
   const slug = `h5p-${kebab(machineName)}`;
   return OWNERS.map(o => `${o}/${slug}`);
 }
@@ -61,6 +61,9 @@ function pickTags(tags, major, minor) {
   return releases.length && ![...tags.keys()].some(t => parse(t)) ? [releases[releases.length - 1]] : [];
 }
 
+/** Repositories with no version tags can be pinned to a branch in repo-overrides.json: {"repo": "...", "ref": "master"}. */
+const refFor = name => (OVERRIDES[name] && OVERRIDES[name].ref) || null;
+
 function resolve(cacheDir, requirements) {
   const lock = {};
   const problems = [];
@@ -76,7 +79,7 @@ function resolve(cacheDir, requirements) {
     let lib = null;
     const notes = [];
     for (const repo of candidates(req.name)) {
-      for (const tag of pickTags(listTags(repo), req.major, req.minor)) {
+      for (const tag of (refFor(req.name) ? [refFor(req.name)] : pickTags(listTags(repo), req.major, req.minor))) {
         fs.rmSync(dir, { recursive: true, force: true });
         try {
           git(['clone', '--quiet', '--depth', '1', '--branch', tag, repoUrl(repo), dir]);
