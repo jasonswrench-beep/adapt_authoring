@@ -12,6 +12,7 @@ const helpers = require('../../../lib/helpers');
 const installHelpers = require('../../../lib/installHelpers');
 const logger = require('../../../lib/logger');
 const origin = require('../../../');
+const h5pApprovalStore = require('./h5pApprovalStore');
 const h5pPackaging = require('./h5pPackaging');
 const outputHelpers = require('./outputHelpers');
 const usermanager = require('../../../lib/usermanager');
@@ -255,10 +256,22 @@ function publishCourse(courseId, mode, request, response, next) {
       });
     },
     function(callback) {
-      // Unpack uploaded .h5p files for the H5P Player component (no-op when the course has none)
-      if (!isRebuildRequired) return callback(null);
-      h5pPackaging.packageH5P({ components: outputJson.component, buildFolder: BUILD_FOLDER }).then(summary => {
+      // Unpack approved .h5p files for the H5P Player component (no-op when the course has none).
+      // Files that are not approved are never unpacked: a preview shows a "waiting for approval" notice,
+      // but a download or publish is refused until an administrator has approved them.
+      h5pPackaging.packageH5P({
+        components: outputJson.component,
+        buildFolder: BUILD_FOLDER,
+        approvals: h5pApprovalStore(),
+        context: { courseId: String(courseId), courseTitle: outputJson.course.title }
+      }).then(summary => {
         summary.warnings.forEach(warning => logger.log('warn', warning));
+        if (summary.pending.length && mode !== Constants.Modes.Preview) {
+          const list = summary.pending.map(p => `"${p.title}" (${p.fileName}, ${p.status})`).join(', ');
+          return callback(new Error(
+            `${summary.pending.length} H5P ${summary.pending.length === 1 ? 'activity needs' : 'activities need'} approval by an administrator before this course can be published or downloaded: ${list}.`
+          ));
+        }
         callback(null);
       }, error => callback(error));
     },

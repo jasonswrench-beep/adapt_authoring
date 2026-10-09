@@ -43,7 +43,9 @@ Entries marked `"community": true` in `conf/plugin-bundle.json` are not maintain
 
 `adapt-plugins/adapt-component-h5p` adds an **H5P Player** component: upload a `.h5p` file to the asset library, pick it in the component, and the activity plays inside the course, self-hosted, so it also works in Web and SCORM exports. It completes when the learner finishes the activity. The authoring tool unpacks the file automatically when the course is previewed or published (`plugins/output/adapt/h5pPackaging.js`, with path-traversal and size protection). See `adapt-plugins/adapt-component-h5p/README.md` for the steps, how it works and its limits.
 
-Things to know: an `.h5p` file contains JavaScript, so only use files you trust and review any that students upload; H5P scores are not passed to the LMS (completion is); each activity adds roughly its unpacked size to the package. Tested with a real H5P file and a real framework build in a browser; **not yet run inside the live editor**.
+**Approval:** an `.h5p` file contains JavaScript, so a new file is never unpacked or run until an administrator approves it. Students see "waiting for an instructor to approve it" in preview, and downloads are refused until then. The administrator clicks **H5P approvals** in the editor sidebar (Super Admin only, enforced by the server's role permissions), sees each file's title, libraries and the courses using it, and approves or rejects it. Approval is per exact file (by hash) and is stored in `data/h5p-approvals.json`. Approving is a human judgement: check who uploaded the file and where it came from. See `adapt-plugins/adapt-component-h5p/README.md`.
+
+Also: H5P scores are not passed to the LMS (completion is); each activity adds roughly its unpacked size to the package. Tested with a real H5P file and a real framework build in a browser, including the approval lifecycle; **the approvals dialog and its buttons have not yet been run against a live editor**.
 
 ## Exporting: SCORM and Web
 

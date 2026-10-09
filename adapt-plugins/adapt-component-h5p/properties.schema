@@ -11,6 +11,22 @@
       "inputType": "Text",
       "validators": [],
       "translatable": true
+    },
+    "pendingMessage": {
+      "type": "string",
+      "required": true,
+      "default": "This activity is waiting for an instructor to approve it.",
+      "inputType": "Text",
+      "validators": [],
+      "translatable": true
+    },
+    "rejectedMessage": {
+      "type": "string",
+      "required": true,
+      "default": "This activity has not been approved for use.",
+      "inputType": "Text",
+      "validators": [],
+      "translatable": true
     }
   },
   "properties": {

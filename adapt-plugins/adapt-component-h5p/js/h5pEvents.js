@@ -33,3 +33,13 @@ export function isFromActivity(statement, iri) {
   const id = statement && statement.object && statement.object.id;
   return typeof id === 'string' && (id === iri || id.startsWith(`${iri}?`));
 }
+
+/** The marker the export step writes beside each activity: {status: 'approved'|'pending'|'rejected'}. */
+export function statusUrlFor(componentId) {
+  return `${contentFolderFor(componentId)}/status.json`;
+}
+
+/** Only these statuses stop the activity from loading; a missing marker (older builds) means "go ahead". */
+export function isBlockedStatus(status) {
+  return status === 'pending' || status === 'rejected';
+}

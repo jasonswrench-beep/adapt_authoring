@@ -1,6 +1,6 @@
 import Adapt from 'core/js/adapt';
 import ComponentView from 'core/js/views/componentView';
-import { activityIriFor, contentFolderFor, isFinishedStatement, isFromActivity, isTopLevelStatement } from './h5pEvents';
+import { activityIriFor, contentFolderFor, isBlockedStatus, isFinishedStatement, isFromActivity, isTopLevelStatement, statusUrlFor } from './h5pEvents';
 
 // Where the player files ship inside every course build (copied from this plugin's assets folder)
 const PLAYER_PATH = 'assets/h5p-player/';
@@ -106,8 +106,28 @@ class H5pPlayerView extends ComponentView {
     return this.model.get('_setCompletionOn') === 'completed' ? 'completed' : 'inview';
   }
 
+  /** 'approved', 'pending', 'rejected', or null when there is no marker (or it cannot be read). */
+  async fetchApprovalStatus(id) {
+    try {
+      const response = await fetch(statusUrlFor(id), { cache: 'no-store' });
+      if (!response.ok) return null;
+      return (await response.json()).status || null;
+    } catch (error) {
+      return null;
+    }
+  }
+
   async renderPlayer() {
     try {
+      // An H5P file is a program, so an administrator has to approve it before it is unpacked. Until then the
+      // learner sees a notice instead of the activity, and it must not count as completed.
+      const approval = await this.fetchApprovalStatus(this.model.get('_id'));
+      if (isBlockedStatus(approval)) {
+        this.$('.component__widget').off('inview');
+        this.$(`.js-h5p-${approval}`).prop('hidden', false);
+        this.setReadyStatus();
+        return;
+      }
       const { H5P } = await loadPlayerScript();
       const id = this.model.get('_id');
       const title = this.model.get('displayTitle') || this.model.get('title') || '';

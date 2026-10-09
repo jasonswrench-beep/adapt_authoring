@@ -10,8 +10,17 @@
     }
   }
 
-  &__error[hidden] {
+  &__error[hidden],
+  &__notice[hidden] {
     display: none;
+  }
+
+  &__notice:not([hidden]) {
+    margin: 0;
+    padding: 1rem;
+    border-left: 0.3rem solid #A84D10;
+    background: #F4F5F6;
+    color: #1F2937;
   }
 
   &__error:not([hidden]) {

@@ -272,3 +272,118 @@ i.asset-clear {
     }
   }
 }
+
+// Administrator's "H5P approvals" dialog (SweetAlert with customClass)
+.sweet-alert.h5p-approval-dialog {
+  width: 680px;
+  margin-left: -357px;
+  max-height: 85vh;
+  overflow-y: auto;
+  text-align: left;
+
+  h2 {
+    text-align: center;
+  }
+
+  .h5p-approvals {
+    font-size: 14px;
+    line-height: 1.45;
+
+    h4 {
+      margin: 18px 0 6px;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .h5p-warning {
+      padding: 8px 12px;
+      border-left: 5px solid #A84D10;
+      background: #F4F5F6;
+    }
+
+    .h5p-entry {
+      border-left: 5px solid #7a7a7a;
+      background: #F4F5F6;
+      margin: 8px 0;
+      padding: 8px 12px;
+    }
+
+    .h5p-pending {
+      border-left-color: #A84D10;
+    }
+
+    .h5p-approved {
+      border-left-color: #166534;
+    }
+
+    .h5p-rejected {
+      border-left-color: #B91C1C;
+    }
+
+    .h5p-details {
+      margin: 4px 0 0 4px;
+      color: #444;
+
+      li {
+        padding: 1px 0;
+      }
+    }
+
+    // Explicit button styling: the alert library's default buttons are pale blue with white text (low contrast).
+    // Navy is the brand colour (10.5:1 with white); the second action is an outline so the two are not confused.
+    .h5p-actions {
+      margin-top: 8px;
+
+      button {
+        margin: 0 8px 0 0;
+        padding: 6px 16px;
+        border: 2px solid #003E7E;
+        border-radius: 8px;
+        background: #003E7E;
+        color: #FFFFFF;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: none;
+        cursor: pointer;
+
+        &:hover,
+        &:focus {
+          background: #00305F;
+          border-color: #00305F;
+          color: #FFFFFF;
+        }
+
+        &.h5p-action-reject,
+        &.h5p-action-revoke {
+          background: #FFFFFF;
+          color: #003E7E;
+
+          &:hover,
+          &:focus {
+            background: #F0F3F7;
+            border-color: #003E7E;
+            color: #003E7E;
+          }
+        }
+
+        &:focus-visible {
+          outline: 3px solid #1F2937;
+          outline-offset: 2px;
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: default;
+        }
+      }
+    }
+
+    .h5p-empty {
+      color: #555;
+    }
+  }
+}
