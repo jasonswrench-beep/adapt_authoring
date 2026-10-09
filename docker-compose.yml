@@ -1,0 +1,39 @@
+# Hosted authoring tool for students.  Usage:  cp .env.example .env && edit it && docker compose up -d --build
+services:
+  mongo:
+    image: mongo:6
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+
+  adapt:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    env_file: .env
+    environment:
+      H5P_EDITOR_URL: http://h5p-editor:8080
+    ports:
+      - "5000:5000"
+    volumes:
+      - adapt_app:/app
+      - h5p_shared:/shared:ro
+
+  # The H5P editor. Not published to the internet: the authoring tool forwards signed-in authors' requests to it.
+  h5p-editor:
+    build:
+      context: .
+      dockerfile: h5p-editor/Dockerfile
+    restart: unless-stopped
+    volumes:
+      - h5p_editor_data:/data
+      - h5p_shared:/shared
+
+volumes:
+  mongo_data:
+  adapt_app:
+  h5p_editor_data:
+  h5p_shared:

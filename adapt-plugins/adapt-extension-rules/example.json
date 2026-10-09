@@ -1,0 +1,17 @@
+{
+  "_comment": "Goes in course.json. Give elements a class in the editor (the Classes box) and use that name as the target.",
+  "_rules": {
+    "_isEnabled": true,
+    "_variables": [
+      { "name": "Score", "type": "number", "initial": "0" },
+      { "name": "SeenIntro", "type": "true/false", "initial": "false" }
+    ],
+    "_triggers": [
+      { "_name": "Hide the bonus until it is earned", "_when": "start", "_do": "hide", "_element": "bonus" },
+      { "_name": "Mark intro seen", "_when": "completed", "_target": "intro", "_do": "set-variable", "_variable": "SeenIntro", "_value": "true" },
+      { "_name": "Reward a correct answer", "_when": "correct", "_target": "quiz1", "_do": "add-to-variable", "_variable": "Score", "_value": "10" },
+      { "_name": "Unlock the bonus", "_when": "variable", "_watch": "Score", "_ifVariable": "Score", "_ifOperator": "≥", "_ifValue": "10", "_do": "show", "_element": "bonus" },
+      { "_name": "Hint button", "_when": "button", "_target": "hintblock", "_buttonText": "Need a hint?", "_do": "message", "_title": "Hint", "_text": "You have [[Score]] points so far." }
+    ]
+  }
+}

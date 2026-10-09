@@ -1,0 +1,68 @@
+.hotgraphic-popup {
+  // Increase toolbar padding top so the browser outline of the
+  // item title is not hidden by toolbar
+  // --------------------------------------------------
+  &__inner {
+    padding-top: (@icon-size + (@icon-padding * 2)) + (@item-padding / 2);
+  }
+
+  &__controls,
+  &__close {
+    .ui-btn-ctrl;
+
+    & when (@notify-ui-btn-ctrl-color-style = filled) {
+      .notify-ui-btn-ctrl-color;
+
+      .no-touch &:not(.is-disabled):not(.is-locked):hover {
+        .notify-ui-btn-ctrl-color-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .notify-ui-btn-ctrl-color-focus;
+      }
+
+      &.is-disabled {
+        .notify-ui-btn-ctrl-color-disabled;
+      }
+    }
+
+    & when (@notify-ui-btn-ctrl-color-style = outline) {
+      .notify-ui-btn-ctrl-color-outline;
+
+      .no-touch &:not(.is-disabled):not(.is-locked):hover {
+        .notify-ui-btn-ctrl-color-outline-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .notify-ui-btn-ctrl-color-outline-focus;
+      }
+
+      &.is-disabled {
+        .notify-ui-btn-ctrl-color-outline-disabled;
+      }
+    }
+  }
+
+  &__item-title {
+    margin-bottom: @notify-title-margin;
+    .notify-title;
+  }
+
+  &__item-body {
+    margin-bottom: @notify-body-margin;
+  }
+
+  &__item-body a {
+    .link-text;
+    color: @notify-link;
+
+    .no-touch &:hover {
+      color: @notify-link-hover;
+      .transition(color @duration ease-in);
+    }
+  }
+
+  .hotgraphic.has-img-zoom &__item-image-container {
+    .img-zoom();
+  }
+}

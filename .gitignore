@@ -30,3 +30,5 @@
 .idea
 .project
 .vscode
+.env
+h5p-editor/node_modules/

@@ -1,0 +1,12 @@
+{
+  "name": "adapt-a11y-check",
+  "version": "0.1.0",
+  "description": "Accessibility checker for built Adapt courses: Adapt-aware content rules plus axe-core in a real browser",
+  "license": "GPL-3.0",
+  "private": true,
+  "dependencies": {
+    "adm-zip": "^0.5.16",
+    "axe-core": "^4.10.0",
+    "playwright-core": "^1.48.0"
+  }
+}

@@ -1,0 +1,1033 @@
+{
+  "H5P.Accordion-1.0": {
+    "machineName": "H5P.Accordion",
+    "repo": "h5p/h5p-accordion",
+    "tag": "1.0.33",
+    "commit": "9db09da2e16983e70904db864f78edbaa4c9c797",
+    "version": "1.0.33"
+  },
+  "H5P.AdvancedBlanks-1.2": {
+    "machineName": "H5P.AdvancedBlanks",
+    "repo": "h5p/h5p-advanced-blanks",
+    "tag": "1.2.7",
+    "commit": "aa929bcd2e96279a831b452b578f269edc1812b9",
+    "version": "1.2.7",
+    "missingFiles": [
+      "dist/ractive.min.js",
+      "dist/h5p-advanced-blanks.js"
+    ]
+  },
+  "H5P.AdvancedText-1.1": {
+    "machineName": "H5P.AdvancedText",
+    "repo": "h5p/h5p-advanced-text",
+    "tag": "1.1.16",
+    "commit": "ca7451c56145facde0d33b8b63f4ae3770368dfa",
+    "version": "1.1.16"
+  },
+  "H5P.Audio-1.5": {
+    "machineName": "H5P.Audio",
+    "repo": "h5p/h5p-audio",
+    "tag": "1.5.29",
+    "commit": "4f79c2158b3dbd34a5ee8f33ebc2134624cce8b4",
+    "version": "1.5.29"
+  },
+  "H5P.Blanks-1.14": {
+    "machineName": "H5P.Blanks",
+    "repo": "h5p/h5p-blanks",
+    "tag": "1.14.13",
+    "commit": "5fc308e6ea96331aee6412366c6477498c21c341",
+    "version": "1.14.13"
+  },
+  "H5P.Chart-1.2": {
+    "machineName": "H5P.Chart",
+    "repo": "h5p/h5p-chart",
+    "tag": "1.2.24",
+    "commit": "0c2dd287f71956ecf5a67caac4fb0f1839efc437",
+    "version": "1.2.24"
+  },
+  "H5P.Collage-0.3": {
+    "machineName": "H5P.Collage",
+    "repo": "h5p/h5p-collage",
+    "tag": "0.3.25",
+    "commit": "4c7362fed56b63dfeb75472bd4c31cfa9094defa",
+    "version": "0.3.25"
+  },
+  "H5P.Column-1.18": {
+    "machineName": "H5P.Column",
+    "repo": "h5p/h5p-column",
+    "tag": "1.18.8",
+    "commit": "c8586b59bbc41c50bd46ddbf538bde4aafab700b",
+    "version": "1.18.8"
+  },
+  "H5P.Cornell-0.3": {
+    "machineName": "H5P.Cornell",
+    "repo": "otacke/h5p-cornell",
+    "tag": "0.3.3",
+    "commit": "e19194d1cf28b3f6e555572a7d443336ea2dc76a",
+    "version": "0.3.3",
+    "missingFiles": [
+      "dist/h5p-cornell.js",
+      "dist/h5p-cornell.css"
+    ]
+  },
+  "H5P.CoursePresentation-1.26": {
+    "machineName": "H5P.CoursePresentation",
+    "repo": "h5p/h5p-course-presentation",
+    "tag": "1.26.3",
+    "commit": "4b4f5a701c84516ef0c74bf8f9dbdf79e184fd3a",
+    "version": "1.26.3",
+    "missingFiles": [
+      "dist/h5p-course-presentation.js",
+      "dist/h5p-course-presentation.css"
+    ]
+  },
+  "H5P.DocumentExportPage-1.5": {
+    "machineName": "H5P.DocumentExportPage",
+    "repo": "h5p/h5p-document-export-page",
+    "tag": "1.5.18",
+    "commit": "268f72090a3cc620cea86d80f7dc7f56f6d0f00b",
+    "version": "1.5.18",
+    "missingFiles": [
+      "dist/h5p-document-export-page.js",
+      "dist/h5p-document-export-page.css"
+    ]
+  },
+  "H5P.DocumentationTool-1.8": {
+    "machineName": "H5P.DocumentationTool",
+    "repo": "h5p/h5p-documentation-tool",
+    "tag": "1.8.35",
+    "commit": "877d8ee21e20f626936eefd0f4af96ff506982b7",
+    "version": "1.8.35"
+  },
+  "H5P.DragQuestion-1.14": {
+    "machineName": "H5P.DragQuestion",
+    "repo": "h5p/h5p-drag-question",
+    "tag": "1.14.23",
+    "commit": "27b23dd2b11188f6f83f4e1cc06604b5239870fa",
+    "version": "1.14.23",
+    "missingFiles": [
+      "h5p-drag-question.js"
+    ]
+  },
+  "H5P.DragText-1.10": {
+    "machineName": "H5P.DragText",
+    "repo": "h5p/h5p-drag-text",
+    "tag": "1.10.52",
+    "commit": "3d3eb6d759b3ed65862c3048fbe02b989cbb7110",
+    "version": "1.10.52",
+    "missingFiles": [
+      "dist/h5p-drag-text.js",
+      "dist/h5p-drag-text.css"
+    ]
+  },
+  "H5P.Essay-1.5": {
+    "machineName": "H5P.Essay",
+    "repo": "otacke/h5p-essay",
+    "tag": "1.5.20",
+    "commit": "5a7e2b33a1f06a5d7ab5fb992308fc8ded1bbdb4",
+    "version": "1.5.20"
+  },
+  "H5P.Flashcards-1.7": {
+    "machineName": "H5P.Flashcards",
+    "repo": "h5p/h5p-flashcards",
+    "tag": "1.7.16",
+    "commit": "6f0e6763e99ab4630a256da1e29718da1228a347",
+    "version": "1.7.16"
+  },
+  "H5P.GoToScene-0.1": {
+    "machineName": "H5P.GoToScene",
+    "repo": "h5p/h5p-go-to-scene",
+    "tag": "0.1.0",
+    "commit": "7b949cfc8e41bdc15fa5a761d8e68ac7c9c02aeb",
+    "version": "0.1.0"
+  },
+  "H5P.GoalsAssessmentPage-1.4": {
+    "machineName": "H5P.GoalsAssessmentPage",
+    "repo": "h5p/h5p-goals-assessment-page",
+    "tag": "1.4.17",
+    "commit": "6f9e2020915770041287d856e89fb1620eb39517",
+    "version": "1.4.17"
+  },
+  "H5P.GoalsPage-1.5": {
+    "machineName": "H5P.GoalsPage",
+    "repo": "h5p/h5p-goals-page",
+    "tag": "1.5.32",
+    "commit": "d76a28b8d22b69f2f2504780fcd490950b4c2a59",
+    "version": "1.5.32"
+  },
+  "H5P.Image-1.1": {
+    "machineName": "H5P.Image",
+    "repo": "h5p/h5p-image",
+    "tag": "1.1.23",
+    "commit": "310f8572e60987ad7305425e0ea1b1e786aa0f60",
+    "version": "1.1.23"
+  },
+  "H5P.ImageHotspotQuestion-1.8": {
+    "machineName": "H5P.ImageHotspotQuestion",
+    "repo": "h5p/h5p-image-hotspot-question",
+    "tag": "1.8.22",
+    "commit": "41aea7cf02f5873b1773d863f49460c4e827213d",
+    "version": "1.8.22"
+  },
+  "H5P.ImageHotspots-1.10": {
+    "machineName": "H5P.ImageHotspots",
+    "repo": "h5p/h5p-image-hotspots",
+    "tag": "1.10.31",
+    "commit": "c72b91308e2fdb1eb319c9dfd11c5c7d50c80d12",
+    "version": "1.10.31"
+  },
+  "H5P.ImageMultipleHotspotQuestion-1.0": {
+    "machineName": "H5P.ImageMultipleHotspotQuestion",
+    "repo": "h5p/h5p-image-multiple-hotspot-question",
+    "tag": "1.0.1",
+    "commit": "699b3ba05f828502836d588abfea10a6a85d2013",
+    "version": "1.0.1"
+  },
+  "H5P.ImageSequencing-1.1": {
+    "machineName": "H5P.ImageSequencing",
+    "repo": "https://gitlab.com/icfoss/H5P-ImageSequencing",
+    "tag": "1.1.0",
+    "commit": "2e53e538287d84b223e09b630f101875f1123784",
+    "version": "1.1.0"
+  },
+  "H5P.ImageSlide-1.1": {
+    "machineName": "H5P.ImageSlide",
+    "repo": "h5p/h5p-image-slide",
+    "tag": "1.1.4",
+    "commit": "97984f727d2410db0a0ad8298d30fd57ca8814bc",
+    "version": "1.1.4"
+  },
+  "H5P.ImageSlider-1.1": {
+    "machineName": "H5P.ImageSlider",
+    "repo": "h5p/h5p-image-slider",
+    "tag": "1.1.9",
+    "commit": "6ae7b52d1589ebb7974e1d471b538ead8f824eb7",
+    "version": "1.1.9"
+  },
+  "H5P.ImpressPresentation-1.0": {
+    "machineName": "H5P.ImpressPresentation",
+    "repo": "h5p/h5p-impressive-presentation",
+    "tag": "1.0.4",
+    "commit": "d0a92a91fbec3bca21d1394eebd97ae75e90603c",
+    "version": "1.0.4"
+  },
+  "H5P.InfoWall-0.4": {
+    "machineName": "H5P.InfoWall",
+    "repo": "otacke/h5p-info-wall",
+    "tag": "0.4.10",
+    "commit": "bba40939aede3d1be29664fec436bb6aab6d68fc",
+    "version": "0.4.10",
+    "missingFiles": [
+      "dist/h5p-info-wall.js",
+      "dist/h5p-info-wall.css"
+    ]
+  },
+  "H5P.InteractiveBook-1.11": {
+    "machineName": "H5P.InteractiveBook",
+    "repo": "h5p/h5p-interactive-book",
+    "tag": "1.11.11",
+    "commit": "4e647f3e9c57cb161574d12ec7dddb44eabfc225",
+    "version": "1.11.11",
+    "missingFiles": [
+      "dist/h5p-interactive-book.js",
+      "dist/h5p-interactive-book.css"
+    ]
+  },
+  "H5P.InteractiveVideo-1.27": {
+    "machineName": "H5P.InteractiveVideo",
+    "repo": "h5p/h5p-interactive-video",
+    "tag": "1.27.9",
+    "commit": "6ed13f4a19e43ac32c4b1690e83f7b0bf8d26978",
+    "version": "1.27.9",
+    "missingFiles": [
+      "dist/h5p-interactive-video.js",
+      "dist/h5p-interactive-video.css"
+    ]
+  },
+  "H5P.KewArCode-1.2": {
+    "machineName": "H5P.KewArCode",
+    "repo": "otacke/h5p-kewar-code",
+    "tag": "1.2.3",
+    "commit": "febe808aabd40dd9a710ced8d44834a979c5ac0b",
+    "version": "1.2.3",
+    "missingFiles": [
+      "dist/h5p-kewar-code.js",
+      "dist/h5p-kewar-code.css"
+    ]
+  },
+  "H5P.MarkTheWords-1.11": {
+    "machineName": "H5P.MarkTheWords",
+    "repo": "h5p/h5p-mark-the-words",
+    "tag": "1.11.18",
+    "commit": "c35980a08ab11c8f68edd3b66c576f413cd038f2",
+    "version": "1.11.18"
+  },
+  "H5P.MemoryGame-1.3": {
+    "machineName": "H5P.MemoryGame",
+    "repo": "h5p/h5p-memory-game",
+    "tag": "1.3.51",
+    "commit": "8f3591a2df181d71e4b6c5ca1a606134204e489f",
+    "version": "1.3.51"
+  },
+  "H5P.MultiChoice-1.16": {
+    "machineName": "H5P.MultiChoice",
+    "repo": "h5p/h5p-multi-choice",
+    "tag": "1.16.14",
+    "commit": "571f5e002fba50046b24809994f7161f4f7d2c31",
+    "version": "1.16.14"
+  },
+  "H5P.MultiMediaChoice-0.3": {
+    "machineName": "H5P.MultiMediaChoice",
+    "repo": "h5p/h5p-multi-media-choice",
+    "tag": "0.3.56",
+    "commit": "894394bfef9f09f86805d75bb23af53a360f2ca8",
+    "version": "0.3.56",
+    "missingFiles": [
+      "dist/h5p-multi-media-choice.js",
+      "dist/h5p-multi-media-choice.css"
+    ]
+  },
+  "H5P.OpenEndedQuestion-1.0": {
+    "machineName": "H5P.OpenEndedQuestion",
+    "repo": "h5p/h5p-open-ended-question",
+    "tag": "1.0.28",
+    "commit": "93d3b3e5e939453afd88913026c0daceeb0711d1",
+    "version": "1.0.28",
+    "missingFiles": [
+      "dist/h5p-open-ended-question.js",
+      "dist/h5p-open-ended-question.css"
+    ]
+  },
+  "H5P.PersonalityQuiz-1.0": {
+    "machineName": "H5P.PersonalityQuiz",
+    "repo": "h5p/h5p-personality-quiz",
+    "tag": "master",
+    "commit": "a06bff73f808962b5c280a83bee686c2b07b2014",
+    "version": "1.0.7"
+  },
+  "H5P.QuestionSet-1.20": {
+    "machineName": "H5P.QuestionSet",
+    "repo": "h5p/h5p-question-set",
+    "tag": "1.20.31",
+    "commit": "bbfba40797b8fc972f68555164d211be4645a79e",
+    "version": "1.20.31"
+  },
+  "H5P.Questionnaire-1.3": {
+    "machineName": "H5P.Questionnaire",
+    "repo": "h5p/h5p-questionnaire",
+    "tag": "1.3.11",
+    "commit": "feeff48ad3f709e1c452e28d851235e126c6c1f8",
+    "version": "1.3.11",
+    "missingFiles": [
+      "dist/dist.js",
+      "dist/styles.css"
+    ]
+  },
+  "H5P.SimpleMultiChoice-1.1": {
+    "machineName": "H5P.SimpleMultiChoice",
+    "repo": "h5p/h5p-simple-multiple-choice",
+    "tag": "1.1.22",
+    "commit": "67440d9b7472cebf3e787fa2cae97c844a70d0f3",
+    "version": "1.1.22",
+    "missingFiles": [
+      "dist/dist.js",
+      "dist/styles.css"
+    ]
+  },
+  "H5P.SingleChoiceSet-1.11": {
+    "machineName": "H5P.SingleChoiceSet",
+    "repo": "h5p/h5p-single-choice-set",
+    "tag": "1.11.89",
+    "commit": "d570a968fa9e3d944262f9bf5eed42ce2718f2bc",
+    "version": "1.11.89"
+  },
+  "H5P.SortParagraphs-0.11": {
+    "machineName": "H5P.SortParagraphs",
+    "repo": "otacke/h5p-sort-paragraphs",
+    "tag": "0.11.16",
+    "commit": "9d030c4ecd8da76500c876e8a71f1cd5fb3a4dc8",
+    "version": "0.11.16",
+    "missingFiles": [
+      "dist/h5p-sort-paragraphs.js",
+      "dist/h5p-sort-paragraphs.css"
+    ]
+  },
+  "H5P.SpeakTheWords-1.5": {
+    "machineName": "H5P.SpeakTheWords",
+    "repo": "h5p/h5p-speak-the-words",
+    "tag": "1.5.7",
+    "commit": "46d26aa5225bad70bc5f388730e55edb4e8ecd93",
+    "version": "1.5.7",
+    "missingFiles": [
+      "dist/h5p-speak-the-words.js",
+      "dist/h5p-speak-the-words.css"
+    ]
+  },
+  "H5P.SpeakTheWordsSet-1.3": {
+    "machineName": "H5P.SpeakTheWordsSet",
+    "repo": "h5p/h5p-speak-the-words-set",
+    "tag": "1.3.4",
+    "commit": "eca5aaf715b164cbc4da2f0d373a3d39e597fded",
+    "version": "1.3.4",
+    "missingFiles": [
+      "dist/dist.js"
+    ]
+  },
+  "H5P.StandardPage-1.5": {
+    "machineName": "H5P.StandardPage",
+    "repo": "h5p/h5p-standard-page",
+    "tag": "1.5.21",
+    "commit": "1b449888643fb8fae61b518254639e13f15fc230",
+    "version": "1.5.21"
+  },
+  "H5P.StructureStrip-1.0": {
+    "machineName": "H5P.StructureStrip",
+    "repo": "otacke/h5p-structure-strip",
+    "tag": "1.0.6",
+    "commit": "d090ad654862270708803766dd0d56e81b6704e8",
+    "version": "1.0.6",
+    "missingFiles": [
+      "dist/h5p-structure-strip.js",
+      "dist/h5p-structure-strip.css"
+    ]
+  },
+  "H5P.Summary-1.10": {
+    "machineName": "H5P.Summary",
+    "repo": "h5p/h5p-summary",
+    "tag": "1.10.22",
+    "commit": "1f2d338f4570156dffa5b48bfdb923034d69dcb9",
+    "version": "1.10.22"
+  },
+  "H5P.Table-1.2": {
+    "machineName": "H5P.Table",
+    "repo": "h5p/h5p-table",
+    "tag": "1.2.2",
+    "commit": "a729f98aad466f7aedbe368e6a33d7141d21e518",
+    "version": "1.2.2"
+  },
+  "H5P.Text-1.1": {
+    "machineName": "H5P.Text",
+    "repo": "h5p/h5p-text",
+    "tag": "1.1.17",
+    "commit": "85ab86ebd42f3262bb2bb3c40cf07321851f8a77",
+    "version": "1.1.17"
+  },
+  "H5P.TextInputField-1.2": {
+    "machineName": "H5P.TextInputField",
+    "repo": "h5p/h5p-text-input-field",
+    "tag": "1.2.17",
+    "commit": "f4546a122febbad3296feb35cc4147e9012bff28",
+    "version": "1.2.17"
+  },
+  "H5P.ThreeImage-0.5": {
+    "machineName": "H5P.ThreeImage",
+    "repo": "h5p/h5p-three-image",
+    "tag": "0.5.11",
+    "commit": "3316af148bb1779f23d35fe543c51df4ff692cc1",
+    "version": "0.5.11",
+    "missingFiles": [
+      "dist/h5p-three-image.js",
+      "dist/h5p-three-image.css"
+    ]
+  },
+  "H5P.Timeline-1.1": {
+    "machineName": "H5P.Timeline",
+    "repo": "h5p/h5p-timeline",
+    "tag": "1.1.25",
+    "commit": "080719644530d4cc3426fc68fe92d73ce2389bbc",
+    "version": "1.1.25"
+  },
+  "H5P.TrueFalse-1.8": {
+    "machineName": "H5P.TrueFalse",
+    "repo": "h5p/h5p-true-false",
+    "tag": "1.8.11",
+    "commit": "20a11571c3b3ebf21efbe1127ebf140924cdaf76",
+    "version": "1.8.11"
+  },
+  "H5P.Video-1.6": {
+    "machineName": "H5P.Video",
+    "repo": "h5p/h5p-video",
+    "tag": "1.6.80",
+    "commit": "af25aef6e9eb8f84db037d564d82494c7d44e267",
+    "version": "1.6.80"
+  },
+  "FontAwesome-4.5": {
+    "machineName": "FontAwesome",
+    "repo": "h5p/font-awesome",
+    "tag": "4.5.6",
+    "commit": "49f57629864f80d0bc339ccf3b99f172106d20b4",
+    "version": "4.5.6"
+  },
+  "H5P.Question-1.4": {
+    "machineName": "H5P.Question",
+    "repo": "h5p/h5p-question",
+    "tag": "1.4.10",
+    "commit": "8222f716e2708dce41ecc8648420add6161f2af8",
+    "version": "1.4.10"
+  },
+  "H5P.JoubelUI-1.3": {
+    "machineName": "H5P.JoubelUI",
+    "repo": "h5p/h5p-joubel-ui",
+    "tag": "1.3.32",
+    "commit": "5d1890570f2c8eb48d229c47928fb79bdc03bdaf",
+    "version": "1.3.32"
+  },
+  "H5PEditor.VerticalTabs-1.3": {
+    "machineName": "H5PEditor.VerticalTabs",
+    "repo": "h5p/h5p-editor-vertical-tabs",
+    "tag": "1.3.16",
+    "commit": "20df230e6b2f052b61a8dfd9b195c6d12a8a9c86",
+    "version": "1.3.16",
+    "editorOnly": true
+  },
+  "H5PEditor.ShowWhen-1.0": {
+    "machineName": "H5PEditor.ShowWhen",
+    "repo": "h5p/h5p-editor-show-when",
+    "tag": "1.0.9",
+    "commit": "93678737300e084cb9390a691d3e1ad4e793fbaa",
+    "version": "1.0.9",
+    "editorOnly": true
+  },
+  "H5PEditor.RangeList-1.0": {
+    "machineName": "H5PEditor.RangeList",
+    "repo": "h5p/h5p-editor-range-list",
+    "tag": "1.0.13",
+    "commit": "d1e1118999cedb86bd4f746f8db9dbde8ccbf05c",
+    "version": "1.0.13",
+    "editorOnly": true
+  },
+  "H5P.Question-1.5": {
+    "machineName": "H5P.Question",
+    "repo": "h5p/h5p-question",
+    "tag": "1.5.47",
+    "commit": "fffb3c86f5289b1d24adfd7343559a4f03ba81d5",
+    "version": "1.5.47"
+  },
+  "H5P.TextUtilities-1.3": {
+    "machineName": "H5P.TextUtilities",
+    "repo": "otacke/h5p-text-utilities",
+    "tag": "1.3.0",
+    "commit": "e5bffbe458dd2626aae7650c32fde236bd2f0e54",
+    "version": "1.3.0"
+  },
+  "H5PEditor.ColorSelector-1.3": {
+    "machineName": "H5PEditor.ColorSelector",
+    "repo": "h5p/h5p-editor-color-selector",
+    "tag": "1.3.1",
+    "commit": "00cc797b9031c1372a8b6dd4d4e1541ebd1f538c",
+    "version": "1.3.1",
+    "editorOnly": true
+  },
+  "H5PEditor.Collage-0.3": {
+    "machineName": "H5PEditor.Collage",
+    "repo": "h5p/h5p-editor-collage",
+    "tag": "0.3.22",
+    "commit": "47ab17367fddbc541cec58df7044402e7e1ada5f",
+    "version": "0.3.22",
+    "editorOnly": true
+  },
+  "H5P.FontIcons-1.0": {
+    "machineName": "H5P.FontIcons",
+    "repo": "h5p/h5p-font-icons",
+    "tag": "1.0.6",
+    "commit": "8328f1554e7ba531eb34424ceca08034bda9c639",
+    "version": "1.0.6"
+  },
+  "H5PEditor.CoursePresentation-1.25": {
+    "machineName": "H5PEditor.CoursePresentation",
+    "repo": "h5p/h5p-editor-course-presentation",
+    "tag": "1.25.14",
+    "commit": "e1169070a171e360cb9b819e249cd590bb754b12",
+    "version": "1.25.14",
+    "editorOnly": true
+  },
+  "H5P.Components-1.0": {
+    "machineName": "H5P.Components",
+    "repo": "h5p/h5p-components",
+    "tag": "1.0.99",
+    "commit": "223a9164259db6f9c1132791671beb1ce4d2c9c2",
+    "version": "1.0.99",
+    "missingFiles": [
+      "dist/h5p-components.js",
+      "dist/h5p-components.css"
+    ]
+  },
+  "jQuery.ui-1.10": {
+    "machineName": "jQuery.ui",
+    "repo": "h5p/jquery-ui",
+    "tag": "1.10.22",
+    "commit": "3c4d7f373e6a18ca71fdc4be48fa6b062ff2134d",
+    "version": "1.10.22"
+  },
+  "H5PEditor.DragQuestion-1.10": {
+    "machineName": "H5PEditor.DragQuestion",
+    "repo": "h5p/h5p-editor-drag-question",
+    "tag": "1.10.21",
+    "commit": "82dca6641ca1c1ae3cd05b1399b1da9b5dbf5115",
+    "version": "1.10.21",
+    "editorOnly": true
+  },
+  "H5PEditor.Wizard-1.2": {
+    "machineName": "H5PEditor.Wizard",
+    "repo": "h5p/h5p-editor-wizard",
+    "tag": "1.2.17",
+    "commit": "4cdf5d26d998daf10191fa4dcc1fb9b2192f3dd6",
+    "version": "1.2.17",
+    "editorOnly": true
+  },
+  "H5PEditor.ImageHotspotQuestion-1.8": {
+    "machineName": "H5PEditor.ImageHotspotQuestion",
+    "repo": "h5p/h5p-editor-image-hotspot-question",
+    "tag": "1.8.12",
+    "commit": "a8a959bbd942c2a2232e165e2ec9abbb94c71fd1",
+    "version": "1.8.12",
+    "editorOnly": true
+  },
+  "H5P.Transition-1.0": {
+    "machineName": "H5P.Transition",
+    "repo": "h5p/h5p-transition",
+    "tag": "1.0.4",
+    "commit": "5b5d056baeafd277412f8960814b077e3b6f9bd2",
+    "version": "1.0.4"
+  },
+  "H5PEditor.ImageCoordinateSelector-1.2": {
+    "machineName": "H5PEditor.ImageCoordinateSelector",
+    "repo": "h5p/h5p-editor-image-coordinate-selector",
+    "tag": "1.2.7",
+    "commit": "53bd59035df3193d60de571b18be16827ca94c41",
+    "version": "1.2.7",
+    "editorOnly": true
+  },
+  "H5P.Timer-0.4": {
+    "machineName": "H5P.Timer",
+    "repo": "otacke/h5p-timer",
+    "tag": "0.4.2",
+    "commit": "c3645cee23aa80ecef493cfc80f22ad5da485ad0",
+    "version": "0.4.2"
+  },
+  "H5P.Audio-1.2": {
+    "machineName": "H5P.Audio",
+    "repo": "h5p/h5p-audio",
+    "tag": "1.2.14",
+    "commit": "27213bbb6baf48e3c058540192bb1979d620e60a",
+    "version": "1.2.14"
+  },
+  "H5P.JoubelUI-1.2": {
+    "machineName": "H5P.JoubelUI",
+    "repo": "h5p/h5p-joubel-ui",
+    "tag": "1.2.14",
+    "commit": "b8aadde30a85fb970f90173e4fda89f88b4cd519",
+    "version": "1.2.14"
+  },
+  "H5PEditor.ImpressPresentation-1.0": {
+    "machineName": "H5PEditor.ImpressPresentation",
+    "repo": "h5p/h5p-editor-impressive-presentation",
+    "tag": "1.0.3",
+    "commit": "d9e38794b1f86e4fd4062dda10245cc1b0379c57",
+    "version": "1.0.3",
+    "editorOnly": true
+  },
+  "H5PEditor.ColorSelector-1.0": {
+    "machineName": "H5PEditor.ColorSelector",
+    "repo": "h5p/h5p-editor-color-selector",
+    "tag": "1.0.3",
+    "commit": "58c980de01c76b47a3717fb0f9084afbe174ec25",
+    "version": "1.0.3",
+    "editorOnly": true
+  },
+  "H5PEditor.InfoWall-0.2": {
+    "machineName": "H5PEditor.InfoWall",
+    "repo": "otacke/h5p-editor-info-wall",
+    "tag": "0.2.7",
+    "commit": "512bf1d4b5483d8e2ef7b9c9ef98ec645b989e79",
+    "version": "0.2.7",
+    "editorOnly": true,
+    "missingFiles": [
+      "dist/h5peditor-info-wall.js",
+      "dist/h5peditor-info-wall.css"
+    ]
+  },
+  "H5PEditor.InfoWallPassiveList-0.1": {
+    "machineName": "H5PEditor.InfoWallPassiveList",
+    "repo": "otacke/h5p-editor-info-wall-passive-list",
+    "tag": "0.1.5",
+    "commit": "42fb52c01777b8835abdf0f55ec559a69ea62626",
+    "version": "0.1.5",
+    "editorOnly": true,
+    "missingFiles": [
+      "dist/h5peditor-info-wall-passive-list.js"
+    ]
+  },
+  "H5P.DragNBar-1.5": {
+    "machineName": "H5P.DragNBar",
+    "repo": "h5p/h5p-drag-n-bar",
+    "tag": "1.5.23",
+    "commit": "b475daaf1d5de8d967145072388fb4727a7d8e6a",
+    "version": "1.5.23"
+  },
+  "H5PEditor.InteractiveVideo-1.25": {
+    "machineName": "H5PEditor.InteractiveVideo",
+    "repo": "h5p/h5p-editor-interactive-video",
+    "tag": "1.25.11",
+    "commit": "0a9fbd07d9f0ab2cefb9cb32a0b46bb05d342f88",
+    "version": "1.25.11",
+    "editorOnly": true
+  },
+  "H5PEditor.KewArCode-1.0": {
+    "machineName": "H5PEditor.KewArCode",
+    "repo": "otacke/h5p-editor-kewar-code",
+    "tag": "1.0.0",
+    "commit": "d910aad485cc179b6713349c283dc98b32092814",
+    "version": "1.0.0",
+    "editorOnly": true
+  },
+  "H5PEditor.AudioRecorder-1.0": {
+    "machineName": "H5PEditor.AudioRecorder",
+    "repo": "h5p/h5p-editor-audio-recorder",
+    "tag": "1.0.12",
+    "commit": "d66676273300711d7201356fb036e75c29b76e43",
+    "version": "1.0.12",
+    "editorOnly": true,
+    "missingFiles": [
+      "dist/h5p-editor-audio-recorder.js"
+    ]
+  },
+  "H5P.MaterialDesignIcons-1.0": {
+    "machineName": "H5P.MaterialDesignIcons",
+    "repo": "h5p/h5p-material-design-icons",
+    "tag": "1.0.0",
+    "commit": "4d1cde70c9a12a4f4874b6721c25eb5a4f7abd80",
+    "version": "1.0.0"
+  },
+  "H5PEditor.QuestionSetTextualEditor-1.3": {
+    "machineName": "H5PEditor.QuestionSetTextualEditor",
+    "repo": "h5p/h5p-editor-question-set-textual-editor",
+    "tag": "1.3.18",
+    "commit": "fad138d32eebd7d0a90848448fae9650797a1fde",
+    "version": "1.3.18",
+    "editorOnly": true,
+    "missingFiles": [
+      "dist/h5p-question-set-textual-editor.js"
+    ]
+  },
+  "H5PEditor.SingleChoiceSetTextualEditor-1.0": {
+    "machineName": "H5PEditor.SingleChoiceSetTextualEditor",
+    "repo": "h5p/h5p-editor-single-choice-set-textual-editor",
+    "tag": "1.0.10",
+    "commit": "c32ebb9790616142fb7d28bdd8c8082342e2ba11",
+    "version": "1.0.10",
+    "editorOnly": true
+  },
+  "H5PEditor.SummaryTextualEditor-1.1": {
+    "machineName": "H5PEditor.SummaryTextualEditor",
+    "repo": "h5p/h5p-editor-summary-textual-editor",
+    "tag": "1.1.12",
+    "commit": "18f50660c6b682374b91a0e53d93b8edc6a72b0f",
+    "version": "1.1.12",
+    "editorOnly": true
+  },
+  "H5P.ThreeSixty-0.3": {
+    "machineName": "H5P.ThreeSixty",
+    "repo": "h5p/h5p-three-sixty",
+    "tag": "0.3.7",
+    "commit": "68dbbf46ebedecf81e4e5ffe1f700edbcc03df72",
+    "version": "0.3.7"
+  },
+  "H5PEditor.ThreeImage-0.5": {
+    "machineName": "H5PEditor.ThreeImage",
+    "repo": "h5p/h5p-editor-three-image",
+    "tag": "0.5.3",
+    "commit": "f2f432b2022f032641f9773f30123c7cb7a37105",
+    "version": "0.5.3",
+    "editorOnly": true,
+    "missingFiles": [
+      "dist/h5p-editor-three-image.js"
+    ]
+  },
+  "H5PEditor.RadioGroup-1.1": {
+    "machineName": "H5PEditor.RadioGroup",
+    "repo": "h5p/h5p-editor-radio-group",
+    "tag": "1.1.3",
+    "commit": "7b2cba7c6fdc4c5b994a9098fd04b3120ab961f3",
+    "version": "1.1.3",
+    "editorOnly": true
+  },
+  "TimelineJS-1.1": {
+    "machineName": "TimelineJS",
+    "repo": "h5p/TimelineJS",
+    "tag": "1.1.1",
+    "commit": "f5729241acb91633ddeb9cf5087a864499169c59",
+    "version": "1.1.1"
+  },
+  "H5PEditor.TableList-1.0": {
+    "machineName": "H5PEditor.TableList",
+    "repo": "h5p/h5p-editor-table-list",
+    "tag": "1.0.4",
+    "commit": "6c92ab93ad33ee3dd63554ae444972a8cff5596a",
+    "version": "1.0.4",
+    "editorOnly": true
+  },
+  "H5P.Shape-1.0": {
+    "machineName": "H5P.Shape",
+    "repo": "h5p/h5p-shape",
+    "tag": "1.0.5",
+    "commit": "66b614b87af7b8722edce5692a0c5825f37c2ba7",
+    "version": "1.0.5",
+    "editorOnly": true
+  },
+  "H5P.Link-1.3": {
+    "machineName": "H5P.Link",
+    "repo": "h5p/h5p-link",
+    "tag": "1.3.19",
+    "commit": "ea354cebd2b592ae56a911ac32eff4f2fba858c4",
+    "version": "1.3.19",
+    "editorOnly": true
+  },
+  "H5P.ContinuousText-1.2": {
+    "machineName": "H5P.ContinuousText",
+    "repo": "h5p/h5p-continuous-text",
+    "tag": "1.2.16",
+    "commit": "73dfc334c9482eaeb1ae7a40be6756ee6dcc9166",
+    "version": "1.2.16",
+    "editorOnly": true
+  },
+  "H5P.ExportableTextArea-1.3": {
+    "machineName": "H5P.ExportableTextArea",
+    "repo": "h5p/h5p-exportable-text-area",
+    "tag": "1.3.19",
+    "commit": "67bfe51706807a2cbb052167f2ccee9f359ed51e",
+    "version": "1.3.19",
+    "editorOnly": true,
+    "missingFiles": [
+      "dist/h5p-exportable-text-area.js"
+    ]
+  },
+  "H5P.TwitterUserFeed-1.0": {
+    "machineName": "H5P.TwitterUserFeed",
+    "repo": "h5p/h5p-twitter-user-feed",
+    "tag": "1.0.21",
+    "commit": "9794120dbc272c692415fac25a886e381dc42699",
+    "version": "1.0.21",
+    "editorOnly": true
+  },
+  "H5P.Dialogcards-1.9": {
+    "machineName": "H5P.Dialogcards",
+    "repo": "h5p/h5p-dialogcards",
+    "tag": "1.9.40",
+    "commit": "5d48d1c599f5a2de1b5e3ce6dd954fb1371c219f",
+    "version": "1.9.40",
+    "editorOnly": true,
+    "missingFiles": [
+      "dist/h5p-dialogcards.js",
+      "dist/h5p-dialogcards.css"
+    ]
+  },
+  "H5P.AudioRecorder-1.0": {
+    "machineName": "H5P.AudioRecorder",
+    "repo": "h5p/h5p-audio-recorder",
+    "tag": "1.0.33",
+    "commit": "283329030a18f79a446afda0c7779d7e56e13f31",
+    "version": "1.0.33",
+    "editorOnly": true,
+    "missingFiles": [
+      "dist/h5p-audio-recorder.js"
+    ]
+  },
+  "H5PEditor.RadioSelector-1.2": {
+    "machineName": "H5PEditor.RadioSelector",
+    "repo": "h5p/h5p-editor-radio-selector",
+    "tag": "1.2.2",
+    "commit": "c91ff35898ccc14702c668d47491eae920f14a34",
+    "version": "1.2.2",
+    "editorOnly": true
+  },
+  "H5P.DragNResize-1.2": {
+    "machineName": "H5P.DragNResize",
+    "repo": "h5p/h5p-drag-n-resize",
+    "tag": "1.2.5",
+    "commit": "c00d12cf65905e7fe2ece5cc8aaa145bebb2168a",
+    "version": "1.2.5"
+  },
+  "flowplayer-1.0": {
+    "machineName": "flowplayer",
+    "repo": "h5p/flowplayer",
+    "tag": "1.0.5",
+    "commit": "b7846ce607bce22dbf02d7f05a1923c291095c03",
+    "version": "1.0.5"
+  },
+  "Drop-1.0": {
+    "machineName": "Drop",
+    "repo": "h5p/drop",
+    "tag": "1.0.2",
+    "commit": "1385b2c3c728f395694fae33abb347780e339d5e",
+    "version": "1.0.2"
+  },
+  "H5P.MarkTheWords-1.5": {
+    "machineName": "H5P.MarkTheWords",
+    "repo": "h5p/h5p-mark-the-words",
+    "tag": "1.5.5",
+    "commit": "56f291adb67a876d8f57f181a3eff606bc049247",
+    "version": "1.5.5",
+    "editorOnly": true
+  },
+  "H5P.SingleChoiceSet-1.3": {
+    "machineName": "H5P.SingleChoiceSet",
+    "repo": "h5p/h5p-single-choice-set",
+    "tag": "1.3.5",
+    "commit": "d9285b5735c369613cf607a7858f330eb949d00e",
+    "version": "1.3.5",
+    "editorOnly": true
+  },
+  "H5P.Blanks-1.4": {
+    "machineName": "H5P.Blanks",
+    "repo": "h5p/h5p-blanks",
+    "tag": "1.4.6",
+    "commit": "50b4bfa161289403c6d4fc7152079fe211695673",
+    "version": "1.4.6",
+    "editorOnly": true
+  },
+  "H5P.DragNDrop-1.1": {
+    "machineName": "H5P.DragNDrop",
+    "repo": "h5p/h5p-drag-n-drop",
+    "tag": "1.1.5",
+    "commit": "a739a3dba26412f184a337642f5c82cdf179f54c",
+    "version": "1.1.5"
+  },
+  "H5PEditor.Duration-1.1": {
+    "machineName": "H5PEditor.Duration",
+    "repo": "h5p/h5p-editor-duration",
+    "tag": "1.1.14",
+    "commit": "3661c92e072c85648100cd1187419be0c9667075",
+    "version": "1.1.14",
+    "editorOnly": true
+  },
+  "H5PEditor.Timecode-1.2": {
+    "machineName": "H5PEditor.Timecode",
+    "repo": "h5p/h5p-editor-timecode",
+    "tag": "1.2.14",
+    "commit": "0b32f41f9900daff4cf05b1345db390d0ebb4965",
+    "version": "1.2.14",
+    "editorOnly": true
+  },
+  "H5PEditor.SelectToggleFields-1.1": {
+    "machineName": "H5PEditor.SelectToggleFields",
+    "repo": "h5p/h5p-editor-select-toggle-fields",
+    "tag": "1.1.1",
+    "commit": "c8aa5aab1548e7b936c1f7f532a7aebde59a3f22",
+    "version": "1.1.1",
+    "editorOnly": true
+  },
+  "H5P.Nil-1.0": {
+    "machineName": "H5P.Nil",
+    "repo": "h5p/h5p-nil",
+    "tag": "1.0.14",
+    "commit": "d09dd4a820fd57496913db0dbefbd5daef82f4cd",
+    "version": "1.0.14",
+    "editorOnly": true
+  },
+  "H5P.GuidedTour-1.0": {
+    "machineName": "H5P.GuidedTour",
+    "repo": "h5p/h5p-guided-tour",
+    "tag": "1.0.6",
+    "commit": "060794f89056da5417c98f291d75af1c3a647087",
+    "version": "1.0.6",
+    "editorOnly": true
+  },
+  "H5P.GoToQuestion-1.3": {
+    "machineName": "H5P.GoToQuestion",
+    "repo": "h5p/h5p-go-to-question",
+    "tag": "1.3.23",
+    "commit": "3f4694c9af7c1e1fbcd22d3bb6d159b17b902a03",
+    "version": "1.3.23",
+    "editorOnly": true
+  },
+  "H5P.IVHotspot-1.2": {
+    "machineName": "H5P.IVHotspot",
+    "repo": "h5p/h5p-iv-hotspot",
+    "tag": "1.2.18",
+    "commit": "1c5fdb23fe0939d78c96a73429babc8c6af28e4b",
+    "version": "1.2.18",
+    "editorOnly": true
+  },
+  "H5P.FreeTextQuestion-1.0": {
+    "machineName": "H5P.FreeTextQuestion",
+    "repo": "h5p/h5p-free-text-question",
+    "tag": "1.0.16",
+    "commit": "5ea90c9c76353d87356e74012ccdb1e71b9228fb",
+    "version": "1.0.16",
+    "editorOnly": true
+  },
+  "H5P.ThreeJS-1.0": {
+    "machineName": "H5P.ThreeJS",
+    "repo": "h5p/h5p-three-js",
+    "tag": "1.0.108",
+    "commit": "1805c9b245a076e065ab0b31dcf89d33d28d6b88",
+    "version": "1.0.108",
+    "missingFiles": [
+      "dist/three.min.js"
+    ]
+  },
+  "H5PEditor.Shape-1.0": {
+    "machineName": "H5PEditor.Shape",
+    "repo": "h5p/h5p-editor-shape",
+    "tag": "master",
+    "commit": "2acebc340e66cb5c93558e4bfeee7d1d9a72cf58",
+    "version": "1.0.0",
+    "editorOnly": true
+  },
+  "H5PEditor.UrlField-1.2": {
+    "machineName": "H5PEditor.UrlField",
+    "repo": "h5p/h5p-editor-url-field",
+    "tag": "1.2.2",
+    "commit": "00274822eb1827cb5f4aca2564b42a420f25bb3a",
+    "version": "1.2.2",
+    "editorOnly": true
+  },
+  "Tether-1.0": {
+    "machineName": "Tether",
+    "repo": "h5p/tether",
+    "tag": "1.0.2",
+    "commit": "d192d460538feba1eaa61f698623fba61abda44a",
+    "version": "1.0.2"
+  },
+  "H5P.Question-1.1": {
+    "machineName": "H5P.Question",
+    "repo": "h5p/h5p-question",
+    "tag": "1.1.6",
+    "commit": "0d2a0b8464a7c4553d8c8bac4f86023c5c36c8ae",
+    "version": "1.1.6",
+    "editorOnly": true
+  },
+  "H5P.SoundJS-1.0": {
+    "machineName": "H5P.SoundJS",
+    "repo": "h5p/h5p-soundjs",
+    "tag": "1.0.2",
+    "commit": "c4313c98d2f2687c8f88f42ab3c2e79f29a611fd",
+    "version": "1.0.2",
+    "editorOnly": true
+  },
+  "H5PEditor.VerticalTabs-1.1": {
+    "machineName": "H5PEditor.VerticalTabs",
+    "repo": "h5p/h5p-editor-vertical-tabs",
+    "tag": "1.1.4",
+    "commit": "8c4079e26f96a5b2f37c104d3d088e4a376dee49",
+    "version": "1.1.4",
+    "editorOnly": true
+  },
+  "Shepherd-1.0": {
+    "machineName": "Shepherd",
+    "repo": "h5p/shepherd",
+    "tag": "1.0.7",
+    "commit": "50bd07f43145c0b350c87581647366f1fb85cf86",
+    "version": "1.0.7",
+    "editorOnly": true
+  },
+  "H5P.CKEditor-1.0": {
+    "machineName": "H5P.CKEditor",
+    "repo": "h5p/h5p-ckeditor",
+    "tag": "1.0.23",
+    "commit": "7101d4b9e3d9fbe619360b92d026b95a2ac4cfd3",
+    "version": "1.0.23",
+    "editorOnly": true
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "adapt-component-h5p",
+  "version": "0.1.0",
+  "framework": ">=5.48.4",
+  "homepage": "https://github.com/jasonswrench-beep/adapt_authoring",
+  "bugs": "https://github.com/jasonswrench-beep/adapt_authoring/issues",
+  "component": "h5pPlayer",
+  "displayName": "H5P Player",
+  "description": "Plays an uploaded H5P file inside the course (self-hosted, works offline and in SCORM packages) and completes when the learner finishes the activity",
+  "main": "js/adapt-component-h5p.js",
+  "keywords": [
+    "adapt-plugin",
+    "adapt-component"
+  ],
+  "license": "GPL-3.0",
+  "targetAttribute": "_h5pPlayer"
+}

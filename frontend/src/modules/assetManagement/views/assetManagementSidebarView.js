@@ -3,11 +3,13 @@ define(function(require) {
 
     var Origin = require('core/origin');
     var SidebarItemView = require('modules/sidebar/views/sidebarItemView');
+    var Recorder = require('./assetManagementRecorder');
 
     var AssetManagementSidebarView = SidebarItemView.extend({
 
         events: {
             'click .asset-management-sidebar-new': 'onAddNewAssetClicked',
+            'click .asset-management-sidebar-record': 'onRecordClicked',
             'click .asset-management-sidebar-filter-button': 'onFilterButtonClicked',
             'click .sidebar-filter-clear': 'onClearSearchClicked',
             'keyup .asset-management-sidebar-filter-search': 'onSearchKeyup',
@@ -24,6 +26,11 @@ define(function(require) {
 
         onAddNewAssetClicked: function() {
             Origin.router.navigateTo('assetManagement/new');
+        },
+
+        onRecordClicked: function(event) {
+            event.preventDefault();
+            Recorder.open(event.currentTarget);
         },
 
         onFilterButtonClicked: function(event) {

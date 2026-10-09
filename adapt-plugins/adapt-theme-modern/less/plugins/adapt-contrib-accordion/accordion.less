@@ -1,0 +1,107 @@
+.accordion-item {
+  margin-bottom: @item-margin / 2;
+
+  &__btn {
+    position: relative;
+    padding-top: @item-padding;
+    padding-bottom: @item-padding;
+    padding-inline-start: @item-padding;
+    padding-inline-end: @icon-size + (@item-padding * 2);
+    text-align: start;
+  }
+  
+  &__btn.has-title-icon {
+    padding-inline-start: @icon-size + (@item-padding * 2);
+  }
+
+  & when (@item-color-style = filled) {
+    &__btn {
+      .item-color;
+
+      .no-touch &:not(.is-selected):hover {
+        .item-color-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .item-color-focus;
+      }
+    }
+
+    &__btn.is-visited {
+      .item-color-visited;
+    }
+
+    &__btn.is-selected {
+      .item-color-selected;
+    }
+  }
+
+  & when (@item-color-style = outline) {
+    &__btn {
+      .item-color-outline;
+
+      .no-touch &:not(.is-selected):hover {
+        .item-color-outline-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .item-color-outline-focus;
+      }
+    }
+
+    &__btn.is-visited {
+      .item-color-outline-visited;
+    }
+
+    &__btn.is-selected {
+      .item-color-outline-selected;
+    }
+  }
+
+  &:not(.is-center-aligned) &__title-icon {
+    position: absolute;
+    top: 50%;
+    left: @item-padding;
+    .transform(translateY(-50%));
+
+    .dir-rtl & {
+      left: inherit;
+      right: @item-padding;
+    }
+  }
+
+  &:not(.is-center-aligned) &__icon {
+    position: absolute;
+    top: 50%;
+    right: @item-padding;
+    .transform(translateY(-50%));
+
+    .dir-rtl & {
+      right: inherit;
+      left: @item-padding;
+    }
+  }
+
+  &__content {
+    padding: @item-padding;
+    border-radius: @item-border-radius;
+  }
+
+  &__body a {
+    .link-text;
+  }
+
+  &.has-img-zoom &__image-container {
+    .img-zoom();
+  }
+
+  // vertical items
+  &.is-center-aligned &__btn {
+    padding-inline: @item-padding;
+  }
+
+  &.is-center-aligned &__title-icon,
+  &.is-center-aligned &__title {
+    padding-bottom: @icon-padding / 2;
+  }
+}

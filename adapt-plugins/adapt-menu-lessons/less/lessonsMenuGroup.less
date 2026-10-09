@@ -1,0 +1,41 @@
+.lessons-group {
+  &__header-inner {
+    .l-container-responsive(@max-content-width);
+  }
+
+  &__item-container-inner {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Default look of the Lessons menu (numbered cards with a status label and a button). Without this the menu is plain
+// unstyled text under any theme that does not style it itself (such as Vanilla). The Modern theme has its own copy of
+// these rules, which is applied after these. Only variables that every Adapt theme defines are used here.
+// ---------------------------------------------------------------------------------------------------------------------
+.lessons-group {
+  &__header-inner {
+    .l-container-padding(@menu-header-padding-ver, @menu-header-padding-hoz);
+  }
+
+  &__title {
+    margin-bottom: @menu-subtitle-margin;
+    .menu-subtitle;
+  }
+
+  &__body {
+    margin-bottom: @menu-body-margin;
+    .menu-body;
+  }
+
+  &__instruction {
+    margin-bottom: @menu-instruction-margin;
+    .menu-instruction;
+  }
+
+  &__body a,
+  &__instruction a {
+    .link-text;
+  }
+}

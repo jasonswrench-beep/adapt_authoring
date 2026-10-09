@@ -1,0 +1,21 @@
+{
+  "name": "adapt-h5p-editor",
+  "version": "0.1.0",
+  "private": true,
+  "description": "H5P editor service for the course authoring tool (built on Lumi's h5p-nodejs-library, GPL-3.0)",
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "engines": { "node": ">=22.12.0" },
+  "scripts": { "start": "node server.mjs", "test": "node --test test/*.test.mjs" },
+  "dependencies": {
+    "@lumieducation/h5p-express": "10.0.5",
+    "@lumieducation/h5p-server": "10.0.4",
+    "body-parser": "2.2.0",
+    "express": "5.1.0",
+    "express-fileupload": "1.5.1",
+    "cookie-parser": "1.4.7",
+    "i18next": "25.3.2",
+    "i18next-fs-backend": "2.6.0",
+    "i18next-http-middleware": "3.7.4"
+  }
+}

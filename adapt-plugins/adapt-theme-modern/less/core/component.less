@@ -1,0 +1,51 @@
+.component {
+  position: relative;
+
+  &.has-bg-image > .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+  }
+
+  &__container {
+    flex-direction: unset;
+    margin-left: -@component-padding-hoz;
+    margin-right: -@component-padding-hoz;
+  }
+
+  &__inner {
+    position: relative;
+    padding: @component-padding-ver @component-padding-hoz;
+  }
+
+  &__priority {
+    .priority-label;
+    margin-bottom: @component-priority-margin;
+    .component-priority;
+  }
+
+  &__title {
+    margin-bottom: @component-title-margin;
+    .component-title;
+    color: @heading-color;
+  }
+
+  &__body {
+    margin-bottom: @component-body-margin;
+  }
+
+  &__instruction {
+    margin-bottom: @component-instruction-margin;
+    .instruction-text;
+  }
+
+  &__body a,
+  &__instruction a {
+    .link-text;
+  }
+}

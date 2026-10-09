@@ -1,0 +1,341 @@
+[
+  {
+    "id": "multiple-choice",
+    "file": "multiple-choice.h5p",
+    "title": "Multiple Choice",
+    "category": "Check understanding",
+    "summary": "A question with several answers; one or more can be correct.",
+    "bestFor": "Quick knowledge checks after a short section, or testing understanding of a single idea.",
+    "completion": "activity"
+  },
+  {
+    "id": "true-false",
+    "file": "true-false.h5p",
+    "title": "True / False",
+    "category": "Check understanding",
+    "summary": "One statement the learner marks true or false.",
+    "bestFor": "Busting myths or checking a single fact; very quick to answer.",
+    "completion": "activity"
+  },
+  {
+    "id": "single-choice-set",
+    "file": "single-choice-set.h5p",
+    "title": "Single Choice Set",
+    "category": "Check understanding",
+    "summary": "A run of quick one-answer questions, one after another, with a score at the end.",
+    "bestFor": "Rapid-fire review of several facts in one place.",
+    "completion": "activity"
+  },
+  {
+    "id": "question-set",
+    "file": "question-set.h5p",
+    "title": "Quiz (Question Set)",
+    "category": "Check understanding",
+    "summary": "A full quiz that mixes question types and shows a final score and feedback.",
+    "bestFor": "End-of-lesson quizzes where you want one overall result.",
+    "completion": "activity"
+  },
+  {
+    "id": "summary",
+    "file": "summary.h5p",
+    "title": "Summary",
+    "category": "Check understanding",
+    "summary": "The learner builds a summary by picking the correct statement from each group.",
+    "bestFor": "Reinforcing the key points at the end of a topic.",
+    "completion": "activity"
+  },
+  {
+    "id": "mark-the-words",
+    "file": "mark-the-words.h5p",
+    "title": "Mark the Words",
+    "category": "Check understanding",
+    "summary": "The learner clicks the words in a passage that answer the question (for example, all the verbs).",
+    "bestFor": "Close reading, grammar, or spotting key terms in a text.",
+    "completion": "activity"
+  },
+  {
+    "id": "find-the-hotspot",
+    "file": "find-the-hotspot.h5p",
+    "title": "Find the Hotspot",
+    "category": "Check understanding",
+    "summary": "The learner clicks the correct spot on an image.",
+    "bestFor": "Anatomy, maps, diagrams and screenshots: \"show me where\".",
+    "completion": "activity"
+  },
+  {
+    "id": "find-multiple-hotspots",
+    "file": "find-multiple-hotspots.h5p",
+    "title": "Find Multiple Hotspots",
+    "category": "Check understanding",
+    "summary": "The learner finds several correct spots on an image.",
+    "bestFor": "Labelling parts of a diagram or finding all the errors in a picture.",
+    "completion": "activity"
+  },
+  {
+    "id": "multimedia-choice",
+    "file": "multimedia-choice.h5p",
+    "title": "Multimedia Choice",
+    "category": "Check understanding",
+    "summary": "Multiple choice where the answers are pictures (or audio) instead of text.",
+    "bestFor": "Visual identification, such as picking the correct diagram or specimen.",
+    "completion": "activity"
+  },
+  {
+    "id": "fill-in-the-blanks",
+    "file": "fill-in-the-blanks.h5p",
+    "title": "Fill in the Blanks",
+    "category": "Fill in and drag",
+    "summary": "The learner types the missing words into a passage.",
+    "bestFor": "Recalling terminology and vocabulary from memory.",
+    "completion": "activity"
+  },
+  {
+    "id": "complex-blanks",
+    "file": "complex-blanks.h5p",
+    "title": "Complex Fill the Blanks",
+    "category": "Fill in and drag",
+    "summary": "Fill in the blanks with richer feedback, and hints for each blank.",
+    "bestFor": "Longer passages where wrong answers need tailored feedback.",
+    "completion": "activity"
+  },
+  {
+    "id": "drag-the-words",
+    "file": "drag-the-words.h5p",
+    "title": "Drag the Words",
+    "category": "Fill in and drag",
+    "summary": "The learner drags words into the gaps in a passage.",
+    "bestFor": "A gentler alternative to typing; good for beginners or touch screens.",
+    "completion": "activity"
+  },
+  {
+    "id": "drag-and-drop",
+    "file": "drag-and-drop.h5p",
+    "title": "Drag and Drop",
+    "category": "Fill in and drag",
+    "summary": "The learner drags items onto the right places on an image or into categories.",
+    "bestFor": "Sorting, matching, and labelling diagrams.",
+    "completion": "activity"
+  },
+  {
+    "id": "sort-paragraphs",
+    "file": "sort-paragraphs.h5p",
+    "title": "Sort the Paragraphs",
+    "category": "Fill in and drag",
+    "summary": "The learner puts paragraphs (or steps) into the right order.",
+    "bestFor": "Procedures, processes, and how an argument is structured.",
+    "completion": "activity"
+  },
+  {
+    "id": "image-sequencing",
+    "file": "image-sequencing.h5p",
+    "title": "Image Sequencing",
+    "category": "Fill in and drag",
+    "summary": "The learner puts images into the right order.",
+    "bestFor": "Stages of a process, timelines, or step-by-step visuals.",
+    "completion": "viewed"
+  },
+  {
+    "id": "accordion",
+    "file": "accordion.h5p",
+    "title": "Accordion",
+    "category": "Explore and present",
+    "summary": "Collapsible headings that reveal text when clicked.",
+    "bestFor": "Long reference text, FAQs, and glossaries that would otherwise fill the page.",
+    "completion": "viewed"
+  },
+  {
+    "id": "timeline",
+    "file": "timeline.h5p",
+    "title": "Timeline",
+    "category": "Explore and present",
+    "summary": "A scrolling timeline of events with text and pictures.",
+    "bestFor": "History, case studies, and any sequence of dated events.",
+    "completion": "viewed"
+  },
+  {
+    "id": "image-slider",
+    "file": "image-slider.h5p",
+    "title": "Image Slider",
+    "category": "Explore and present",
+    "summary": "A slideshow of images with captions.",
+    "bestFor": "Galleries, before-and-after comparisons, and photo walkthroughs.",
+    "completion": "viewed"
+  },
+  {
+    "id": "collage",
+    "file": "collage.h5p",
+    "title": "Collage",
+    "category": "Explore and present",
+    "summary": "Several pictures arranged in a grid, shown in a chosen layout.",
+    "bestFor": "A visual overview or a set of related photos.",
+    "completion": "viewed"
+  },
+  {
+    "id": "information-wall",
+    "file": "information-wall.h5p",
+    "title": "Information Wall",
+    "category": "Explore and present",
+    "summary": "A wall of cards the learner can browse and filter.",
+    "bestFor": "Browsing many short facts, profiles or resources at once.",
+    "completion": "viewed"
+  },
+  {
+    "id": "virtual-tour",
+    "file": "virtual-tour.h5p",
+    "title": "Virtual Tour (360)",
+    "category": "Explore and present",
+    "summary": "A 360-degree panorama with clickable hotspots and links between scenes.",
+    "bestFor": "Places that are hard to visit in person: labs, sites, buildings.",
+    "completion": "viewed",
+    "notes": "Needs 360-degree photographs. The example uses large images, so the page loads more slowly."
+  },
+  {
+    "id": "chart",
+    "file": "chart.h5p",
+    "title": "Chart",
+    "category": "Explore and present",
+    "summary": "A bar or pie chart drawn from numbers you enter.",
+    "bestFor": "Showing data without making an image of it.",
+    "completion": "viewed"
+  },
+  {
+    "id": "flashcards",
+    "file": "flashcards.h5p",
+    "title": "Flashcards",
+    "category": "Practice and recall",
+    "summary": "Cards with a question on the front; the learner types an answer and flips the card.",
+    "bestFor": "Self-testing on terms and definitions.",
+    "completion": "viewed"
+  },
+  {
+    "id": "memory-game",
+    "file": "memory-game.h5p",
+    "title": "Memory Game",
+    "category": "Practice and recall",
+    "summary": "Match pairs of cards.",
+    "bestFor": "Matching terms to pictures or definitions in a lighter way.",
+    "completion": "activity"
+  },
+  {
+    "id": "course-presentation",
+    "file": "course-presentation.h5p",
+    "title": "Course Presentation",
+    "category": "Presentations and video",
+    "summary": "Slides that can hold text, images, video and questions, with a score across the whole presentation.",
+    "bestFor": "A self-contained mini-lesson with checks along the way.",
+    "completion": "activity"
+  },
+  {
+    "id": "interactive-video",
+    "file": "interactive-video.h5p",
+    "title": "Interactive Video",
+    "category": "Presentations and video",
+    "summary": "A video that stops at chosen moments to ask questions or show extra information.",
+    "bestFor": "Keeping learners active while watching a lecture or demonstration.",
+    "completion": "activity"
+  },
+  {
+    "id": "interactive-book",
+    "file": "interactive-book.h5p",
+    "title": "Interactive Book",
+    "category": "Presentations and video",
+    "summary": "A multi-chapter book mixing text, media and activities with progress tracking.",
+    "bestFor": "A whole unit in one place, with a table of contents.",
+    "completion": "activity"
+  },
+  {
+    "id": "impressive-presentation",
+    "file": "impressive-presentation.h5p",
+    "title": "Impressive Presentation (alpha)",
+    "category": "Presentations and video",
+    "summary": "A 3D, zooming presentation in the style of Prezi.",
+    "bestFor": "Showy overviews where the movement between ideas matters. Experimental.",
+    "completion": "viewed",
+    "notes": "Alpha software that was only tested in Chrome. Keep this one for special cases."
+  },
+  {
+    "id": "essay",
+    "file": "essay.h5p",
+    "title": "Essay",
+    "category": "Reflect and respond",
+    "summary": "The learner writes a short answer which is checked for keywords.",
+    "bestFor": "Short written responses where you want instant, keyword-based feedback.",
+    "completion": "activity"
+  },
+  {
+    "id": "questionnaire",
+    "file": "questionnaire.h5p",
+    "title": "Questionnaire",
+    "category": "Reflect and respond",
+    "summary": "A set of survey questions with no right or wrong answers.",
+    "bestFor": "Course feedback and self-assessment.",
+    "completion": "activity"
+  },
+  {
+    "id": "personality-quiz",
+    "file": "personality-quiz.h5p",
+    "title": "Personality Quiz",
+    "category": "Reflect and respond",
+    "summary": "A set of questions whose answers add up to a \"which type are you?\" result, with no right or wrong answers.",
+    "bestFor": "Self-assessment, learning styles, and career or role-fit activities.",
+    "completion": "viewed",
+    "notes": "Gives a result rather than a score, so it counts as complete once viewed."
+  },
+  {
+    "id": "cornell-notes",
+    "file": "cornell-notes.h5p",
+    "title": "Cornell Notes",
+    "category": "Reflect and respond",
+    "summary": "A note-taking template with a notes column, cues column and summary.",
+    "bestFor": "Teaching note-taking while students read or watch.",
+    "completion": "viewed"
+  },
+  {
+    "id": "documentation-tool",
+    "file": "documentation-tool.h5p",
+    "title": "Documentation Tool",
+    "category": "Reflect and respond",
+    "summary": "A guided form (goals, pages of questions) that the learner can export as a document.",
+    "bestFor": "Reflective journals, project plans and learning contracts.",
+    "completion": "viewed"
+  },
+  {
+    "id": "structure-strip",
+    "file": "structure-strip.h5p",
+    "title": "Structure Strip",
+    "category": "Reflect and respond",
+    "summary": "A drag-to-arrange strip for planning the parts of a piece of writing.",
+    "bestFor": "Planning an essay or report structure.",
+    "completion": "viewed"
+  },
+  {
+    "id": "speak-the-words",
+    "file": "speak-the-words.h5p",
+    "title": "Speak the Words",
+    "category": "Reflect and respond",
+    "summary": "The learner answers aloud and the browser listens.",
+    "bestFor": "Language learning and pronunciation. Needs a microphone.",
+    "completion": "viewed",
+    "notes": "Needs a microphone, and speech recognition works in Chrome and Edge but not in every browser."
+  },
+  {
+    "id": "speak-the-words-set",
+    "file": "speak-the-words-set.h5p",
+    "title": "Speak the Words Set",
+    "category": "Reflect and respond",
+    "summary": "Several spoken-answer questions in a row.",
+    "bestFor": "Oral practice with several prompts.",
+    "completion": "viewed",
+    "notes": "Needs a microphone, and speech recognition works in Chrome and Edge but not in every browser."
+  },
+  {
+    "id": "kewar-code",
+    "file": "kewar-code.h5p",
+    "title": "KewAr Code",
+    "category": "Explore and present",
+    "summary": "Makes a scannable QR code for contact details, a web link, a location, a calendar event or a text message.",
+    "bestFor": "Linking a printed handout, poster or slide to online material, or sharing contact details.",
+    "completion": "viewed",
+    "notes": "Learners need a phone camera to scan it."
+  }
+]

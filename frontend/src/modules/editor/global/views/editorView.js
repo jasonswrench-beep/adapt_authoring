@@ -4,8 +4,11 @@
  */
 define(function(require) {
   var Backbone = require('backbone');
+  var _ = require('underscore');
   var Origin = require('core/origin');
   var helpers = require('core/helpers');
+  var AccessibilityReport = require('../accessibilityReport');
+  var H5pApprovalReport = require('../h5pApprovalReport');
 
   var EditorOriginView = require('./editorOriginView');
   var EditorMenuView = require('../../contentObject/views/editorMenuView');
@@ -35,6 +38,8 @@ define(function(require) {
     preRender: function(options) {
       this.currentView = options.currentView;
       Origin.editor.isPreviewPending = false;
+      // the approvals dialog lives outside this view (it is an alert), so its buttons are handled at document level
+      $(document).off('click.h5pApproval').on('click.h5pApproval', '.js-h5p-action', this.onH5pAction.bind(this));
       this.currentCourseId = Origin.editor.data.course.get('_id');
       this.currentCourse = Origin.editor.data.course;
       this.currentPageId = options.currentPageId;
@@ -45,6 +50,8 @@ define(function(require) {
         'editorView:copyID': this.copyIdToClipboard,
         'editorView:paste': this.pasteFromClipboard,
         'editorCommon:download': this.downloadProject,
+        'editorCommon:accessibility': function() { this.checkAccessibility(false); },
+        'editorCommon:h5papprovals': this.openH5pApprovals,
         'editorCommon:preview': function(isForceRebuild) {
           var previewWindow = window.open('loading', 'preview');
           this.previewProject(previewWindow, isForceRebuild);
@@ -149,7 +156,7 @@ define(function(require) {
       }
     },
 
-    downloadProject: function() {
+    downloadProject: function(format) {
       if(Origin.editor.isDownloadPending) {
         return;
       }
@@ -157,6 +164,7 @@ define(function(require) {
       $('.editor-common-sidebar-downloading').removeClass('display-none');
 
       var url = 'api/output/' + Origin.constants.outputPlugin + '/publish/' + this.currentCourseId;
+      if (format) url += '?format=' + encodeURIComponent(format);
       $.get(url, function(data, textStatus, jqXHR) {
         if (!data.success) {
           Origin.Notify.alert({
@@ -183,6 +191,106 @@ define(function(require) {
         this.resetDownloadProgress();
         Origin.Notify.alert({ type: 'error', text: Origin.l10n.t('app.errorgeneric') });
       }.bind(this));
+    },
+
+    /** Administrators: lists H5P files waiting for approval, and the decisions made so far. */
+    openH5pApprovals: function() {
+      var self = this;
+      if (Origin.editor.isH5pLoading) return;
+      Origin.editor.isH5pLoading = true;
+      $('.editor-common-sidebar-h5p-inner').addClass('display-none');
+      $('.editor-common-sidebar-h5p-loading').removeClass('display-none');
+      var done = function() {
+        $('.editor-common-sidebar-h5p-inner').removeClass('display-none');
+        $('.editor-common-sidebar-h5p-loading').addClass('display-none');
+        Origin.editor.isH5pLoading = false;
+      };
+      $.get('api/h5papproval', function(data) {
+        done();
+        if (!data.success) {
+          return Origin.Notify.alert({ type: 'error', text: Origin.l10n.t('app.errorgeneric') + Origin.l10n.t('app.debuginfo', { message: data.message }) });
+        }
+        Origin.Notify.alert({
+          type: 'info',
+          title: Origin.l10n.t('app.h5ptitle'),
+          text: H5pApprovalReport.buildHtml(data.payload, function(key, options) { return Origin.l10n.t(key, options); }, _.escape),
+          customClass: 'h5p-approval-dialog',
+          confirmButtonText: Origin.l10n.t('app.a11yclose')
+        });
+      }).fail(function() {
+        done();
+        Origin.Notify.alert({ type: 'error', text: Origin.l10n.t('app.errorgeneric') });
+      });
+    },
+
+    onH5pAction: function(event) {
+      var self = this;
+      var $button = $(event.currentTarget);
+      var action = String($button.data('action'));
+      var hash = String($button.data('hash'));
+      if (!/^[a-f0-9]{64}$/.test(hash) || ['approve', 'reject', 'revoke'].indexOf(action) === -1) return;
+      $button.prop('disabled', true);
+      $.ajax({
+        url: 'api/h5papproval/' + hash + (action === 'revoke' ? '' : '/' + action),
+        type: action === 'revoke' ? 'DELETE' : 'POST'
+      }).done(function() {
+        self.openH5pApprovals(); // show the updated list
+      }).fail(function(xhr) {
+        var message = (xhr.responseJSON && xhr.responseJSON.message) || Origin.l10n.t('app.errorgeneric');
+        Origin.Notify.alert({ type: 'error', text: message });
+      });
+    },
+
+    /**
+     * Checks the saved course for accessibility problems and shows a report. `isFullCheck` also builds the
+     * preview and runs axe-core on the rendered pages (slower, and only offered if the server supports it).
+     */
+    checkAccessibility: function(isFullCheck) {
+      var self = this;
+      if (Origin.editor.isAccessibilityCheckPending) return;
+      Origin.editor.isAccessibilityCheckPending = true;
+      $('.editor-common-sidebar-accessibility-inner').addClass('display-none');
+      $('.editor-common-sidebar-accessibility-checking').removeClass('display-none');
+
+      var url = 'api/output/' + Origin.constants.outputPlugin + '/accessibility/' + this.currentCourseId;
+      if (isFullCheck === true) url += '?deep=true';
+      $.get(url, function(data) {
+        self.resetAccessibilityCheck();
+        if (!data.success) {
+          return Origin.Notify.alert({
+            type: 'error',
+            text: Origin.l10n.t('app.errorgeneric') + Origin.l10n.t('app.debuginfo', { message: data.message })
+          });
+        }
+        self.showAccessibilityReport(data.payload, isFullCheck === true);
+      }).fail(function() {
+        self.resetAccessibilityCheck();
+        Origin.Notify.alert({ type: 'error', text: Origin.l10n.t('app.errorgeneric') });
+      });
+    },
+
+    showAccessibilityReport: function(payload, wasFullCheck) {
+      var self = this;
+      var summary = AccessibilityReport.summarise(payload);
+      var offerFullCheck = !wasFullCheck && payload.deepAvailable === true;
+      Origin.Notify.alert({
+        type: summary.errors ? 'warning' : 'success',
+        title: Origin.l10n.t('app.a11ytitle'),
+        text: AccessibilityReport.buildHtml(payload, function(key, options) { return Origin.l10n.t(key, options); }, _.escape),
+        customClass: 'a11y-report-dialog',
+        showCancelButton: offerFullCheck,
+        confirmButtonText: Origin.l10n.t(offerFullCheck ? 'app.a11yrunfull' : 'app.a11yclose'),
+        cancelButtonText: Origin.l10n.t('app.a11yclose'),
+        callback: function(isConfirm) {
+          if (offerFullCheck && isConfirm) self.checkAccessibility(true);
+        }
+      });
+    },
+
+    resetAccessibilityCheck: function() {
+      $('.editor-common-sidebar-accessibility-inner').removeClass('display-none');
+      $('.editor-common-sidebar-accessibility-checking').addClass('display-none');
+      Origin.editor.isAccessibilityCheckPending = false;
     },
 
     updatePreviewProgress: function(url, previewWindow) {

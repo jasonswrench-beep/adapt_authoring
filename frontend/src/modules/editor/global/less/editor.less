@@ -202,3 +202,326 @@ i.asset-clear {
   transform: scale(0.4, 0.4);
   opacity:0;
 }
+
+// "Check accessibility" report dialog (SweetAlert with customClass)
+.sweet-alert.a11y-report-dialog {
+  width: 640px;
+  margin-left: -337px;
+  max-height: 85vh;
+  overflow-y: auto;
+  text-align: left;
+
+  h2 {
+    text-align: center;
+  }
+
+  .a11y-report {
+    font-size: 14px;
+    line-height: 1.45;
+
+    h4 {
+      margin: 18px 0 6px;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .a11y-group {
+      border-left: 5px solid #7a7a7a;
+      background: #f4f4f4;
+      margin: 8px 0;
+      padding: 6px 12px;
+    }
+
+    .a11y-error {
+      border-left-color: #b00020;
+    }
+
+    .a11y-warning {
+      border-left-color: #b26b00;
+    }
+
+    .a11y-info {
+      border-left-color: #1d5f9e;
+    }
+
+    .a11y-places {
+      margin: 4px 0 0 4px;
+      color: #444;
+
+      li {
+        padding: 1px 0;
+      }
+    }
+
+    .a11y-wcag {
+      color: #666;
+      font-size: 12px;
+    }
+
+    .a11y-fix {
+      margin: 6px 0 0;
+    }
+
+    .a11y-note {
+      color: #555;
+      margin-top: 14px;
+    }
+  }
+}
+
+// Administrator's "H5P approvals" dialog (SweetAlert with customClass)
+.sweet-alert.h5p-approval-dialog {
+  width: 680px;
+  margin-left: -357px;
+  max-height: 85vh;
+  overflow-y: auto;
+  text-align: left;
+
+  h2 {
+    text-align: center;
+  }
+
+  .h5p-approvals {
+    font-size: 14px;
+    line-height: 1.45;
+
+    h4 {
+      margin: 18px 0 6px;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .h5p-warning {
+      padding: 8px 12px;
+      border-left: 5px solid #A84D10;
+      background: #F4F5F6;
+    }
+
+    .h5p-entry {
+      border-left: 5px solid #7a7a7a;
+      background: #F4F5F6;
+      margin: 8px 0;
+      padding: 8px 12px;
+    }
+
+    .h5p-pending {
+      border-left-color: #A84D10;
+    }
+
+    .h5p-approved {
+      border-left-color: #166534;
+    }
+
+    .h5p-rejected {
+      border-left-color: #B91C1C;
+    }
+
+    .h5p-badge {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 1px 8px;
+      border: 1px solid #003E7E;
+      border-radius: 10px;
+      background: #F0F3F7;
+      color: #003E7E;
+      font-size: 0.85em;
+    }
+
+    .h5p-details {
+      margin: 4px 0 0 4px;
+      color: #444;
+
+      li {
+        padding: 1px 0;
+      }
+    }
+
+    // Explicit button styling: the alert library's default buttons are pale blue with white text (low contrast).
+    // Navy is the brand colour (10.5:1 with white); the second action is an outline so the two are not confused.
+    .h5p-actions {
+      margin-top: 8px;
+
+      button {
+        margin: 0 8px 0 0;
+        padding: 6px 16px;
+        border: 2px solid #003E7E;
+        border-radius: 8px;
+        background: #003E7E;
+        color: #FFFFFF;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: none;
+        cursor: pointer;
+
+        &:hover,
+        &:focus {
+          background: #00305F;
+          border-color: #00305F;
+          color: #FFFFFF;
+        }
+
+        &.h5p-action-reject,
+        &.h5p-action-revoke {
+          background: #FFFFFF;
+          color: #003E7E;
+
+          &:hover,
+          &:focus {
+            background: #F0F3F7;
+            border-color: #003E7E;
+            color: #003E7E;
+          }
+        }
+
+        &:focus-visible {
+          outline: 3px solid #1F2937;
+          outline-offset: 2px;
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: default;
+        }
+      }
+    }
+
+    .h5p-empty {
+      color: #555;
+    }
+  }
+}
+
+// H5P activity gallery (dialog opened from the H5P Player component's sidebar)
+.h5p-gallery-overlay {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: 3000;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.h5p-gallery {
+  background: #fff;
+  color: #222;
+  width: 92%;
+  max-width: 1000px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 20px 24px;
+  border-radius: 6px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+
+  .h5p-gallery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h2 { margin: 0; }
+  }
+  .h5p-gallery-close {
+    background: none;
+    border: 0;
+    font-size: 32px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px 10px;
+  }
+  .h5p-gallery-tools {
+    margin: 10px 0;
+    label { display: block; font-weight: bold; margin-bottom: 4px; }
+    input[type=search] { width: 100%; max-width: 420px; padding: 8px; box-sizing: border-box; }
+  }
+  .h5p-gallery-categories { margin-top: 10px; }
+  .h5p-gallery-category {
+    margin: 0 6px 6px 0;
+    padding: 6px 12px;
+    border: 1px solid #888;
+    border-radius: 16px;
+    background: #fff;
+    cursor: pointer;
+    &.is-active { background: #222; color: #fff; border-color: #222; }
+  }
+  .h5p-gallery-status { min-height: 1.4em; font-style: italic; }
+  .h5p-gallery-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .h5p-gallery-card {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    h3 { margin: 0 0 6px; }
+    p { margin: 0 0 8px; }
+  }
+  .h5p-gallery-thumb {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    object-position: top;
+    background: #eee;
+  }
+  .h5p-gallery-card-body { padding: 12px; display: flex; flex-direction: column; flex: 1; }
+  .h5p-gallery-note { font-size: 0.9em; color: #7a4b00; }
+  .h5p-gallery-tags span {
+    display: inline-block;
+    font-size: 0.8em;
+    padding: 2px 8px;
+    margin-right: 4px;
+    background: #eef1f4;
+    border-radius: 10px;
+  }
+  .h5p-gallery-use { margin-top: auto; }
+}
+.editor-h5p-library-help { font-size: 0.9em; margin-top: 6px; }
+
+// Screen recorder (dialog opened from the asset library's sidebar)
+.recorder-overlay {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: 3000;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recorder {
+  background: #fff;
+  color: #222;
+  width: 92%;
+  max-width: 720px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 20px 24px;
+  border-radius: 6px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+
+  .recorder-header { display: flex; justify-content: space-between; align-items: center; h2 { margin: 0; } }
+  .recorder-close { background: none; border: 0; font-size: 32px; line-height: 1; cursor: pointer; padding: 4px 10px; }
+  .recorder-status { min-height: 1.4em; font-style: italic; }
+  .recorder-privacy { font-size: 0.9em; color: #7a4b00; }
+  .recorder-unsupported { padding: 12px; background: #fff4e0; border-left: 4px solid #c77700; }
+  .recorder-actions { margin: 16px 0; button { margin-right: 8px; } }
+  .recorder-clock { font-size: 2em; font-variant-numeric: tabular-nums; }
+  .recorder-dot { display: inline-block; width: 0.5em; height: 0.5em; border-radius: 50%; background: #c62828; }
+  .recorder-clock.is-paused .recorder-dot { background: #888; }
+  .recorder-preview { width: 100%; max-height: 360px; background: #000; }
+  .recorder-field { margin: 12px 0; label { display: block; font-weight: bold; margin-bottom: 4px; } input, textarea { width: 100%; box-sizing: border-box; padding: 8px; } }
+  .recorder-hint { font-size: 0.9em; margin: 4px 0 0; }
+  .recorder-polish { font-size: 0.9em; margin-top: 16px; }
+}

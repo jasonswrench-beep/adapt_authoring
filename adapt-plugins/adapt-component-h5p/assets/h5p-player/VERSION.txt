@@ -1,0 +1,3 @@
+h5p-standalone 3.8.2 (MIT), https://github.com/tunapanda/h5p-standalone
+Vendored unmodified from the npm package dist/ folder (h5p.d.ts omitted).
+It bundles the H5P core (GPL-3.0, https://github.com/h5p/h5p-php-library) and its dependencies.

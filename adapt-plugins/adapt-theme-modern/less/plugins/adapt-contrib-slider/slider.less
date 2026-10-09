@@ -1,0 +1,114 @@
+@slider-handle-width: 2rem;
+@slider-handle-height: 2rem;
+
+@slider-track-height: .375rem;
+
+// Min width to show prefix/suffix affixes on scale step numbers
+@slider-affix-breakpoint: @device-width-medium;
+
+.slider {
+  // Numbers
+  &__number-container {
+    min-height: 2.5rem;
+  }
+
+  &__widget:not(.is-disabled) &__number {
+    cursor: pointer;
+  }
+
+  &__number-selection {
+    .item-color;
+  }
+
+  &__number-model-answer {
+    .item-color;
+  }
+
+  &__number,
+  &__number-selection,
+  &__number-model-answer {
+    height: 2.5rem;
+    width: 2.5rem;
+    line-height: 2.5;
+    text-align: center;
+    border-radius: 50%;
+  }
+
+  @media (min-width: @slider-affix-breakpoint) {
+    // Lozenge shape when prefix or suffix is present
+    &__widget {
+      &.has-scale-step-prefix,
+      &.has-scale-step-suffix {
+        .slider__number,
+        .slider__number-selection,
+        .slider__number-model-answer {
+          width: auto;
+          min-width: 2.5rem;
+          padding: 0 0.5rem;
+          border-radius: @item-ui-border-radius;
+          white-space: nowrap;
+          line-height: normal;
+        }
+      }
+    }
+  }
+
+  &__scale-step-prefix,
+  &__scale-step-suffix {
+    display: none;
+
+    @media (min-width: @slider-affix-breakpoint) {
+      display: inline;
+    }
+  }
+
+  // Scale
+  &__scale-container {
+    background-color: lighten(@black, 75%);
+  }
+
+  &__scale-notch {
+    background-color: lighten(@black, 75%);
+  }
+
+  // Slider bar
+  &__item-input-track {
+    background-color: darken(@background-inverted, 20%);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  &__item-input-fill {
+    background-color: @item-color;
+  }
+
+  // Class to show whether the users selection is in/correct
+  &__widget.show-user-answer.is-correct &__number-selection {
+    background-color: @validation-success;
+    color: @validation-success-inverted;
+  }
+
+  &__widget.show-user-answer.is-correct &__item-input-fill {
+    background-color: @validation-success;
+  }
+
+  &__widget.show-user-answer.is-incorrect &__number-selection {
+    background-color: @validation-error;
+    color: @validation-error-inverted;
+  }
+
+  &__widget.show-user-answer.is-incorrect &__item-input-fill {
+    background-color: @validation-error;
+  }
+
+  &__widget.show-correct-answer.is-correct &__item-input-fill,
+  &__widget.show-correct-answer.is-incorrect &__item-input-fill {
+    background-color: @validation-success;
+  }
+
+  &__widget.show-correct-answer.is-correct &__number-model-answer,
+  &__widget.show-correct-answer.is-incorrect &__number-model-answer {
+    background-color: @validation-success;
+    color: @validation-success-inverted;
+  }
+}

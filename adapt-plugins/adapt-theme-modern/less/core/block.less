@@ -1,0 +1,101 @@
+.block {
+  position: relative;
+
+  &.has-bg-image > .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+  }
+
+  &__inner {
+    position: relative;
+    .l-container-padding(@block-padding-ver, @block-padding-hoz);
+  }
+
+  &__priority {
+    .priority-label;
+    margin-bottom: @block-priority-margin;
+    .block-priority;
+  }
+
+  &__header.has-bg-image {
+    position: relative;
+
+    > .background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center top;
+    }
+
+    .block__header-inner {
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  &__header-inner {
+    .l-container-padding(@block-header-padding-ver, @block-header-padding-hoz);
+  }
+
+  &__title {
+    margin-bottom: @block-title-margin;
+    .block-title;
+    color: @heading-color;
+  }
+
+  &__body {
+    margin-bottom: @block-body-margin;
+  }
+
+  &__instruction {
+    margin-bottom: @block-instruction-margin;
+    .instruction-text;
+  }
+
+  &__body a,
+  &__instruction a {
+    .link-text;
+  }
+
+  // Double the blocks top or bottom padding
+  &.double-padding-top &__inner { padding-top: @block-padding-ver * 2; }
+  &.double-padding-bottom &__inner { padding-bottom: @block-padding-ver * 2; }
+
+  // Half the blocks top or bottom padding
+  &.half-padding-top &__inner { padding-top: @block-padding-ver / 2; }
+  &.half-padding-bottom &__inner { padding-bottom: @block-padding-ver / 2; }
+
+  // Remove the top or bottom padding from block
+  &.remove-padding-top &__inner { padding-top: 0; }
+  &.remove-padding-bottom &__inner { padding-bottom: 0; }
+
+  // Aligns child components centrally on the vertical axis
+  &.align-vert-center {
+    .block__inner,
+    .component__container {
+      min-height: inherit;
+    }
+    .component__container {
+      align-items: center;
+    }
+  }
+
+  // Aligns child components to the bottom of the parent block on the vertical axis
+  &.align-vert-bottom .component__container {align-items: flex-end; }
+
+  // Aligns child components centrally on the horizontal axis
+  &.align-horz-center .component__container { justify-content: center; }
+
+  // Aligns child components to the right of the parent block on the horizontal axis
+  &.align-horz-right .component__container { justify-content: flex-end; }
+}

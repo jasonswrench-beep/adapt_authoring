@@ -1,0 +1,25 @@
+{
+  "FontAwesome": "h5p/font-awesome",
+  "jQuery.ui": "h5p/jquery-ui",
+  "TimelineJS": "h5p/TimelineJS",
+  "H5P.SimpleMultiChoice": "h5p/h5p-simple-multiple-choice",
+  "H5P.ImpressPresentation": "h5p/h5p-impressive-presentation",
+  "H5P.ImageSequencing": "https://gitlab.com/icfoss/H5P-ImageSequencing",
+  "Drop": "h5p/drop",
+  "Tether": "h5p/tether",
+  "flowplayer": "h5p/flowplayer",
+  "H5P.PersonalityQuiz": {
+    "repo": "h5p/h5p-personality-quiz",
+    "ref": "master"
+  },
+  "H5P.KewArCode": "otacke/h5p-kewar-code",
+  "Shepherd": "h5p/shepherd",
+  "H5P.CKEditor": "h5p/h5p-ckeditor",
+  "H5PEditor.KewArCode": "otacke/h5p-editor-kewar-code",
+  "H5PEditor.ImpressPresentation": "h5p/h5p-editor-impressive-presentation",
+  "H5P.SoundJS": "h5p/h5p-soundjs",
+  "H5PEditor.Shape": {
+    "repo": "h5p/h5p-editor-shape",
+    "ref": "master"
+  }
+}

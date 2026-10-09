@@ -1,0 +1,12 @@
+{
+  "name": "pptx-to-adapt",
+  "version": "0.1.0",
+  "description": "Convert a PowerPoint (.pptx) deck into an Adapt framework source zip for the authoring tool's Import source feature",
+  "license": "GPL-3.0",
+  "private": true,
+  "bin": { "pptx-to-adapt": "pptx-to-adapt.js" },
+  "dependencies": {
+    "@xmldom/xmldom": "^0.8.10",
+    "adm-zip": "^0.5.16"
+  }
+}

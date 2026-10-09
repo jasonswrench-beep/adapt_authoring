@@ -1,0 +1,256 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "id": "http://jsonschema.net",
+  "$ref": "http://localhost/plugins/content/component/model.schema",
+  "globals": {},
+  "properties": {
+    "_supportedLayout": {
+      "type": "string",
+      "required": true,
+      "enum": [
+        "full-width",
+        "half-width",
+        "both"
+      ],
+      "default": "full-width",
+      "editorOnly": true
+    },
+    "instruction": {
+      "type": "string",
+      "required": false,
+      "default": "",
+      "title": "Instruction",
+      "inputType": "Text",
+      "validators": [],
+      "help": "This is the instruction text shown above the slides.",
+      "translatable": true
+    },
+    "_isSequenced": {
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "title": "Must be seen in order",
+      "inputType": "Checkbox",
+      "validators": [],
+      "help": "Learners can go back anywhere, but can only move forward one slide at a time (the dots ahead are disabled)."
+    },
+    "_setCompletionOn": {
+      "type": "string",
+      "required": true,
+      "default": "allSlides",
+      "title": "Complete when",
+      "inputType": {
+        "type": "Select",
+        "options": [
+          "allSlides",
+          "lastSlide"
+        ]
+      },
+      "validators": [],
+      "help": "allSlides: the learner has seen every slide. lastSlide: they have reached the last slide."
+    },
+    "_showProgress": {
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "title": "Show 'Slide 2 of 5'",
+      "inputType": "Checkbox",
+      "validators": [],
+      "help": "Shows the slide number above the dots."
+    },
+    "_backText": {
+      "type": "string",
+      "required": false,
+      "default": "Back",
+      "title": "Back button text",
+      "inputType": "Text",
+      "validators": [],
+      "help": "",
+      "translatable": true
+    },
+    "_nextText": {
+      "type": "string",
+      "required": false,
+      "default": "Next",
+      "title": "Next button text",
+      "inputType": "Text",
+      "validators": [],
+      "help": "",
+      "translatable": true
+    },
+    "_progressText": {
+      "type": "string",
+      "required": false,
+      "default": "Slide {{current}} of {{total}}",
+      "title": "Progress text",
+      "inputType": "Text",
+      "validators": [],
+      "help": "Use {{current}} and {{total}} for the numbers.",
+      "translatable": true
+    },
+    "_items": {
+      "type": "array",
+      "required": true,
+      "title": "Slides",
+      "items": {
+        "type": "object",
+        "required": true,
+        "properties": {
+          "title": {
+            "type": "string",
+            "required": false,
+            "default": "",
+            "title": "Slide title",
+            "inputType": "Text",
+            "validators": [],
+            "help": "The slide's heading.",
+            "translatable": true
+          },
+          "body": {
+            "type": "string",
+            "required": false,
+            "default": "",
+            "title": "Slide text",
+            "inputType": "TextArea",
+            "validators": [],
+            "help": "The slide's text. You can use formatting, lists and links.",
+            "translatable": true
+          },
+          "_graphic": {
+            "type": "object",
+            "required": false,
+            "title": "Slide image",
+            "properties": {
+              "src": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Select image",
+                "inputType": "Asset:image",
+                "validators": [],
+                "help": ""
+              },
+              "alt": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Alternative text",
+                "inputType": "Text",
+                "validators": [],
+                "help": "Describe the image for people who cannot see it. Leave blank only if it is purely decoration.",
+                "translatable": true
+              },
+              "attribution": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Attribution",
+                "inputType": "Text",
+                "validators": [],
+                "help": "Credit shown with the image, if needed.",
+                "translatable": true
+              }
+            }
+          },
+          "_imagePosition": {
+            "type": "string",
+            "required": true,
+            "default": "top",
+            "title": "Image position",
+            "inputType": {
+              "type": "Select",
+              "options": [
+                "top",
+                "left",
+                "right"
+              ]
+            },
+            "validators": [],
+            "help": "Where the image sits relative to the text. Left and right apply on wide screens; on phones the image goes above the text."
+          },
+          "_video": {
+            "type": "object",
+            "required": false,
+            "title": "Slide video",
+            "properties": {
+              "src": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Select video",
+                "inputType": "Asset:video",
+                "validators": [],
+                "help": "An MP4 video shown on this slide with play controls. It never starts by itself."
+              },
+              "captions": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Captions file (.vtt)",
+                "inputType": "Asset:other",
+                "validators": [],
+                "help": "Captions let deaf and hard-of-hearing learners follow the video."
+              },
+              "captionsLanguage": {
+                "type": "string",
+                "required": false,
+                "default": "en",
+                "title": "Captions language code",
+                "inputType": "Text",
+                "validators": [],
+                "help": "Two-letter code, for example en."
+              },
+              "transcript": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Transcript",
+                "inputType": "TextArea",
+                "validators": [],
+                "help": "The words spoken in the video. Learners can open it under the video.",
+                "translatable": true
+              }
+            }
+          },
+          "_audio": {
+            "type": "object",
+            "required": false,
+            "title": "Slide audio",
+            "properties": {
+              "src": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Select audio",
+                "inputType": "Asset:audio",
+                "validators": [],
+                "help": "An MP3 (or other web audio) clip with play controls. It never starts by itself."
+              },
+              "transcript": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Transcript",
+                "inputType": "TextArea",
+                "validators": [],
+                "help": "The words spoken in the audio. Required for accessibility.",
+                "translatable": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "_transcriptText": {
+      "type": "string",
+      "required": false,
+      "default": "Transcript",
+      "title": "Transcript heading",
+      "inputType": "Text",
+      "validators": [],
+      "help": "The heading learners click to open a slide's transcript.",
+      "translatable": true
+    }
+  }
+}

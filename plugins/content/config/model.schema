@@ -49,7 +49,7 @@
       "properties" : {
         "_isEnabled": {
           "type": "boolean",
-          "default": false,
+          "default": true,
           "isSetting": false,
           "inputType": "Checkbox",
           "validators": [],

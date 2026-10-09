@@ -1,0 +1,206 @@
+// Lesson cards: a numbered, full-width card per lesson with a status label and a primary button.
+.lessons-item {
+  display: flex;
+
+  &__inner {
+    width: 100%;
+    margin: 0 @menu-item-padding-hoz @menu-item-padding-ver;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: @menu-item;
+    color: @menu-item-inverted;
+    border: 1px solid @grey;
+    border-radius: @item-border-radius;
+    box-shadow: 0 1px 2px fade(@greyDark, 8%);
+    .transition(box-shadow @duration ease-in, border-color @duration ease-in;);
+
+    @media (min-width: @device-width-medium) {
+      flex-direction: row;
+    }
+  }
+
+  .no-touch &__inner:hover {
+    box-shadow: 0 8px 24px fade(@greyDark, 14%);
+    border-color: @item-color;
+  }
+
+  &__image-container {
+    flex: 0 0 auto;
+    margin: 0;
+
+    @media (min-width: @device-width-medium) {
+      width: 13rem;
+    }
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    max-height: 14rem;
+    object-fit: cover;
+
+    @media (min-width: @device-width-medium) {
+      max-height: none;
+    }
+  }
+
+  &__image-container + &__details {
+    margin-top: 0;
+  }
+
+  &__details {
+    flex: 1 1 auto;
+    display: flex;
+  }
+
+  &__details-inner {
+    flex: 1 1 auto;
+    padding: 1.25rem 1.5rem;
+
+    // text on the left, button on the right (stacked on small screens)
+    @media (min-width: @device-width-medium) {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      column-gap: 1.5rem;
+      align-items: center;
+
+      > * {
+        grid-column: 1;
+      }
+
+      > .lessons-item__button-container {
+        grid-column: 2;
+        grid-row: 1 / span 99;
+        margin-top: 0;
+      }
+    }
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  &__number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: @item-color;
+    color: @white;
+    font-size: 0.9rem;
+    font-weight: @font-weight-bold;
+    line-height: 1;
+  }
+
+  // The status is always written out as text: colour is only a hint
+  &__status-text {
+    font-size: 0.8125rem;
+    font-weight: @font-weight-bold;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #4B5563;
+
+    &.is-inprogress {
+      color: @accent-text;
+    }
+
+    &.is-complete {
+      color: @validation-success;
+    }
+  }
+
+  &__title {
+    margin-bottom: @menu-item-title-margin;
+    .menu-item-title;
+  }
+
+  &__body {
+    margin-bottom: @menu-item-body-margin;
+    .menu-item-body;
+  }
+
+  &__body a {
+    .link-text;
+  }
+
+  &__priority {
+    .priority-label;
+    margin-bottom: @menu-item-priority-margin;
+    .menu-item-priority;
+  }
+
+  &__duration {
+    margin-bottom: @menu-item-duration-margin;
+    .menu-item-body;
+    color: #4B5563;
+  }
+
+  &__progress {
+    margin-bottom: @menu-item-progress-margin;
+  }
+
+  &__button-container {
+    display: flex;
+    align-items: center;
+    margin-top: 0.75rem;
+  }
+
+  &__button {
+    padding: 0.625rem 1.5rem;
+    font-weight: @font-weight-bold;
+  }
+
+  & when (@menu-item-btn-color-style = filled) {
+    &__button {
+      .menu-item-btn-color;
+
+      .no-touch &:not(.is-disabled):not(.is-locked):hover {
+        .menu-item-btn-color-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .menu-item-btn-color-focus;
+      }
+    }
+
+    &__button.is-locked {
+      .menu-item-btn-color-locked;
+    }
+  }
+
+  & when (@menu-item-btn-color-style = outline) {
+    &__button {
+      .menu-item-btn-color-outline;
+
+      .no-touch &:not(.is-disabled):not(.is-locked):hover {
+        .menu-item-btn-color-outline-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .menu-item-btn-color-outline-focus;
+      }
+    }
+
+    &__button.is-locked {
+      .menu-item-btn-color-outline-locked;
+    }
+  }
+
+  &__status {
+    margin-left: @menu-item-status-margin;
+  }
+
+  &.has-img-zoom &__image-container {
+    .img-zoom();
+  }
+}

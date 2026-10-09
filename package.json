@@ -22,6 +22,8 @@
   "dependencies": {
     "@babel/core": "^7.19.6",
     "@babel/preset-env": "^7.19.4",
+    "@xmldom/xmldom": "^0.8.10",
+    "adm-zip": "^0.5.16",
     "archiver": "^3.1.1",
     "async": "^3.2.3",
     "bcrypt-nodejs": "0.0.3",
@@ -74,6 +76,7 @@
     "optimist": "^0.6.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
+    "qs": "^6.11.0",
     "request": "^2.88.0",
     "semver": "^6.3.0",
     "serve-favicon": "^2.5.0",

@@ -1,0 +1,280 @@
+// Fonts: a system font stack, so no request is made to a third-party font service
+// (faster, works offline, and keeps students' browsers from contacting Google).
+// --------------------------------------------------
+@system-font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+
+// Font family
+// --------------------------------------------------
+@title-family: @system-font-stack;
+@body-family: @system-font-stack;
+@btn-family: @system-font-stack;
+
+// Font weights
+// --------------------------------------------------
+@font-weight-light: 300;
+@font-weight-regular: 400;
+@font-weight-bold: 700;
+
+// 100	Thin (Hairline)
+// 200	Extra Light (Ultra Light)
+// 300	Light
+// 400	Normal
+// 500	Medium
+// 600	Semi Bold (Demi Bold)
+// 700	Bold
+// 800	Extra Bold (Ultra Bold)
+// 900	Black (Heavy)
+
+// Line heights
+// --------------------------------------------------
+@title-line-height: 1.2;
+@body-line-height: 1.6;
+@btn-line-height: 1.5;
+
+// Globals
+// --------------------------------------------------
+@body-size: 1rem;
+@body-weight: @font-weight-regular;
+
+@instruction-size: @body-size;
+@instruction-family: @body-family;
+@instruction-weight: @font-weight-bold;
+@instruction-line-height: @body-line-height;
+@instruction-font-style: normal;
+@instruction-text-transform: none;
+
+@btn-size: @body-size;
+@btn-weight: @font-weight-regular;
+@btn-letter-spacing: normal;
+@btn-text-transform: none;
+
+@icon-size: 1.5rem;
+@icon-weight: @font-weight-regular;
+@icon-line-height: 1;
+
+@link-size: inherit;
+@link-family: @body-family;
+@link-weight: @font-weight-regular;
+@link-line-height: @body-line-height;
+
+@priority-size: 0.875rem;
+@priority-family: @body-family;
+@priority-weight: @font-weight-bold;
+@priority-line-height: @body-line-height;
+@priority-letter-spacing: normal;
+@priority-text-transform: none;
+
+// Navigation
+// --------------------------------------------------
+@nav-btn-label-size: 0.875rem;
+
+// Menu header
+// --------------------------------------------------
+@menu-title-size: 3rem;
+@menu-title-family: @title-family;
+@menu-title-weight: @font-weight-bold;
+@menu-title-line-height: @title-line-height;
+@menu-title-mobile-percentage: .75;
+@menu-title-letter-spacing: normal;
+@menu-title-text-transform: none;
+
+@menu-subtitle-size: 2rem;
+@menu-subtitle-family: @title-family;
+@menu-subtitle-weight: @font-weight-regular;
+@menu-subtitle-line-height: @title-line-height;
+@menu-subtitle-mobile-percentage: .75;
+@menu-subtitle-letter-spacing: normal;
+@menu-subtitle-text-transform: none;
+
+@menu-body-size: 1.25rem;
+@menu-body-family: @body-family;
+@menu-body-weight: @font-weight-regular;
+@menu-body-line-height: @body-line-height;
+
+@menu-instruction-size: @menu-body-size;
+@menu-instruction-family: @menu-body-family;
+@menu-instruction-weight: @instruction-weight;
+@menu-instruction-line-height: @menu-body-line-height;
+@menu-instruction-font-style: @instruction-font-style;
+@menu-instruction-text-transform: @instruction-text-transform;
+
+@menu-priority-size: @priority-size;
+@menu-priority-family: @priority-family;
+@menu-priority-weight: @priority-weight;
+@menu-priority-line-height: @priority-line-height;
+@menu-priority-letter-spacing: @priority-letter-spacing;
+@menu-priority-text-transform: @priority-text-transform;
+
+// Menu item
+// --------------------------------------------------
+@menu-item-title-size: 1.25rem;
+@menu-item-title-family: @title-family;
+@menu-item-title-weight: @font-weight-bold;
+@menu-item-title-line-height: @title-line-height;
+@menu-item-title-letter-spacing: normal;
+@menu-item-title-text-transform: none;
+
+@menu-item-body-size: @body-size;
+@menu-item-body-family: @body-family;
+@menu-item-body-weight: @font-weight-light;
+@menu-item-body-line-height: @body-line-height;
+
+@menu-item-priority-size: @priority-size;
+@menu-item-priority-family: @priority-family;
+@menu-item-priority-weight: @priority-weight;
+@menu-item-priority-line-height: @priority-line-height;
+@menu-item-priority-letter-spacing: @priority-letter-spacing;
+@menu-item-priority-text-transform: @priority-text-transform;
+
+// Page header
+// --------------------------------------------------
+@page-title-size: 2.5rem;
+@page-title-family: @title-family;
+@page-title-weight: @font-weight-bold;
+@page-title-line-height: @title-line-height;
+@page-title-mobile-percentage: .75;
+@page-title-letter-spacing: normal;
+@page-title-text-transform: none;
+
+@page-subtitle-size: 2rem;
+@page-subtitle-family: @title-family;
+@page-subtitle-weight: @font-weight-regular;
+@page-subtitle-line-height: @title-line-height;
+@page-subtitle-mobile-percentage: .75;
+@page-subtitle-letter-spacing: normal;
+@page-subtitle-text-transform: none;
+
+@page-body-size: 1.25rem;
+@page-body-family: @body-family;
+@page-body-weight: @font-weight-regular;
+@page-body-line-height: @body-line-height;
+
+@page-instruction-size: @page-body-size;
+@page-instruction-family: @page-body-family;
+@page-instruction-weight: @instruction-weight;
+@page-instruction-line-height: @page-body-line-height;
+@page-instruction-font-style: @instruction-font-style;
+@page-instruction-text-transform: @instruction-text-transform;
+
+@page-priority-size: @priority-size;
+@page-priority-family: @priority-family;
+@page-priority-weight: @priority-weight;
+@page-priority-line-height: @priority-line-height;
+@page-priority-letter-spacing: @priority-letter-spacing;
+@page-priority-text-transform: @priority-text-transform;
+
+// Page
+// --------------------------------------------------
+@article-title-size: 2.5rem;
+@article-title-family: @title-family;
+@article-title-weight: @font-weight-bold;
+@article-title-line-height: @title-line-height;
+@article-title-mobile-percentage: .75;
+@article-title-letter-spacing: normal;
+@article-title-text-transform: none;
+
+@article-priority-size: @priority-size;
+@article-priority-family: @priority-family;
+@article-priority-weight: @priority-weight;
+@article-priority-line-height: @priority-line-height;
+@article-priority-letter-spacing: @priority-letter-spacing;
+@article-priority-text-transform: @priority-text-transform;
+
+@block-title-size: 2.5rem;
+@block-title-family: @title-family;
+@block-title-weight: @font-weight-bold;
+@block-title-line-height: @title-line-height;
+@block-title-mobile-percentage: .75;
+@block-title-letter-spacing: normal;
+@block-title-text-transform: none;
+
+@block-priority-size: @priority-size;
+@block-priority-family: @priority-family;
+@block-priority-weight: @priority-weight;
+@block-priority-line-height: @priority-line-height;
+@block-priority-letter-spacing: @priority-letter-spacing;
+@block-priority-text-transform: @priority-text-transform;
+
+@component-title-size: 2.5rem;
+@component-title-family: @title-family;
+@component-title-weight: @font-weight-bold;
+@component-title-line-height: @title-line-height;
+@component-title-mobile-percentage: .75;
+@component-title-letter-spacing: normal;
+@component-title-text-transform: none;
+
+@component-priority-size: @priority-size;
+@component-priority-family: @priority-family;
+@component-priority-weight: @priority-weight;
+@component-priority-line-height: @priority-line-height;
+@component-priority-letter-spacing: @priority-letter-spacing;
+@component-priority-text-transform: @priority-text-transform;
+
+@notify-title-size: 2.5rem;
+@notify-title-family: @title-family;
+@notify-title-weight: @font-weight-bold;
+@notify-title-line-height: @title-line-height;
+@notify-title-mobile-percentage: .75;
+@notify-title-letter-spacing: normal;
+@notify-title-text-transform: none;
+
+// Components
+// --------------------------------------------------
+@item-title-size: 1.25rem;
+@item-title-family: @title-family;
+@item-title-weight: @font-weight-bold;
+@item-title-line-height: @title-line-height;
+@item-title-letter-spacing: normal;
+@item-title-text-transform: none;
+
+// Quote
+// --------------------------------------------------
+@quote-body-size: @body-size * 1.25;
+@quote-body-family: @body-family;
+@quote-body-weight: @font-weight-regular;
+@quote-body-line-height: @body-line-height;
+@quote-body-font-style: normal;
+@quote-body-letter-spacing: normal;
+
+@quote-attribution-size: @body-size;
+@quote-attribution-family: @body-family;
+@quote-attribution-weight: @font-weight-regular;
+@quote-attribution-line-height: @body-line-height;
+@quote-attribution-font-style: normal;
+@quote-attribution-letter-spacing: normal;
+
+// Pull quote
+// --------------------------------------------------
+@pull-quote-body-size: @body-size * 2;
+@pull-quote-body-family: @body-family;
+@pull-quote-body-weight: @font-weight-bold;
+@pull-quote-body-line-height: @body-line-height;
+@pull-quote-body-font-style: normal;
+@pull-quote-body-letter-spacing: normal;
+@pull-quote-body-mobile-percentage: .75;
+
+// Drawer
+// --------------------------------------------------
+@drawer-title-size: 1.5rem;
+@drawer-title-family: @title-family;
+@drawer-title-weight: @font-weight-bold;
+@drawer-title-line-height: @title-line-height;
+@drawer-title-mobile-percentage: .75;
+@drawer-title-letter-spacing: normal;
+@drawer-title-text-transform: none;
+
+@drawer-item-title-size: 1rem;
+@drawer-item-title-family: @title-family;
+@drawer-item-title-weight: @font-weight-bold;
+@drawer-item-title-line-height: @title-line-height;
+@drawer-item-title-letter-spacing: normal;
+
+@drawer-item-body-size: 0.875rem;
+@drawer-item-body-family: @body-family;
+@drawer-item-body-weight: @font-weight-regular;
+@drawer-item-body-line-height: @body-line-height;
+
+@resources-filter-btn-size: 1rem;
+@resources-filter-btn-family: @btn-family;
+@resources-filter-btn-weight: @font-weight-regular;
+@resources-filter-btn-line-height: @body-line-height;

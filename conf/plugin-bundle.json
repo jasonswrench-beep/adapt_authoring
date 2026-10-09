@@ -1,0 +1,316 @@
+{
+  "_comment": "Curated plugin bundle for a Rise-style authoring experience. Installed straight from GitHub by scripts/install-plugin-bundle.js (no Bower registry needed). 'ref' is optional: omit it to use the newest release tag compatible with the installed framework. Repos marked community are not maintained by adaptlearning; review before use. Entries with a 'path' are plugins that live in this repository (adapt-plugins/).",
+  "plugins": [
+    {
+      "group": "Core look & menus",
+      "name": "adapt-theme-modern",
+      "path": "adapt-plugins/adapt-theme-modern",
+      "riseEquivalent": "Rise-style look: modern type, indigo palette, rounded cards (default for new courses)"
+    },
+    {
+      "group": "Core look & menus",
+      "name": "adapt-menu-lessons",
+      "path": "adapt-plugins/adapt-menu-lessons",
+      "riseEquivalent": "Rise-style course home: numbered lesson cards with Start / Continue / Review (default for new courses)"
+    },
+    {
+      "group": "Interactions",
+      "name": "adapt-component-h5p",
+      "path": "adapt-plugins/adapt-component-h5p",
+      "riseEquivalent": "Embedded interactive activities (H5P: quizzes, drag-and-drop, interactive video, branching scenarios, course presentations)"
+    },
+    {
+      "group": "Interactions",
+      "name": "adapt-extension-rules",
+      "path": "adapt-plugins/adapt-extension-rules",
+      "riseEquivalent": "Storyline-style variables and triggers (show/hide, set a variable, jump, pop-up message, button actions)"
+    },
+    {
+      "group": "Interactions",
+      "name": "adapt-component-slides",
+      "path": "adapt-plugins/adapt-component-slides",
+      "riseEquivalent": "Storyline-style slide deck: one slide at a time with Back/Next, progress dots, optional image per slide, optional forced order"
+    },
+    {
+      "group": "Core look & menus",
+      "name": "adapt-contrib-vanilla",
+      "repo": "adaptlearning/adapt-contrib-vanilla",
+      "riseEquivalent": "Default theme"
+    },
+    {
+      "group": "Core look & menus",
+      "name": "adapt-contrib-boxMenu",
+      "repo": "adaptlearning/adapt-contrib-boxMenu",
+      "riseEquivalent": "Course landing/lesson cards"
+    },
+    {
+      "group": "Core look & menus",
+      "name": "adapt-contrib-languagePicker",
+      "repo": "adaptlearning/adapt-contrib-languagePicker"
+    },
+    {
+      "group": "Content blocks",
+      "name": "adapt-contrib-text",
+      "repo": "adaptlearning/adapt-contrib-text",
+      "riseEquivalent": "Text block"
+    },
+    {
+      "group": "Content blocks",
+      "name": "adapt-contrib-graphic",
+      "repo": "adaptlearning/adapt-contrib-graphic",
+      "riseEquivalent": "Image block"
+    },
+    {
+      "group": "Content blocks",
+      "name": "adapt-contrib-media",
+      "repo": "adaptlearning/adapt-contrib-media",
+      "riseEquivalent": "Video/audio block"
+    },
+    {
+      "group": "Content blocks",
+      "name": "adapt-youtube",
+      "repo": "adaptlearning/adapt-youtube",
+      "riseEquivalent": "YouTube embed"
+    },
+    {
+      "group": "Content blocks",
+      "name": "adapt-vimeo",
+      "repo": "adaptlearning/adapt-vimeo",
+      "riseEquivalent": "Vimeo embed"
+    },
+    {
+      "group": "Content blocks",
+      "name": "adapt-iframe",
+      "repo": "cgkineo/adapt-iframe",
+      "community": true,
+      "riseEquivalent": "Embed block (H5P, Google Slides, forms, any web page)"
+    },
+    {
+      "group": "Content blocks",
+      "name": "adapt-list",
+      "repo": "cgkineo/adapt-list",
+      "community": true,
+      "riseEquivalent": "List block"
+    },
+    {
+      "group": "Content blocks",
+      "name": "adapt-contrib-blank",
+      "repo": "adaptlearning/adapt-contrib-blank"
+    },
+    {
+      "group": "Interactions",
+      "name": "adapt-contrib-accordion",
+      "repo": "adaptlearning/adapt-contrib-accordion",
+      "riseEquivalent": "Accordion"
+    },
+    {
+      "group": "Interactions",
+      "name": "adapt-contrib-narrative",
+      "repo": "adaptlearning/adapt-contrib-narrative",
+      "riseEquivalent": "Process / Labeled graphic-ish"
+    },
+    {
+      "group": "Interactions",
+      "name": "adapt-contrib-hotgraphic",
+      "repo": "adaptlearning/adapt-contrib-hotgraphic",
+      "riseEquivalent": "Labeled graphic (Storyline hotspots)"
+    },
+    {
+      "group": "Interactions",
+      "name": "adapt-hotgrid",
+      "repo": "cgkineo/adapt-hotgrid",
+      "community": true,
+      "riseEquivalent": "Tabs / Flashcard grid"
+    },
+    {
+      "group": "Interactions",
+      "name": "adapt-contrib-matching",
+      "repo": "adaptlearning/adapt-contrib-matching",
+      "riseEquivalent": "Matching (Storyline drop-down match)"
+    },
+    {
+      "group": "Interactions",
+      "name": "adapt-tabs",
+      "repo": "cgkineo/adapt-tabs",
+      "community": true,
+      "riseEquivalent": "Tabs"
+    },
+    {
+      "group": "Interactions",
+      "name": "adapt-graphicCompare",
+      "repo": "nachocinalli/adapt-graphicCompare",
+      "community": true,
+      "riseEquivalent": "Before/after image slider"
+    },
+    {
+      "group": "Knowledge checks",
+      "name": "adapt-contrib-mcq",
+      "repo": "adaptlearning/adapt-contrib-mcq",
+      "riseEquivalent": "Multiple choice"
+    },
+    {
+      "group": "Knowledge checks",
+      "name": "adapt-contrib-gmcq",
+      "repo": "adaptlearning/adapt-contrib-gmcq",
+      "riseEquivalent": "Image multiple choice"
+    },
+    {
+      "group": "Knowledge checks",
+      "name": "adapt-contrib-textInput",
+      "repo": "adaptlearning/adapt-contrib-textInput",
+      "riseEquivalent": "Fill in the blank"
+    },
+    {
+      "group": "Knowledge checks",
+      "name": "adapt-contrib-slider",
+      "repo": "adaptlearning/adapt-contrib-slider",
+      "riseEquivalent": "Slider question"
+    },
+    {
+      "group": "Knowledge checks",
+      "name": "adapt-contrib-confidenceSlider",
+      "repo": "adaptlearning/adapt-contrib-confidenceSlider"
+    },
+    {
+      "group": "Assessment & feedback",
+      "name": "adapt-contrib-assessment",
+      "repo": "adaptlearning/adapt-contrib-assessment",
+      "riseEquivalent": "Quiz block / scoring"
+    },
+    {
+      "group": "Assessment & feedback",
+      "name": "adapt-contrib-assessmentResults",
+      "repo": "adaptlearning/adapt-contrib-assessmentResults",
+      "riseEquivalent": "Results slide"
+    },
+    {
+      "group": "Assessment & feedback",
+      "name": "adapt-contrib-tutor",
+      "repo": "adaptlearning/adapt-contrib-tutor",
+      "riseEquivalent": "Feedback layers (Storyline)"
+    },
+    {
+      "group": "Assessment & feedback",
+      "name": "adapt-contrib-instructionError",
+      "repo": "adaptlearning/adapt-contrib-instructionError",
+      "riseEquivalent": "Accessible answer-error prompt"
+    },
+    {
+      "group": "Assessment & feedback",
+      "name": "adapt-submitAll",
+      "repo": "cgkineo/adapt-submitAll",
+      "community": true,
+      "riseEquivalent": "One Submit button for a whole quiz page"
+    },
+    {
+      "group": "Assessment & feedback",
+      "name": "adapt-hint",
+      "repo": "cgkineo/adapt-hint",
+      "community": true,
+      "riseEquivalent": "Hint button on questions"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-contrib-pageLevelProgress",
+      "repo": "adaptlearning/adapt-contrib-pageLevelProgress",
+      "riseEquivalent": "Progress sidebar"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-contrib-bookmarking",
+      "repo": "adaptlearning/adapt-contrib-bookmarking",
+      "riseEquivalent": "Resume where you left off"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-contrib-trickle",
+      "repo": "adaptlearning/adapt-contrib-trickle",
+      "riseEquivalent": "Continue button / locked sections"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-contrib-triggered",
+      "repo": "adaptlearning/adapt-contrib-triggered",
+      "riseEquivalent": "Button-triggered reveal (simple Storyline-style trigger)"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-articleBlockSlider",
+      "repo": "cgkineo/adapt-articleBlockSlider",
+      "community": true,
+      "riseEquivalent": "Slide-by-slide sections (closest to Storyline slides)"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-pageIncompletePrompt",
+      "repo": "cgkineo/adapt-pageIncompletePrompt",
+      "community": true,
+      "riseEquivalent": "Warn before leaving an unfinished lesson"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-homeButton",
+      "repo": "cgkineo/adapt-homeButton",
+      "community": true,
+      "riseEquivalent": "Home button"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-close",
+      "repo": "cgkineo/adapt-close",
+      "community": true,
+      "riseEquivalent": "Exit/close button"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-contrib-contentObjectTransition",
+      "repo": "adaptlearning/adapt-contrib-contentObjectTransition",
+      "riseEquivalent": "Page transitions"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-contrib-resources",
+      "repo": "adaptlearning/adapt-contrib-resources",
+      "riseEquivalent": "Resources panel"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-contrib-glossary",
+      "repo": "adaptlearning/adapt-contrib-glossary",
+      "riseEquivalent": "Glossary"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-search",
+      "repo": "cgkineo/adapt-search",
+      "community": true,
+      "riseEquivalent": "Course search"
+    },
+    {
+      "group": "Navigation & progress",
+      "name": "adapt-branching",
+      "repo": "adaptlearning/adapt-contrib-branching",
+      "riseEquivalent": "Branching scenarios (Storyline triggers/variables, partial)"
+    },
+    {
+      "group": "Accessibility & LMS",
+      "name": "adapt-visua11y",
+      "repo": "cgkineo/adapt-visua11y",
+      "community": true,
+      "riseEquivalent": "Learner accessibility settings"
+    },
+    {
+      "group": "Accessibility & LMS",
+      "name": "adapt-contrib-spoor",
+      "repo": "adaptlearning/adapt-contrib-spoor",
+      "riseEquivalent": "SCORM tracking. Added to every new course so SCORM export works out of the box (Web export switches it off)",
+      "addedByDefault": true
+    },
+    {
+      "group": "Accessibility & LMS",
+      "name": "adapt-contrib-trackingErrors",
+      "repo": "adaptlearning/adapt-contrib-trackingErrors",
+      "riseEquivalent": "LMS tracking-error notices"
+    }
+  ]
+}

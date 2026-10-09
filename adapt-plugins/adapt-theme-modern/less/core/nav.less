@@ -1,0 +1,45 @@
+.nav {
+  background-color: @nav;
+
+  &__inner {
+    max-width: inherit;
+  }
+
+  &__inner {
+    padding-left: @nav-btn-margin / 2;
+    padding-right: @nav-btn-margin / 2;
+  }
+
+  &__btn {
+    margin: @nav-btn-margin (@nav-btn-margin / 2);
+    padding: @nav-btn-padding-ver @nav-btn-padding-hoz;
+
+    & when (@nav-ui-btn-ctrl-color-style = filled) {
+      .nav-ui-btn-ctrl-color;
+
+      .no-touch &:not(.is-disabled):not(.is-locked):hover {
+        .nav-ui-btn-ctrl-color-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .nav-ui-btn-ctrl-color-focus;
+      }
+    }
+
+    & when (@nav-ui-btn-ctrl-color-style = outline) {
+      .nav-ui-btn-ctrl-color-outline;
+
+      .no-touch &:not(.is-disabled):not(.is-locked):hover {
+        .nav-ui-btn-ctrl-color-outline-hover;
+      }
+
+      html:not(.a11y-disable-focusoutline) &:focus-visible {
+        .nav-ui-btn-ctrl-color-outline-focus;
+      }
+    }
+  }
+
+  &__btn-label {
+    font-size: @nav-btn-label-size;
+  }
+}

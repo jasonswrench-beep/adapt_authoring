@@ -12,6 +12,9 @@ const helpers = require('../../../lib/helpers');
 const installHelpers = require('../../../lib/installHelpers');
 const logger = require('../../../lib/logger');
 const origin = require('../../../');
+const h5pApprovalStore = require('./h5pApprovalStore');
+const h5pPackaging = require('./h5pPackaging');
+const { trustedUploadsFor } = require('./h5pTrustedUploads');
 const outputHelpers = require('./outputHelpers');
 const usermanager = require('../../../lib/usermanager');
 
@@ -26,6 +29,7 @@ function publishCourse(courseId, mode, request, response, next) {
   let menuName;
   let frameworkVersion;
   let isForceRebuild;
+  let exportFormat;
 
   let resultObject = {};
 
@@ -99,6 +103,30 @@ function publishCourse(courseId, mode, request, response, next) {
         callback(null);
       });
     },
+    // SCORM vs Web: only meaningful for downloads. 'scorm' requires the Spoor extension on the course.
+    function(callback) {
+      const format = request && request.query && request.query.format;
+      if (mode !== Constants.Modes.Publish || !format) {
+        return callback(null);
+      }
+      if (format !== 'scorm' && format !== 'web') {
+        return callback({ message: 'Unknown export format: ' + format });
+      }
+      const spoor = outputJson.config._spoor;
+      if (format === 'scorm' && !spoor) {
+        return callback({ message: 'SCORM export needs the Spoor extension. Add it under Extensions, then try again.' });
+      }
+      if (spoor) {
+        spoor._isEnabled = format === 'scorm';
+        // default to SCORM 1.2 (widest LMS support) unless the course picked a version
+        if (format === 'scorm') {
+          spoor._advancedSettings = spoor._advancedSettings || {};
+          spoor._advancedSettings._scormVersion = spoor._advancedSettings._scormVersion || '1.2';
+        }
+      }
+      exportFormat = format;
+      callback(null);
+    },
     function(callback) {
       self.buildFlagExists(path.join(BUILD_FOLDER, Constants.Filenames.Rebuild), function(err, buildFlagExists) {
         if (err) {
@@ -146,12 +174,20 @@ function publishCourse(courseId, mode, request, response, next) {
       });
     },
     function(callback) {
+      // The framework build adds defaults to two of the course files: screenSize in config.json and the _globals
+      // defaults in course.json. When no rebuild is needed those built files are current, and overwriting them with
+      // the raw saved copy would strip the defaults and leave the course stuck on "Loading..." (a second Preview of an
+      // unchanged course used to do exactly that). Changes to either file flag a rebuild, so they are safe to keep.
+      // The pages, articles, blocks and components come out of the build unchanged, so they are always written: a
+      // component edited or replaced (a new PowerPoint deck, a new H5P activity) does not flag a rebuild, and
+      // skipping them left the preview showing the old content.
+      var options = isRebuildRequired ? undefined : { skip: ['config', 'course'] };
       self.writeCourseJSON(outputJson, path.join(BUILD_FOLDER, Constants.Folders.Course), function(err) {
         if (err) {
           return callback(err);
         }
         callback(null);
-      });
+      }, options);
     },
     function(callback) {
       installHelpers.getInstalledFrameworkVersion(function(error, version) {
@@ -229,6 +265,40 @@ function publishCourse(courseId, mode, request, response, next) {
       });
     },
     function(callback) {
+      // Unpack approved .h5p files for the H5P Player component (no-op when the course has none).
+      // Files that are not approved are never unpacked: a preview shows a "waiting for approval" notice,
+      // but a download or publish is refused until an administrator has approved them.
+      const hasH5P = (outputJson.component || []).some(c => c && c._component === h5pPackaging.COMPONENT);
+      // uploads by someone who may approve H5P files anyway are approved automatically (see h5pTrustedUploads.js)
+      (hasH5P ? trustedUploadsFor({ courseId, tenantId }).catch(error => {
+        logger.log('warn', 'Could not check H5P uploaders; approvals stay manual: ' + error.message);
+        return new Map();
+      }) : Promise.resolve(new Map())).then(trustedUploads => h5pPackaging.packageH5P({
+        components: outputJson.component,
+        buildFolder: BUILD_FOLDER,
+        approvals: h5pApprovalStore(),
+        trustedUploads,
+        context: { courseId: String(courseId), courseTitle: outputJson.course.title }
+      })).then(summary => {
+        summary.warnings.forEach(warning => logger.log('warn', warning));
+        if (summary.pending.length && mode !== Constants.Modes.Preview) {
+          const list = summary.pending.map(p => `"${p.title}" (${p.fileName}, ${p.status})`).join(', ');
+          return callback(new Error(
+            `${summary.pending.length} H5P ${summary.pending.length === 1 ? 'activity needs' : 'activities need'} approval by an administrator before this course can be published or downloaded: ${list}.`
+          ));
+        }
+        callback(null);
+      }, error => callback(error));
+    },
+    function(callback) {
+      // A Web package must not carry the SCORM launch files: with Spoor in the course the build always includes them,
+      // and an LMS that finds imsmanifest.xml would treat the zip as a SCORM package.
+      if (exportFormat !== 'web') return callback(null);
+      const scormOnly = ['imsmanifest.xml', 'adlcp_rootv1p2.xsd', 'ims_xml.xsd', 'imscp_rootv1p1p2.xsd', 'imsmd_rootv1p2p1.xsd',
+        'index_lms.html', 'log_output.html', 'scorm_test_harness.html', 'connection.txt'];
+      async.each(scormOnly, (file, done) => fs.remove(path.join(BUILD_FOLDER, file), done), error => callback(error));
+    },
+    function(callback) {
       const configPath = path.join(BUILD_FOLDER, Constants.Folders.Course, Constants.CourseCollections.config.filename);
       self.removeBuildIncludes(configPath, err => callback(err));
     },
@@ -238,7 +308,7 @@ function publishCourse(courseId, mode, request, response, next) {
       }
       // Now zip the build package
       var filename = path.join(COURSE_FOLDER, Constants.Filenames.Download);
-      var zipName = helpers.slugify(outputJson['course'].title);
+      var zipName = helpers.slugify(outputJson['course'].title) + (exportFormat ? '-' + exportFormat : '');
       var output = fs.createWriteStream(filename);
       var archive = archiver('zip');
 
