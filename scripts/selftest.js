@@ -47,7 +47,7 @@ async function call(method, url, body, opts = {}) {
 
 async function main() {
   console.log(`Self-test against ${BASE}\n`);
-  let tenantId, courseId, textType;
+  let tenantId, courseId, textType, slidesType, blockId;
 
   if (!await step('server answers', async () => {
     for (let i = 0; i < 20; i++) {
@@ -71,6 +71,7 @@ async function main() {
     must(r.status === 200 && Array.isArray(r.json), 'could not read component types');
     const names = r.json.map(c => c.name);
     textType = r.json.find(c => c.name === 'adapt-contrib-text');
+    slidesType = r.json.find(c => c.name === 'adapt-component-slides');
     must(textType, 'Text component not installed');
     const want = ['adapt-component-h5p', 'adapt-component-slides'];
     const missing = want.filter(n => !names.includes(n));
@@ -92,11 +93,42 @@ async function main() {
     const page = await make('contentobject', { _type: 'page', _parentId: courseId, title: 'Page 1' });
     const article = await make('article', { _type: 'article', _parentId: page, title: 'Article' });
     const block = await make('block', { _type: 'block', _parentId: article, title: 'Block' });
+    blockId = block;
     await make('component', {
       _type: 'component', _parentId: block, _componentType: textType._id, _component: textType.component || 'text',
       _layout: 'full', title: 'Hello', displayTitle: 'Hello', body: '<p>Self-test body text.</p>', version: textType.version
     });
   })) return finish();
+
+  // Import a PowerPoint into a Slides component (what the component's "Import PowerPoint" button calls)
+  let slidesComponentId;
+  await step('import a PowerPoint into a Slides component', async () => {
+    const sample = ['/app/scripts/pptx-import/test/sample.pptx', path.join(__dirname, 'pptx-import', 'test', 'sample.pptx')].find(f => fs.existsSync(f));
+    must(sample, 'sample.pptx not found: run the update routine so the server has the latest files');
+    must(slidesType, 'Slides component is not installed');
+    const made = await call('POST', '/api/content/component', {
+      _courseId: courseId, _parentId: blockId, _type: 'component', _componentType: slidesType._id, _component: slidesType.component || 'slides',
+      _layout: 'full', title: 'Deck', displayTitle: 'Deck', version: slidesType.version
+    });
+    must(made.status === 200 && made.json && made.json._id, `create Slides component returned ${made.status}: ${made.text.slice(0, 160)}`);
+    slidesComponentId = made.json._id;
+    const form = new FormData();
+    form.append('file', new Blob([fs.readFileSync(sample)]), 'Study skills deck.pptx');
+    const res = await fetch(`${BASE}/api/content/component/${slidesComponentId}/pptx`, { method: 'POST', headers: { cookie }, body: form });
+    const text = await res.text();
+    let json; try { json = JSON.parse(text); } catch (e) { /* reported below */ }
+    must(res.status === 200 && json && json.success, `import returned ${res.status}: ${text.slice(0, 240)}`);
+    must(json.payload.slides >= 3, 'fewer slides than expected: ' + json.payload.slides);
+    return `${json.payload.slides} slides, ${json.payload.pictures} picture(s)`;
+  });
+  if (slidesComponentId) {
+    await step('the imported slides are saved on the component', async () => {
+      const r = await call('GET', `/api/content/component/${slidesComponentId}`);
+      must(r.status === 200 && r.json, 'could not read the component back');
+      const items = (r.json.properties && r.json.properties._items) || r.json._items;
+      must(Array.isArray(items) && items.length >= 3, 'the component has no imported slides');
+    });
+  }
 
   const preview = async force => {
     const r = await call('GET', `/api/output/adapt/preview/${courseId}?force=${force}`);
@@ -116,6 +148,22 @@ async function main() {
       const cfg = JSON.parse(c.text);
       must(cfg.screenSize && cfg.screenSize.large, 'config.json has no screenSize (framework defaults missing)');
     });
+    if (slidesComponentId) {
+      await step('imported pictures are published with the course', async () => {
+        const c = await fetchPreview('course/en/components.json');
+        const comps = JSON.parse(c.text);
+        const deck = comps.find(x => x._component === 'slides');
+        must(deck && deck._items.length >= 3, 'the Slides component is missing from the build');
+        const pictured = deck._items.filter(i => i._graphic && i._graphic.src);
+        must(pictured.length >= 1, 'no slide kept its picture');
+        for (const item of pictured) {
+          const rel = item._graphic.src.replace(/^course\/assets\//, 'course/en/assets/');
+          const img = await fetch(`${BASE}/preview/${tenantId}/${courseId}/${rel}`, { headers: { cookie } });
+          must(img.status === 200, `picture ${item._graphic.src} is not in the build (status ${img.status})`);
+        }
+        return `${pictured.length} picture(s) found`;
+      });
+    }
     await step('stylesheet is the Modern theme (navy)', async () => {
       const css = await fetchPreview('adapt.css');
       must(css.status === 200 && css.text.length > 20000, `adapt.css status ${css.status}, ${css.text.length} bytes`);

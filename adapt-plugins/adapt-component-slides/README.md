@@ -13,6 +13,12 @@ A slide-style stepped component: **one slide at a time** with Back and Next butt
 
 The component completes when the learner has seen every slide (or reached the last, if you chose that). The first slide counts as seen once the component scrolls into view. Combine it with the **Rules** extension: a trigger on *completed* and this component's class can unlock the next section.
 
+## Importing a PowerPoint into a Slides component
+
+Open the Slides component's settings in the editor and click **Import PowerPoint** in the left sidebar, then choose a `.pptx` file. The component's slides are **replaced** by the deck's slides (title, text, bullets, tables and the first picture of each slide). Pictures are added to the asset library and linked to the course, and the page reloads to show the result, so save any other edits on that screen first. Hidden slides are skipped. Anything that could not be carried over (charts, animations, extra pictures) is listed in the dialog. Add alt text to pictures that have none; **Check accessibility** flags them.
+
+To start a whole new course from a deck instead, use **Import source** on the dashboard.
+
 ## Accessibility
 
 - The deck is a labelled `carousel` group, each slide a labelled `slide` group ("2 of 5"); only the current slide is in the page for screen readers.

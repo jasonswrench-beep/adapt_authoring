@@ -345,13 +345,30 @@ function buildContent(slides, courseTitle, options) {
 }
 
 /**
- * One page holding one Slides component (adapt-component-slides): every PowerPoint slide becomes a step the learner
- * moves through with Back/Next. Text, bullets and tables become the slide text; the first picture becomes the slide
- * image. Further pictures are not carried over (an image inside the text cannot be linked to its uploaded file).
+ * Turns the converted slides into Slides component items: text, bullets and tables become the slide text, the first
+ * picture becomes the slide image. Further pictures are not carried over (an image inside the text cannot be linked
+ * to its uploaded file). Image sources are `course/<lang>/images/<file>` until the caller places the files.
  */
-function buildSlidesContent(slides, courseTitle, options, course) {
-  const lang = options.lang;
+function slidesItems(slides, lang) {
   const warnings = [];
+  const items = slides.map(slide => {
+    const texts = slide.items.filter(i => i.kind === 'text').map(i => i.html);
+    if (slide.notes) texts.push(`<p><strong>Notes</strong></p>${slide.notes}`);
+    const images = slide.items.filter(i => i.kind === 'image');
+    if (images.length > 1) warnings.push(`Slide ${slide.number}: ${images.length - 1} more picture(s) were not carried over (a slide holds one picture; add the others in the editor).`);
+    const first = images[0];
+    return {
+      title: slide.title,
+      body: texts.join(''),
+      _graphic: { src: first ? `course/${lang}/images/${first.file}` : '', alt: first ? first.alt : '', attribution: '' },
+      _imagePosition: texts.length ? 'right' : 'top'
+    };
+  });
+  return { items, warnings };
+}
+
+/** One page holding one Slides component (adapt-component-slides): every PowerPoint slide becomes a step. */
+function buildSlidesContent(slides, courseTitle, options, course) {
   const pageId = 'co-001';
   const contentObjects = [{
     _id: pageId, _parentId: 'course', _type: 'page', _classes: '', title: courseTitle,
@@ -359,22 +376,7 @@ function buildSlidesContent(slides, courseTitle, options, course) {
   }];
   const articles = [{ _id: 'a-002', _parentId: pageId, _type: 'article', _classes: '', title: courseTitle, displayTitle: '', body: '', instruction: '' }];
   const blocks = [{ _id: 'b-003', _parentId: 'a-002', _type: 'block', _classes: '', title: courseTitle, displayTitle: '', body: '', instruction: '' }];
-
-  const items = slides.map(slide => {
-    const texts = slide.items.filter(i => i.kind === 'text').map(i => i.html);
-    if (slide.notes) texts.push(`<p><strong>Notes</strong></p>${slide.notes}`);
-    const images = slide.items.filter(i => i.kind === 'image');
-    if (images.length > 1) warnings.push(`Slide ${slide.number}: ${images.length - 1} more picture(s) were not carried over (a slide holds one picture; add the others in the editor).`);
-    const first = images[0];
-    const src = first ? `course/${lang}/images/${first.file}` : '';
-    return {
-      title: slide.title,
-      body: texts.join(''),
-      _graphic: { src, alt: first ? first.alt : '', attribution: '' },
-      _imagePosition: texts.length ? 'right' : 'top'
-    };
-  });
-
+  const { items, warnings } = slidesItems(slides, options.lang);
   const components = [{
     _id: 'c-004', _parentId: 'b-003', _type: 'component', _component: 'slides', _classes: '', _layout: 'full',
     title: courseTitle, displayTitle: courseTitle, body: '', instruction: 'Use Next and Back to move through the slides.',
@@ -417,7 +419,8 @@ function buildZip(content, assets, options) {
 }
 
 // ---------- main ----------
-function convert(inputPath, options) {
+/** Reads a .pptx: the visible slides, the pictures (as buffers) and warnings. No course is built. */
+function extract(inputPath, options) {
   if (!fs.existsSync(inputPath)) throw new Error(`File not found: ${inputPath}`);
   let zip;
   try { zip = new AdmZip(inputPath); } catch (e) {
@@ -452,6 +455,12 @@ function convert(inputPath, options) {
     courseTitle = (t && t.textContent.trim()) || (slides[0] && slides[0].title) || path.basename(inputPath, '.pptx');
   }
 
+  return { slides, hidden, assets, courseTitle, warnings: ctx.warnings, noAlt: ctx.noAlt };
+}
+
+function convert(inputPath, options) {
+  const { slides, hidden, assets, courseTitle, warnings, noAlt } = extract(inputPath, options);
+  const ctx = { warnings, noAlt };
   const content = buildContent(slides, courseTitle, options);
   // only pack pictures the course actually uses (e.g. extra pictures on a slide are dropped in the slides layout)
   const json = JSON.stringify(content);
@@ -513,4 +522,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { convert, paragraphsToHtml };
+module.exports = { convert, extract, slidesItems, paragraphsToHtml };

@@ -35,6 +35,7 @@ You need: the server running (see *Deploy* in `CLASSROOM-SETUP.md`), the super-u
 
 ## F. Pptx import
 18. On the dashboard choose **Import source**, select a small `.pptx` (the repo has one at `scripts/pptx-import/test/sample.pptx`) and import it. **Expect:** a course appears with one page holding a Slides component; Preview steps through the slides with Back/Next.
+18b. In any course, add a **Slides** component, open it, click **Import PowerPoint** in the left sidebar and pick the same file. **Expect:** a dialog saying how many slides were imported, then the page reloads showing them; Preview steps through them with their pictures.
 
 ## G. Before real students
 19. HTTPS reverse proxy is in place and the super-user password has been changed.
