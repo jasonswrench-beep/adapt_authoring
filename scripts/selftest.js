@@ -158,8 +158,20 @@ async function main() {
     const r = await call('GET', `/api/output/adapt/preview/${courseId}?force=${force}`);
     must(r.json && r.json.success, 'preview failed: ' + ((r.json && r.json.message) || r.text.slice(0, 200)));
   };
+  // The preview server only serves a course's other files once index.html has been loaded in the same session, and
+  // the session may not be saved yet when the next request arrives, so a 404 is retried briefly before it is believed.
+  const previewGet = async (course, file) => {
+    let r;
+    for (let attempt = 0; attempt < 8; attempt++) {
+      r = await fetch(`${BASE}/preview/${tenantId}/${course}/${file}`, { headers: { cookie } });
+      if (r.status !== 404 || file === 'index.html') break;
+      await r.arrayBuffer();
+      await new Promise(resolve => setTimeout(resolve, 600));
+    }
+    return r;
+  };
   const fetchPreview = async file => {
-    const r = await fetch(`${BASE}/preview/${tenantId}/${courseId}/${file}`, { headers: { cookie } });
+    const r = await previewGet(courseId, file);
     return { status: r.status, text: await r.text() };
   };
 
@@ -182,7 +194,7 @@ async function main() {
         must(pictured.length >= 1, 'no slide kept its picture');
         for (const item of pictured) {
           const rel = item._graphic.src.replace(/^course\/assets\//, 'course/en/assets/');
-          const img = await fetch(`${BASE}/preview/${tenantId}/${courseId}/${rel}`, { headers: { cookie } });
+          const img = await previewGet(courseId, rel);
           must(img.status === 200, `picture ${item._graphic.src} is not in the build (status ${img.status})`);
         }
         return `${pictured.length} picture(s) found`;
@@ -199,7 +211,7 @@ async function main() {
         must(audio, 'no slide kept its audio');
         for (const src of [video._video.src, audio._audio.src]) {
           const rel = src.replace(/^course\/assets\//, 'course/en/assets/');
-          const r = await fetch(`${BASE}/preview/${tenantId}/${courseId}/${rel}`, { headers: { cookie } });
+          const r = await previewGet(courseId, rel);
           must(r.status === 200, `${src} is not in the build (status ${r.status})`);
           must(Number(r.headers.get('content-length') || 1) > 0, `${src} is empty`);
         }
@@ -328,13 +340,13 @@ async function main() {
       must(r.json && r.json.success, 'preview failed: ' + ((r.json && r.json.message) || r.text.slice(0, 200)));
       const i = await fetch(`${BASE}/preview/${tenantId}/${importedId}/index.html`, { headers: { cookie } });
       must(i.status === 200, 'preview index status ' + i.status);
-      const c = await fetch(`${BASE}/preview/${tenantId}/${importedId}/course/en/components.json`, { headers: { cookie } });
+      const c = await previewGet(importedId, 'course/en/components.json');
       const body = await c.text();
       let comps;
       try { comps = JSON.parse(body); } catch (e) {
         let disk = '';
         try { disk = require('child_process').execSync('df -k /app 2>/dev/null | tail -1', { encoding: 'utf8' }).trim(); } catch (e2) { /* not available */ }
-        const dirs = await fetch(`${BASE}/preview/${tenantId}/${importedId}/course/config.json`, { headers: { cookie } });
+        const dirs = await previewGet(importedId, 'course/config.json');
         throw new Error(`components.json came back unreadable: status ${c.status}, type ${c.headers.get('content-type')}, ${body.length} bytes, starts "${body.slice(0, 80)}"; config.json status ${dirs.status}; disk: ${disk || 'unknown'}`);
       }
       const slides = comps.find(x => x._component === 'slides');
