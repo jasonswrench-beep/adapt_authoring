@@ -59,7 +59,7 @@ async function checkInBrowser(root, routes, options = {}) {
   const result = { findings: [], review: [], pagesChecked: 0, errors: [] };
   let browser;
   try {
-    browser = await chromium.launch({ executablePath, args: ['--no-sandbox'] });
+    browser = await chromium.launch({ executablePath, args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-gpu'] });
     const context = await browser.newContext({ viewport: { width: options.width || 1280, height: 900 }, reducedMotion: 'reduce' });
     const targets = [{ id: '', title: 'Course menu' }].concat(routes);
     for (const target of targets) {

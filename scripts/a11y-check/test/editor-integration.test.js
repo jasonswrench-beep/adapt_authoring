@@ -127,3 +127,22 @@ test('report: groups repeats, truncates long place lists, handles an empty resul
   assert.ok(html.includes('app.a11ymore{&quot;count&quot;:3}'), 'shows how many places were hidden');
   assert.ok(report.buildHtml({ findings: [] }, t, esc).includes('app.a11ynone'));
 });
+
+test('runDeepCheck: a browser check that opened no pages is a failure with the reason, never an all-clear', async () => {
+  let f = fakeChecker({ report: { browser: { ran: true, pagesChecked: 0, errors: ['Course menu: Timeout 20000ms exceeded.'] }, findings: [], review: [] } });
+  let r = await core.runDeepCheck(f.build, f);
+  assert.strictEqual(r.ran, false);
+  assert.match(r.reason, /could not open the course.*Timeout/);
+  f = fakeChecker({ report: { browser: { ran: true, pagesChecked: 0 }, findings: [], review: [] } });
+  r = await core.runDeepCheck(f.build, f);
+  assert.strictEqual(r.ran, false);
+  assert.match(r.reason, /no pages were opened/);
+});
+
+test('the report lists pages the browser could not check, escaped', () => {
+  const html = report.buildHtml({ findings: [], deep: { ran: true, pagesChecked: 1, errors: ['Page <one>: Timeout'], findings: [], review: [] } }, t, esc);
+  assert.ok(html.includes('app.a11ycouldnotcheck'));
+  assert.ok(html.includes('Page &lt;one&gt;: Timeout'));
+  const failed = report.buildHtml({ findings: [], deep: { ran: false, reason: 'The browser could not open the course (x).' } }, t, esc);
+  assert.ok(failed.includes('app.a11yfullnotrun'));
+});

@@ -80,10 +80,16 @@ function runDeepCheck(buildFolder, opts = {}) {
         if (!report.browser || !report.browser.ran) {
           return resolve({ ran: false, reason: (report.browser && report.browser.reason) || 'The browser check did not run.' });
         }
+        const errors = report.browser.errors || [];
+        // a check that looked at nothing must never read as "all clear"
+        if (!report.browser.pagesChecked) {
+          const why = errors.length ? errors[0] : 'no pages were opened';
+          return resolve({ ran: false, reason: `The browser could not open the course (${String(why).slice(0, 240)}).` });
+        }
         resolve({
           ran: true,
           pagesChecked: report.browser.pagesChecked,
-          errors: report.browser.errors || [],
+          errors,
           // content rules were already run (on the saved data) by quickCheck
           findings: report.findings.filter(f => f.rule.indexOf('axe:') === 0),
           review: report.review || []

@@ -84,6 +84,9 @@ define(function() {
     var deep = payload.deep;
     if (deep && deep.ran) {
       html += '<p class="a11y-note">' + esc(t('app.a11yfullran', { count: deep.pagesChecked })) + '</p>';
+      (deep.errors || []).forEach(function(e) {
+        html += '<p class="a11y-note">' + esc(t('app.a11ycouldnotcheck')) + ' ' + esc(e) + '</p>';
+      });
       var review = group(deep.review || []);
       if (review.length) {
         html += '<h4>' + esc(t('app.a11yreview')) + ' (' + review.length + ')</h4><ul class="a11y-list">';

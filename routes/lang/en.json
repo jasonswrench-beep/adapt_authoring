@@ -200,6 +200,7 @@
   "app.a11yrunfull": "Run full check (about a minute)",
   "app.a11yclose": "Close",
   "app.a11yfullran": "The full check also looked at %{count} rendered page(s) for things like colour contrast.",
+  "app.a11ycouldnotcheck": "Not checked in the browser:",
   "app.a11yfullnotrun": "The full check could not be run.",
   "app.a11ylimits": "Automated checks find only some accessibility problems. They cannot judge whether alt text is good or whether the course works with a keyboard and screen reader, so test those too.",
   "app.downloading": "Downloading...",
