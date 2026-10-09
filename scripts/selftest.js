@@ -329,7 +329,14 @@ async function main() {
       const i = await fetch(`${BASE}/preview/${tenantId}/${importedId}/index.html`, { headers: { cookie } });
       must(i.status === 200, 'preview index status ' + i.status);
       const c = await fetch(`${BASE}/preview/${tenantId}/${importedId}/course/en/components.json`, { headers: { cookie } });
-      const comps = JSON.parse(await c.text());
+      const body = await c.text();
+      let comps;
+      try { comps = JSON.parse(body); } catch (e) {
+        let disk = '';
+        try { disk = require('child_process').execSync('df -k /app 2>/dev/null | tail -1', { encoding: 'utf8' }).trim(); } catch (e2) { /* not available */ }
+        const dirs = await fetch(`${BASE}/preview/${tenantId}/${importedId}/course/config.json`, { headers: { cookie } });
+        throw new Error(`components.json came back unreadable: status ${c.status}, type ${c.headers.get('content-type')}, ${body.length} bytes, starts "${body.slice(0, 80)}"; config.json status ${dirs.status}; disk: ${disk || 'unknown'}`);
+      }
       const slides = comps.find(x => x._component === 'slides');
       must(slides && slides._items && slides._items.length >= 2, 'no Slides component with slides in the imported course');
       return `${slides._items.length} slides`;
