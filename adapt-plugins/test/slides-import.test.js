@@ -79,7 +79,7 @@ const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(
 
 test('the dialog summarises the import and escapes text that came from the file', () => {
   const html = report.buildHtml({ slides: 6, pictures: 2, warnings: ['Slide 4: a <script>x</script> chart was not converted'], noAlt: ['a', 'b'] }, t, esc);
-  assert.ok(html.includes('app.importpptxdone slides=6 pictures=2'));
+  assert.ok(html.includes('app.importpptxdone slides=6 pictures=2 media=0'));
   assert.ok(html.includes('&lt;script&gt;'));
   assert.ok(!html.includes('<script>'));
   assert.ok(html.includes('app.importpptxnoalt count=2'));
@@ -189,4 +189,16 @@ test('route: unknown component, bad id, wrong component type and wrong file type
     assert.match(r.json.message, /\.pptx/);
     assert.strictEqual(s.calls.updates.length, 0);
   } finally { s.close(); }
+});
+
+test('video and audio on slides are stored as linked assets and counted', async () => {
+  const { deps, log } = fakeDeps();
+  const summary = await importDeckIntoComponent({ pptxPath: path.join(__dirname, '..', '..', 'scripts', 'pptx-import', 'test', 'sample-video.pptx'), component: slides(), deps });
+  assert.strictEqual(summary.media, 2, 'one video clip and one audio clip');
+  assert.strictEqual(summary.pictures, 0);
+  const saved = log.saved.items;
+  assert.match(saved[0]._video.src, /^course\/assets\/[0-9a-f]{16}\.mp4$/);
+  assert.match(saved[1]._audio.src, /^course\/assets\/[0-9a-f]{16}\.wav$/);
+  assert.strictEqual(log.linked.length, 2);
+  assert.ok(summary.warnings.some(w => /add a transcript/.test(w)));
 });

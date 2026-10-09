@@ -5,7 +5,7 @@ A slide-style stepped component: **one slide at a time** with Back and Next butt
 ## Using it
 
 1. In a block, add a component and choose **Slides**.
-2. Add slides. Each has a **title**, **text** (formatting, lists and links work) and, if you like, an **image** with alternative text and a position (top, left or right; on phones the image always goes above the text).
+2. Add slides. Each has a **title**, **text** (formatting, lists and links work) and, if you like, an **image** with alternative text and a position (top, left or right; on phones the image always goes above the text), a **video** (MP4, with an optional captions file and a transcript) and/or an **audio** clip (with a transcript). Media shows play controls, never starts by itself, and stops when the learner moves to another slide. Transcripts open under the media.
 3. Optional settings:
    - **Must be seen in order**: learners can go back anywhere but can only move forward one slide at a time, and the dots ahead are disabled.
    - **Complete when**: *allSlides* (default) or *lastSlide*.
@@ -15,7 +15,7 @@ The component completes when the learner has seen every slide (or reached the la
 
 ## Importing a PowerPoint into a Slides component
 
-Open the Slides component's settings in the editor and click **Import PowerPoint** in the left sidebar, then choose a `.pptx` file. The component's slides are **replaced** by the deck's slides (title, text, bullets, tables and the first picture of each slide). Pictures are added to the asset library and linked to the course, and the page reloads to show the result, so save any other edits on that screen first. Hidden slides are skipped. Anything that could not be carried over (charts, animations, extra pictures) is listed in the dialog. Add alt text to pictures that have none; **Check accessibility** flags them.
+Open the Slides component's settings in the editor and click **Import PowerPoint** in the left sidebar, then choose a `.pptx` file. The component's slides are **replaced** by the deck's slides (title, text, bullets, tables, the first picture of each slide, and an embedded **video or audio clip**: MP4/WebM/M4V video, MP3/M4A/WAV/OGG audio; formats browsers cannot play, such as AVI or WMV, are skipped with a message). Embedded media is stored in the asset library like any upload. Add a transcript (and captions for video) afterwards: the dialog reminds you and **Check accessibility** flags what is missing. Pictures are added to the asset library and linked to the course, and the page reloads to show the result, so save any other edits on that screen first. Hidden slides are skipped. Anything that could not be carried over (charts, animations, extra pictures, a second clip on one slide) is listed in the dialog. Add alt text to pictures that have none; **Check accessibility** flags them.
 
 To start a whole new course from a deck instead, use **Import source** on the dashboard.
 

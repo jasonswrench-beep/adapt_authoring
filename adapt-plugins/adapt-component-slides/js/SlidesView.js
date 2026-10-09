@@ -83,6 +83,8 @@ class SlidesView extends ComponentView {
       const active = i === index;
       element.hidden = !active;
       element.classList.toggle('is-active', active);
+      // a clip must not keep playing behind a slide the learner has left
+      if (!active) element.querySelectorAll('video, audio').forEach(media => media.pause());
     });
     this.$('.js-slides-dot').each((i, element) => {
       const $dot = $(element);

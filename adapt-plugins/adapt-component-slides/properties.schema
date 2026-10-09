@@ -168,9 +168,89 @@
             },
             "validators": [],
             "help": "Where the image sits relative to the text. Left and right apply on wide screens; on phones the image goes above the text."
+          },
+          "_video": {
+            "type": "object",
+            "required": false,
+            "title": "Slide video",
+            "properties": {
+              "src": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Select video",
+                "inputType": "Asset:video",
+                "validators": [],
+                "help": "An MP4 video shown on this slide with play controls. It never starts by itself."
+              },
+              "captions": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Captions file (.vtt)",
+                "inputType": "Asset:other",
+                "validators": [],
+                "help": "Captions let deaf and hard-of-hearing learners follow the video."
+              },
+              "captionsLanguage": {
+                "type": "string",
+                "required": false,
+                "default": "en",
+                "title": "Captions language code",
+                "inputType": "Text",
+                "validators": [],
+                "help": "Two-letter code, for example en."
+              },
+              "transcript": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Transcript",
+                "inputType": "TextArea",
+                "validators": [],
+                "help": "The words spoken in the video. Learners can open it under the video.",
+                "translatable": true
+              }
+            }
+          },
+          "_audio": {
+            "type": "object",
+            "required": false,
+            "title": "Slide audio",
+            "properties": {
+              "src": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Select audio",
+                "inputType": "Asset:audio",
+                "validators": [],
+                "help": "An MP3 (or other web audio) clip with play controls. It never starts by itself."
+              },
+              "transcript": {
+                "type": "string",
+                "required": false,
+                "default": "",
+                "title": "Transcript",
+                "inputType": "TextArea",
+                "validators": [],
+                "help": "The words spoken in the audio. Required for accessibility.",
+                "translatable": true
+              }
+            }
           }
         }
       }
+    },
+    "_transcriptText": {
+      "type": "string",
+      "required": false,
+      "default": "Transcript",
+      "title": "Transcript heading",
+      "inputType": "Text",
+      "validators": [],
+      "help": "The heading learners click to open a slide's transcript.",
+      "translatable": true
     }
   }
 }

@@ -120,3 +120,41 @@
     background: @item-color;
   }
 }
+
+.slides {
+  &__media {
+    margin-top: 1rem;
+  }
+
+  &__video {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.25rem;
+    background: #000;
+  }
+
+  &__audio {
+    display: block;
+    width: 100%;
+  }
+
+  &__transcript {
+    margin-top: 0.75rem;
+
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+
+      &:focus-visible {
+        outline: 3px solid @item-color;
+        outline-offset: 2px;
+      }
+    }
+
+    > div {
+      margin-top: 0.5rem;
+    }
+  }
+}

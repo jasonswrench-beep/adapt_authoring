@@ -99,3 +99,29 @@ test('H5P player: missing file is an error; every H5P gets a manual-review note'
   assert.deepStrictEqual(rules(ok), ['embed-review']);
   assert.strictEqual(ok[0].severity, 'info');
 });
+
+const slides = items => ({ _component: 'slides', title: 'Deck', displayTitle: '', _items: items });
+const slide = extra => Object.assign({ title: 'One', body: '<p>x</p>', _graphic: { src: '', alt: '' }, _video: { src: '' }, _audio: { src: '' } }, extra);
+
+test('slides: a video needs a transcript (error) and captions (warning); audio needs a transcript', () => {
+  const none = checkContent(course([slides([slide({ _video: { src: 'course/assets/a.mp4', captions: '', transcript: '' } })])]));
+  assert.ok(rules(none).includes('media-transcript') && rules(none).includes('media-captions'));
+  assert.strictEqual(none.find(f => f.rule === 'media-transcript').severity, 'error');
+  assert.match(none[0].message, /slide 1/);
+  const audio = checkContent(course([slides([slide({ _audio: { src: 'course/assets/a.mp3', transcript: '<p> </p>' } })])]));
+  assert.deepStrictEqual(rules(audio), ['media-transcript']);
+});
+
+test('slides: media with a transcript (and captions for video) is clean; slides with no media are not flagged', () => {
+  const ok = checkContent(course([slides([
+    slide({ _video: { src: 'course/assets/a.mp4', captions: 'course/assets/a.vtt', transcript: '<p>Hello</p>' } }),
+    slide({ title: 'Two', _audio: { src: 'course/assets/a.mp3', transcript: '<p>Hello</p>' } }),
+    slide({ title: 'Three' })
+  ])]));
+  assert.deepStrictEqual(ok, []);
+});
+
+test('slides: a picture without alt text is still flagged', () => {
+  const r = checkContent(course([slides([slide({ _graphic: { src: 'course/assets/p.png', alt: '' } })])]));
+  assert.ok(rules(r).includes('image-alt-missing'));
+});

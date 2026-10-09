@@ -3,7 +3,7 @@ import a11y from 'core/js/a11y';
 import { templates, compile, classes } from 'core/js/reactHelpers';
 
 export default function Slides(props) {
-  const { _id, _items, title, _nextText, _backText, _progressText } = props;
+  const { _id, _items, title, _nextText, _backText, _progressText, _transcriptText } = props;
   const count = _items.length;
 
   return (
@@ -17,7 +17,7 @@ export default function Slides(props) {
           aria-label={title || 'Slides'}
         >
           <div className="slides__stage js-slides-stage">
-            {_items.map(({ _index, title: slideTitle, body, _graphic, _imagePosition }) =>
+            {_items.map(({ _index, title: slideTitle, body, _graphic, _imagePosition, _video, _audio }) =>
               <div
                 className={classes([
                   'slides__slide js-slides-slide',
@@ -51,6 +51,33 @@ export default function Slides(props) {
                   }
                   {body &&
                     <div className="slides__slide-body" dangerouslySetInnerHTML={{ __html: compile(body, props) }} />
+                  }
+                  {_video && _video.src &&
+                    <div className="slides__media">
+                      <video className="slides__video" controls preload="metadata" playsInline aria-label={slideTitle ? slideTitle.replace(/<[^>]*>/g, '') : null}>
+                        <source src={_video.src} />
+                        {_video.captions &&
+                          <track kind="captions" src={_video.captions} srcLang={_video.captionsLanguage || 'en'} label="Captions" default />
+                        }
+                      </video>
+                      {_video.transcript &&
+                        <details className="slides__transcript">
+                          <summary>{_transcriptText || 'Transcript'}</summary>
+                          <div dangerouslySetInnerHTML={{ __html: compile(_video.transcript, props) }} />
+                        </details>
+                      }
+                    </div>
+                  }
+                  {_audio && _audio.src &&
+                    <div className="slides__media">
+                      <audio className="slides__audio" controls preload="metadata" src={_audio.src} aria-label={slideTitle ? slideTitle.replace(/<[^>]*>/g, '') : null} />
+                      {_audio.transcript &&
+                        <details className="slides__transcript">
+                          <summary>{_transcriptText || 'Transcript'}</summary>
+                          <div dangerouslySetInnerHTML={{ __html: compile(_audio.transcript, props) }} />
+                        </details>
+                      }
+                    </div>
                   }
                 </div>
               </div>

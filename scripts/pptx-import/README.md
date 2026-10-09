@@ -36,7 +36,7 @@ Then in the authoring tool: **Import source** → choose the zip.
 
 ## What does not convert (reported after each run)
 
-Animations, transitions, slide layout/positions, fonts and colours, charts, SmartArt, embedded video/audio (links are kept as text), emf/wmf/tiff images, and images without alt text (listed so you can add it). Only the core `text` and `graphic` components are emitted, so the import never depends on optional plugins; enhance the draft in the editor (accordions, tabs, quizzes).
+Animations, transitions, slide layout/positions, fonts and colours, charts, SmartArt, embedded video/audio in the `single` and `pages` layouts (in the **slides** layout, embedded MP4/WebM video and MP3/M4A/WAV/OGG audio are carried over, one clip per slide; links to online video are kept as text), emf/wmf/tiff images, and images without alt text (listed so you can add it). Only the core `text` and `graphic` components are emitted, so the import never depends on optional plugins; enhance the draft in the editor (accordions, tabs, quizzes).
 
 ## How the importer uses the zip
 

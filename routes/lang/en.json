@@ -389,7 +389,7 @@
   "app.importpptxhelp": "Replaces the slides below with the slides of a PowerPoint (.pptx) file: each slide's title, text and first picture.",
   "app.importpptxtitle": "PowerPoint imported",
   "app.importpptxfailed": "PowerPoint import failed",
-  "app.importpptxdone": "%{slides} slide(s) imported, with %{pictures} picture(s) added to the asset library. The page will reload to show them.",
+  "app.importpptxdone": "%{slides} slide(s) imported, with %{pictures} picture(s) and %{media} video/audio clip(s) added to the asset library. The page will reload to show them.",
   "app.importpptxattention": "Needs attention:",
   "app.importpptxmore": "...and %{count} more.",
   "app.importpptxnoalt": "%{count} picture(s) have no alternative text. Add it on each slide, or run Check accessibility.",

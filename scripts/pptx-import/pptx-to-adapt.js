@@ -37,6 +37,9 @@ const parseXml = buf => new DOMParser({
 const elementChildren = n => Array.from(n.childNodes).filter(c => c.nodeType === 1);
 const kids = (n, ns, local) => elementChildren(n).filter(c => c.namespaceURI === ns && c.localName === local);
 const kid = (n, ns, local) => kids(n, ns, local)[0];
+// Embedded media the browser can play. Anything else (wmv, avi, mov...) is reported, not carried over.
+const MEDIA_EXTS = { '.mp4': 'video', '.m4v': 'video', '.webm': 'video', '.ogv': 'video', '.mp3': 'audio', '.m4a': 'audio', '.wav': 'audio', '.ogg': 'audio', '.oga': 'audio' };
+
 const desc = (n, ns, local) => Array.from(n.getElementsByTagNameNS(ns, local));
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const stripTags = s => s.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, ' ').trim();
@@ -224,8 +227,25 @@ function convertSlide(zip, partName, number, ctx) {
     if (media.length) {
       const rel = rels[media[0].getAttributeNS(NS.r, 'link')];
       const url = rel && rel.external && safeUrl(rel.target);
-      warn(`embedded video/audio not converted${url ? ` (linked: ${url})` : ''}. Add it with a Media or YouTube component.`);
-      if (url) addText(`<p><a href="${esc(url)}" target="_blank" rel="noopener">${esc(url)}</a></p>`);
+      if (url) {
+        warn(`video/audio is linked, not embedded (${url}); the link was kept as text. Add it with a Media or YouTube component.`);
+        addText(`<p><a href="${esc(url)}" target="_blank" rel="noopener">${esc(url)}</a></p>`);
+        return;
+      }
+      if (rel && !rel.external) {
+        const ext = path.extname(rel.target).toLowerCase();
+        const kind = MEDIA_EXTS[ext];
+        if (!kind) {
+          warn(`embedded ${ext || 'media'} file is not a web format and was skipped (save it as MP4 for video or MP3 for audio and add it with a Media component).`);
+          return;
+        }
+        const data = readPart(zip, rel.target);
+        if (!data) { warn(`embedded media ${rel.target} is missing from the file.`); return; }
+        const file = ctx.addMedia(rel.target, ext, data, number);
+        slide.items.push({ kind: 'media', mediaType: kind, file });
+        return;
+      }
+      warn('embedded video/audio could not be read. Add it with a Media or YouTube component.');
       return;
     }
     const blip = desc(pic, NS.a, 'blip')[0];
@@ -286,6 +306,13 @@ function buildContent(slides, courseTitle, options) {
   const id = prefix => `${prefix}-${String(++n).padStart(3, '0')}`;
 
   if (options.layout === 'slides') return buildSlidesContent(slides, courseTitle, options, course);
+  const dropped = [];
+  slides.forEach(slide => {
+    if (slide.items.some(i => i.kind === 'media')) {
+      dropped.push(`Slide ${slide.number}: embedded video/audio is only carried over in the slides layout; add it with a Media component.`);
+      slide.items = slide.items.filter(i => i.kind !== 'media');
+    }
+  });
 
   let singlePageId = null;
   if (options.layout === 'single') {
@@ -341,7 +368,7 @@ function buildContent(slides, courseTitle, options) {
     });
   });
 
-  return { course, contentObjects, articles, blocks, components };
+  return { course, contentObjects, articles, blocks, components, warnings: dropped };
 }
 
 /**
@@ -357,11 +384,18 @@ function slidesItems(slides, lang) {
     const images = slide.items.filter(i => i.kind === 'image');
     if (images.length > 1) warnings.push(`Slide ${slide.number}: ${images.length - 1} more picture(s) were not carried over (a slide holds one picture; add the others in the editor).`);
     const first = images[0];
+    const playable = slide.items.filter(i => i.kind === 'media');
+    if (playable.length > 1) warnings.push(`Slide ${slide.number}: ${playable.length - 1} more video/audio clip(s) were not carried over (a slide holds one; add the others with a Media component).`);
+    const video = playable.find(m => m.mediaType === 'video');
+    const audio = !video && playable.find(m => m.mediaType === 'audio');
+    if (video || audio) warnings.push(`Slide ${slide.number}: add a transcript${video ? ' and, if you can, a captions file' : ''} to the ${video ? 'video' : 'audio'} so everyone can follow it.`);
     return {
       title: slide.title,
       body: texts.join(''),
       _graphic: { src: first ? `course/${lang}/images/${first.file}` : '', alt: first ? first.alt : '', attribution: '' },
-      _imagePosition: texts.length ? 'right' : 'top'
+      _imagePosition: texts.length ? 'right' : 'top',
+      _video: { src: video ? `course/${lang}/video/${video.file}` : '', transcript: '' },
+      _audio: { src: audio ? `course/${lang}/audio/${audio.file}` : '', transcript: '' }
     };
   });
   return { items, warnings };
@@ -387,7 +421,7 @@ function buildSlidesContent(slides, courseTitle, options, course) {
   return { course, contentObjects, articles, blocks, components, warnings };
 }
 
-function buildZip(content, assets, options) {
+function buildZip(content, assets, options, media = []) {
   const zip = new AdmZip();
   const put = (name, data) => zip.addFile(name, Buffer.isBuffer(data) ? data : Buffer.from(JSON.stringify(data, null, 2)));
   const base = `src/course/${options.lang}`;
@@ -415,6 +449,7 @@ function buildZip(content, assets, options) {
   put(`${base}/blocks.json`, content.blocks);
   put(`${base}/components.json`, content.components);
   assets.forEach(a => put(`${base}/images/${a.file}`, a.data));
+  media.forEach(m => put(`${base}/${m.kind === 'video' ? 'video' : 'audio'}/${m.file}`, m.data));
   return zip;
 }
 
@@ -429,9 +464,17 @@ function extract(inputPath, options) {
   if (!zip.getEntry('ppt/presentation.xml')) throw new Error('Not a .pptx file (ppt/presentation.xml not found).');
 
   const assets = [];
+  const mediaFiles = [];
   const byPart = new Map();
   const ctx = {
     options, warnings: [], noAlt: [],
+    addMedia(part, ext, data, slideNumber) {
+      if (byPart.has(part)) return byPart.get(part);
+      const file = `slide${String(slideNumber).padStart(2, '0')}_media${mediaFiles.length + 1}${ext}`;
+      mediaFiles.push({ file, data, kind: MEDIA_EXTS[ext] });
+      byPart.set(part, file);
+      return file;
+    },
     addAsset(part, ext, data, slideNumber) {
       if (byPart.has(part)) return byPart.get(part);
       const file = `slide${String(slideNumber).padStart(2, '0')}_img${assets.length + 1}${ext}`;
@@ -455,21 +498,22 @@ function extract(inputPath, options) {
     courseTitle = (t && t.textContent.trim()) || (slides[0] && slides[0].title) || path.basename(inputPath, '.pptx');
   }
 
-  return { slides, hidden, assets, courseTitle, warnings: ctx.warnings, noAlt: ctx.noAlt };
+  return { slides, hidden, assets, media: mediaFiles, courseTitle, warnings: ctx.warnings, noAlt: ctx.noAlt };
 }
 
 function convert(inputPath, options) {
-  const { slides, hidden, assets, courseTitle, warnings, noAlt } = extract(inputPath, options);
+  const { slides, hidden, assets, media, courseTitle, warnings, noAlt } = extract(inputPath, options);
   const ctx = { warnings, noAlt };
   const content = buildContent(slides, courseTitle, options);
   // only pack pictures the course actually uses (e.g. extra pictures on a slide are dropped in the slides layout)
   const json = JSON.stringify(content);
   const used = assets.filter(a => json.includes(a.file));
-  const out = buildZip(content, used, options);
+  const mediaUsed = media.filter(m => json.includes(m.file));
+  const out = buildZip(content, used, options, mediaUsed);
   return {
     out, courseTitle, warnings: ctx.warnings.concat(content.warnings || []), noAlt: ctx.noAlt,
     stats: {
-      slides: slides.length, hidden: hidden.length, pages: content.contentObjects.length, images: used.length,
+      slides: slides.length, hidden: hidden.length, pages: content.contentObjects.length, images: used.length, media: mediaUsed.length,
       textComponents: content.components.filter(c => c._component === 'text').length,
       slideItems: content.components.filter(c => c._component === 'slides').reduce((n, c) => n + c._items.length, 0)
     }

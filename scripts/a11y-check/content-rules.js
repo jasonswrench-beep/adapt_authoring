@@ -173,6 +173,26 @@ function checkContent(data) {
       add(c, 'media-autoplay', 'error', '2.2.2', 'Media starts playing automatically.', 'Turn autoplay off so learners control playback.');
     }
   });
+  // media inside Slides items
+  components.filter(c => c._component === 'slides').forEach(c => {
+    (c._items || []).forEach((item, index) => {
+      const spot = ` (slide ${index + 1}${item.title ? ': ' + stripTags(item.title) : ''})`;
+      const video = item._video || {};
+      const audio = item._audio || {};
+      const where = Object.assign({}, c, { title: (c.title || '') + spot });
+      if (video.src) {
+        if (!stripTags(video.transcript || '')) {
+          add(where, 'media-transcript', 'error', '1.2.1', `Slide video has no transcript${spot}.`, 'Add the words spoken in the video under "Transcript" on that slide.');
+        }
+        if (!video.captions) {
+          add(where, 'media-captions', 'warning', '1.2.2', `Slide video has no caption file${spot}.`, 'Upload a captions file (.vtt) on that slide.');
+        }
+      }
+      if (audio.src && !stripTags(audio.transcript || '')) {
+        add(where, 'media-transcript', 'error', '1.2.1', `Slide audio has no transcript${spot}.`, 'Add the words spoken in the audio under "Transcript" on that slide.');
+      }
+    });
+  });
   components.filter(c => c._component === 'h5pPlayer').forEach(c => {
     if (!(c._h5p && c._h5p._src)) {
       add(c, 'h5p-missing-file', 'error', '4.1.2', 'H5P activity has no file selected.', 'Upload a .h5p file to the asset library and select it in the component settings.');

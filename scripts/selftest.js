@@ -130,6 +130,29 @@ async function main() {
     });
   }
 
+  // A deck with embedded video and audio, into a second Slides component
+  let mediaComponentId;
+  if (slidesComponentId) {
+    await step('import a PowerPoint with video and audio into a Slides component', async () => {
+      const sample = ['/app/scripts/pptx-import/test/sample-video.pptx', path.join(__dirname, 'pptx-import', 'test', 'sample-video.pptx')].find(f => fs.existsSync(f));
+      must(sample, 'sample-video.pptx not found: run the update routine so the server has the latest files');
+      const made = await call('POST', '/api/content/component', {
+        _courseId: courseId, _parentId: blockId, _type: 'component', _componentType: slidesType._id, _component: slidesType.component || 'slides',
+        _layout: 'full', title: 'Media deck', displayTitle: 'Media deck', version: slidesType.version
+      });
+      must(made.status === 200 && made.json && made.json._id, `create Slides component returned ${made.status}`);
+      mediaComponentId = made.json._id;
+      const form = new FormData();
+      form.append('file', new Blob([fs.readFileSync(sample)]), 'Media deck.pptx');
+      const res = await fetch(`${BASE}/api/content/component/${mediaComponentId}/pptx`, { method: 'POST', headers: { cookie }, body: form });
+      const text = await res.text();
+      let json; try { json = JSON.parse(text); } catch (e) { /* reported below */ }
+      must(res.status === 200 && json && json.success, `import returned ${res.status}: ${text.slice(0, 240)}`);
+      must(json.payload.media >= 2, `expected a video and an audio clip, got ${json.payload.media}`);
+      return `${json.payload.slides} slides, ${json.payload.media} clip(s)`;
+    });
+  }
+
   const preview = async force => {
     const r = await call('GET', `/api/output/adapt/preview/${courseId}?force=${force}`);
     must(r.json && r.json.success, 'preview failed: ' + ((r.json && r.json.message) || r.text.slice(0, 200)));
@@ -162,6 +185,24 @@ async function main() {
           must(img.status === 200, `picture ${item._graphic.src} is not in the build (status ${img.status})`);
         }
         return `${pictured.length} picture(s) found`;
+      });
+    }
+    if (mediaComponentId) {
+      await step('imported video and audio are published and can be fetched', async () => {
+        const c = await fetchPreview('course/en/components.json');
+        const decks = JSON.parse(c.text).filter(x => x._component === 'slides');
+        const items = decks.flatMap(d => d._items || []);
+        const video = items.find(i => i._video && i._video.src);
+        const audio = items.find(i => i._audio && i._audio.src);
+        must(video, 'no slide kept its video');
+        must(audio, 'no slide kept its audio');
+        for (const src of [video._video.src, audio._audio.src]) {
+          const rel = src.replace(/^course\/assets\//, 'course/en/assets/');
+          const r = await fetch(`${BASE}/preview/${tenantId}/${courseId}/${rel}`, { headers: { cookie } });
+          must(r.status === 200, `${src} is not in the build (status ${r.status})`);
+          must(Number(r.headers.get('content-length') || 1) > 0, `${src} is empty`);
+        }
+        return 'video and audio files found';
       });
     }
     await step('stylesheet is the Modern theme (navy)', async () => {

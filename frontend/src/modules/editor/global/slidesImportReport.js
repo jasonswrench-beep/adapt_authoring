@@ -6,7 +6,7 @@
  */
 define(function() {
   function buildHtml(summary, t, esc) {
-    var html = '<p>' + esc(t('app.importpptxdone', { slides: summary.slides, pictures: summary.pictures })) + '</p>';
+    var html = '<p>' + esc(t('app.importpptxdone', { slides: summary.slides, pictures: summary.pictures, media: summary.media || 0 })) + '</p>';
     var notes = (summary.warnings || []).slice(0, 8);
     if (notes.length) {
       html += '<p>' + esc(t('app.importpptxattention')) + '</p><ul style="text-align:left">';

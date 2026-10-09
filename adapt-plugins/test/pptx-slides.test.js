@@ -107,3 +107,42 @@ test('a file that is not a PowerPoint gives a readable error', () => {
   fs.writeFileSync(bad, 'not a zip at all');
   assert.throws(() => convertToImportZip(bad, '5.56.3', fakeFrameworkSrc()), /not a valid \.pptx/);
 });
+
+// ---- embedded video and audio ----
+const VIDEO_SAMPLE = path.join(__dirname, '..', '..', 'scripts', 'pptx-import', 'test', 'sample-video.pptx');
+const { extract, slidesItems } = require('../../scripts/pptx-import/pptx-to-adapt');
+
+test('embedded video and audio are extracted and attached to their slides', () => {
+  const r = extract(VIDEO_SAMPLE, { lang: 'en', notes: false, includeHidden: false, layout: 'slides' });
+  assert.ok(r.media.some(m => m.kind === 'video' && /\.mp4$/.test(m.file) && m.data.length > 100));
+  assert.ok(r.media.some(m => m.kind === 'audio' && /\.wav$/.test(m.file)));
+  const { items } = slidesItems(r.slides, 'en');
+  assert.match(items[0]._video.src, /^course\/en\/video\/slide01_media\d\.mp4$/);
+  assert.strictEqual(items[0]._audio.src, '');
+  assert.match(items[1]._audio.src, /^course\/en\/audio\/slide02_media\d\.wav$/);
+  assert.strictEqual(items[1]._video.src, '');
+});
+
+test('media in a format browsers cannot play is skipped with a clear message, and a second clip is reported', () => {
+  const r = extract(VIDEO_SAMPLE, { lang: 'en', notes: false, includeHidden: false, layout: 'slides' });
+  assert.ok(r.warnings.some(w => /Slide 3: embedded \.avi file is not a web format/.test(w)));
+  const { items, warnings } = slidesItems(r.slides, 'en');
+  assert.strictEqual(items[2]._video.src + items[2]._audio.src, '');
+  assert.ok(warnings.some(w => /Slide 4: 1 more video\/audio clip/.test(w)));
+  assert.ok(warnings.some(w => /Slide 1: add a transcript/.test(w)), 'the learner is told to add a transcript');
+});
+
+test('the converted course packs the media under video/ and audio/ and nothing unused', () => {
+  const zip = convert(VIDEO_SAMPLE, options).out;
+  const names = zip.getEntries().map(e => e.entryName);
+  assert.ok(names.some(n => /^src\/course\/en\/video\/slide01_media\d\.mp4$/.test(n)));
+  assert.ok(names.some(n => /^src\/course\/en\/audio\/slide02_media\d\.wav$/.test(n)));
+  assert.ok(!names.some(n => /\.avi$/.test(n)));
+});
+
+test('other layouts do not turn media into pictures: it is dropped with a warning', () => {
+  const r = convert(VIDEO_SAMPLE, Object.assign({}, options, { layout: 'single' }));
+  const comps = JSON.parse(r.out.readAsText(r.out.getEntry('src/course/en/components.json')));
+  assert.ok(comps.every(c => c._component !== 'graphic'), 'no media became a graphic component');
+  assert.ok(r.warnings.some(w => /only carried over in the slides layout/.test(w)));
+});
