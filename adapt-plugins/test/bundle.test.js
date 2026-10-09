@@ -47,3 +47,9 @@ test('the look plugins declare the keys the config hook expects', () => {
     assert.ok(bundle.plugins.some(p => p.name === look.name && p.path), `${look.name} must be in the bundle as a local plugin`);
   });
 });
+
+test('Spoor is flagged to be added to every new course (SCORM export refuses without it)', () => {
+  const spoor = bundle.plugins.find(p => p.name === 'adapt-contrib-spoor');
+  assert.ok(spoor, 'adapt-contrib-spoor is in the bundle');
+  assert.strictEqual(spoor.addedByDefault, true);
+});

@@ -83,7 +83,7 @@ function installLocalEntry(entry, frameworkVersion, cb) {
   if (meta.framework && !semver.satisfies(semver.clean(frameworkVersion), meta.framework, { includePrerelease: true })) {
     return cb(new Error('requires framework ' + meta.framework));
   }
-  register(dir, meta, function(err) { cb(err, meta.name + ' ' + meta.version + ' (local)'); });
+  register(dir, meta, entry, function(err) { cb(err, meta.name + ' ' + meta.version + ' (local)'); });
 }
 
 function installEntry(entry, frameworkVersion, cb) {
@@ -106,7 +106,7 @@ function installEntry(entry, frameworkVersion, cb) {
     if (!ref) return cb(lastErr || new Error('no compatible release'));
     attempt(ref, function(err, meta) {
       if (err) return tryRefs(refs, err);
-      register(dir, meta, function(err) { cb(err, meta.name + ' ' + meta.version); });
+      register(dir, meta, entry, function(err) { cb(err, meta.name + ' ' + meta.version); });
     });
   };
   if (entry.ref) return tryRefs([entry.ref]);
@@ -116,7 +116,7 @@ function installEntry(entry, frameworkVersion, cb) {
   });
 }
 
-function register(dir, pkgMeta, cb) {
+function register(dir, pkgMeta, entry, cb) {
   var type = PLUGIN_TYPES.find(function(t) { return typeof pkgMeta[t] === 'string'; });
   if (!type) return cb(new Error('cannot identify plugin type'));
   app.contentmanager.getContentPlugin(type, function(err, plugin) {
@@ -124,7 +124,10 @@ function register(dir, pkgMeta, cb) {
     var options = Object.assign({}, bowerOptions, { strict: true });
     app.bowermanager.importPackage(plugin, { canonicalDir: dir, pkgMeta: pkgMeta }, options, function(err) {
       // an already-installed identical version is reported by importPackage as an error in strict mode
-      cb(err && /already exists/.test(String(err)) ? null : err);
+      if (err && !/already exists/.test(String(err))) return cb(err);
+      // "addedByDefault" entries are switched on for every new course (the tool's own _isAddedByDefault flag)
+      if (!entry.addedByDefault) return cb(null);
+      app.db.update(plugin.getPluginType(), { name: pkgMeta.name }, { _isAddedByDefault: true }, cb);
     });
   });
 }

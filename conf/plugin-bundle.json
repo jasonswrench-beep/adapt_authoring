@@ -303,7 +303,8 @@
       "group": "Accessibility & LMS",
       "name": "adapt-contrib-spoor",
       "repo": "adaptlearning/adapt-contrib-spoor",
-      "riseEquivalent": "SCORM / xAPI-ish tracking"
+      "riseEquivalent": "SCORM tracking. Added to every new course so SCORM export works out of the box (Web export switches it off)",
+      "addedByDefault": true
     },
     {
       "group": "Accessibility & LMS",

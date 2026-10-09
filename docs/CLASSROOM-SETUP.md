@@ -66,6 +66,8 @@ Also: H5P scores are not passed to the LMS (completion is); each activity adds r
 
 ## Exporting: SCORM and Web
 
+Spoor (the tracking extension SCORM needs) is added to every **new** course automatically (`addedByDefault` in `conf/plugin-bundle.json`, applied by the installer). A course created before that needs it added once under **Manage extensions**; without it the SCORM button explains this and the Web export still works.
+
 The editor sidebar now has two buttons in place of the single Publish button:
 
 - **Download SCORM package** - forces tracking on (Spoor enabled) for this export, giving a zip for an LMS, named `<course>-scorm.zip`.

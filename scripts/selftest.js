@@ -167,8 +167,9 @@ async function main() {
 
   await step('H5P approvals list is available to the administrator', async () => {
     const r = await call('GET', '/api/h5papproval');
-    must(r.status === 200 && r.json && Array.isArray(r.json.pending), `status ${r.status}: ${r.text.slice(0, 120)}`);
-    return `${r.json.pending.length} pending, ${r.json.approved.length} approved`;
+    const lists = r.json && (r.json.payload || r.json);
+    must(r.status === 200 && lists && Array.isArray(lists.pending), `status ${r.status}: ${r.text.slice(0, 120)}`);
+    return `${lists.pending.length} pending, ${lists.approved.length} approved`;
   });
 
   await step('clean up the throwaway course', async () => {
