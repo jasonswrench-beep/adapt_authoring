@@ -174,18 +174,20 @@ function publishCourse(courseId, mode, request, response, next) {
       });
     },
     function(callback) {
-      // The framework build adds defaults (screenSize, theme, menu...) to the course files. When no rebuild is
-      // needed those built files are current, and overwriting them with the raw saved copy would strip the defaults
-      // and leave the course stuck on "Loading..." (a second Preview of an unchanged course used to do exactly that).
-      if (!isRebuildRequired) {
-        return callback(null);
-      }
+      // The framework build adds defaults to two of the course files: screenSize in config.json and the _globals
+      // defaults in course.json. When no rebuild is needed those built files are current, and overwriting them with
+      // the raw saved copy would strip the defaults and leave the course stuck on "Loading..." (a second Preview of an
+      // unchanged course used to do exactly that). Changes to either file flag a rebuild, so they are safe to keep.
+      // The pages, articles, blocks and components come out of the build unchanged, so they are always written: a
+      // component edited or replaced (a new PowerPoint deck, a new H5P activity) does not flag a rebuild, and
+      // skipping them left the preview showing the old content.
+      var options = isRebuildRequired ? undefined : { skip: ['config', 'course'] };
       self.writeCourseJSON(outputJson, path.join(BUILD_FOLDER, Constants.Folders.Course), function(err) {
         if (err) {
           return callback(err);
         }
         callback(null);
-      });
+      }, options);
     },
     function(callback) {
       installHelpers.getInstalledFrameworkVersion(function(error, version) {

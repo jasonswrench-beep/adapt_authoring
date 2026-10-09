@@ -229,6 +229,24 @@ async function main() {
       const c = await fetchPreview('course/config.json');
       must(JSON.parse(c.text).screenSize, 'config.json lost its screenSize on the second preview');
     });
+    if (slidesComponentId) {
+      await step('replacing a deck shows the new deck in the very next preview', async () => {
+        const sample = ['/app/scripts/pptx-import/test/sample-video.pptx', path.join(__dirname, 'pptx-import', 'test', 'sample-video.pptx')].find(f => fs.existsSync(f));
+        must(sample, 'sample-video.pptx not found');
+        const before = JSON.parse((await fetchPreview('course/en/components.json')).text).find(c => c._id === slidesComponentId);
+        must(before && before._items.length === 6, 'expected the first deck (6 slides) in the preview before replacing it');
+        const form = new FormData();
+        form.append('file', new Blob([fs.readFileSync(sample)]), 'Second deck.pptx');
+        const res = await fetch(`${BASE}/api/content/component/${slidesComponentId}/pptx`, { method: 'POST', headers: { cookie }, body: form });
+        must(res.status === 200, `replacing the deck returned ${res.status}`);
+        await preview(false); // an ordinary preview, no force
+        const after = JSON.parse((await fetchPreview('course/en/components.json')).text).find(c => c._id === slidesComponentId);
+        must(after && after._items.length === 4, `the preview still shows ${after ? after._items.length : 'no'} slides, expected the new deck's 4`);
+        const config = JSON.parse((await fetchPreview('course/config.json')).text);
+        must(config.screenSize, 'config.json lost its screenSize on that preview');
+        return 'old deck replaced (6 slides -> 4)';
+      });
+    }
     await step('accessibility check, including the browser pass', async () => {
       const q = await call('GET', `/api/output/adapt/accessibility/${courseId}?deep=true`);
       must(q.json && q.json.success, 'accessibility route failed: ' + ((q.json && q.json.message) || q.text.slice(0, 200)));
