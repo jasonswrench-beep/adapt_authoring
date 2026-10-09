@@ -153,7 +153,7 @@ async function main() {
         const c = await fetchPreview('course/en/components.json');
         const comps = JSON.parse(c.text);
         const deck = comps.find(x => x._component === 'slides');
-        must(deck && deck._items.length >= 3, 'the Slides component is missing from the build');
+        must(deck && Array.isArray(deck._items) && deck._items.length >= 3, 'the Slides component has no slides in the build');
         const pictured = deck._items.filter(i => i._graphic && i._graphic.src);
         must(pictured.length >= 1, 'no slide kept its picture');
         for (const item of pictured) {

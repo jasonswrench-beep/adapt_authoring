@@ -29,8 +29,13 @@ function handler(app, helpers) {
       const id = req.params.id;
       if (!isObjectId(id)) return fail(400, 'Invalid component id.');
       const user = app.usermanager.getCurrentUser();
+      const database = await db();
+      const [component] = await promisify(cb => database.retrieve('component', { _id: id }, { jsonOnly: true }, cb));
+      if (!component) return fail(404, 'Component not found.');
+      // The permission check works out the course from _courseId (without it the tool mistakes the component's own id
+      // for a course id), so pass the course along exactly as the editor's own saves do. Nothing is changed before this.
       const componentPlugin = await plugin('component');
-      const allowed = await promisify(cb => componentPlugin.hasPermission('update', user._id, user.tenant._id, { _id: id }, cb));
+      const allowed = await promisify(cb => componentPlugin.hasPermission('update', user._id, user.tenant._id, { _id: id, _courseId: component._courseId }, cb));
       if (!allowed) return fail(403, 'You do not have permission to change this component.');
 
       const files = await new Promise((resolve, reject) => {
@@ -41,10 +46,6 @@ function handler(app, helpers) {
       if (!files.file) return fail(400, 'Choose a .pptx file.');
       tmpFiles.push(files.file.path);
       if (!pptxName(files.file)) return fail(400, 'That file is not a PowerPoint (.pptx). Save older .ppt files as .pptx first.');
-
-      const database = await db();
-      const [component] = await promisify(cb => database.retrieve('component', { _id: id }, { jsonOnly: true }, cb));
-      if (!component) return fail(404, 'Component not found.');
 
       const deps = {
         async importAsset({ file, data, alt }) {
@@ -72,7 +73,7 @@ function handler(app, helpers) {
         },
         async saveItems(c, items) {
           const properties = Object.assign({}, c.properties, { _items: items });
-          return promisify(cb => componentPlugin.update({ _id: c._id }, { properties }, cb));
+          return promisify(cb => componentPlugin.update({ _id: c._id }, { _courseId: c._courseId, properties }, cb));
         }
       };
 

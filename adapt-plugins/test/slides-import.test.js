@@ -92,3 +92,101 @@ test('the dialog lists at most eight warnings and says how many more there are',
   assert.ok(html.includes('app.importpptxmore count=3'));
   assert.ok(!html.includes('app.importpptxnoalt'));
 });
+
+// ---- the route handler, run through a real HTTP upload with a permission check that fails like the tool's own ----
+const http = require('http');
+const express = require('express');
+const makeHandler = require('../../plugins/output/adapt/slidesImportRoutes');
+
+async function serve({ component, allowed = true }) {
+  const calls = { permission: [], updates: [], assets: [], links: [], destroyed: [] };
+  const user = { _id: 'u1', tenant: { _id: 't1' } };
+  const componentPlugin = {
+    // like helpers.hasCoursePermission: without a _courseId the tool treats the item's _id as a course id and fails
+    hasPermission(action, userId, tenantId, item, cb) {
+      calls.permission.push(item);
+      if (!item._courseId) return cb(new Error(`Course ${item._id} not found`));
+      cb(null, allowed);
+    },
+    update(search, delta, cb) { calls.updates.push({ search, delta }); cb(null, {}); }
+  };
+  const courseAssetPlugin = { create(data, cb) { calls.links.push(data); cb(null, data); } };
+  const app = {
+    usermanager: { getCurrentUser: () => user },
+    configuration: { getConfig: key => (key === 'maxFileUploadSize' ? 50 * 1024 * 1024 : undefined) },
+    contentmanager: { getContentPlugin: (type, cb) => cb(null, type === 'courseasset' ? courseAssetPlugin : componentPlugin) },
+    db: {
+      retrieve: (type, search, opts, cb) => cb(null, component && search._id === component._id ? [component] : []),
+      destroy: (type, search, cb) => { calls.destroyed.push({ type, search }); cb(null); }
+    }
+  };
+  const helpers = {
+    importAsset(meta, metadata, cb) {
+      calls.assets.push(meta.filename);
+      metadata.idMap[meta.oldId] = 'asset-' + meta.filename;
+      metadata.assetNameMap['asset-' + meta.filename] = meta.filename;
+      cb();
+    }
+  };
+  const server = express();
+  server.post('/api/content/component/:id/pptx', makeHandler(app, helpers));
+  const httpServer = await new Promise(resolve => { const s = server.listen(0, () => resolve(s)); });
+  const url = id => `http://127.0.0.1:${httpServer.address().port}/api/content/component/${id}/pptx`;
+  return { calls, url, close: () => httpServer.close() };
+}
+const upload = async (url, name = 'deck.pptx', bytes = require('fs').readFileSync(SAMPLE)) => {
+  const form = new FormData();
+  form.append('file', new Blob([bytes]), name);
+  const res = await fetch(url, { method: 'POST', body: form });
+  return { status: res.status, json: await res.json() };
+};
+const COMPONENT_ID = 'a'.repeat(24);
+const slidesDoc = () => ({ _id: COMPONENT_ID, _courseId: 'b'.repeat(24), _parentId: 'c'.repeat(24), _component: 'slides', properties: { _isSequenced: true, _items: [] } });
+
+test('route: imports the deck, asks permission WITH the course id, keeps the other settings, links the pictures', async () => {
+  const s = await serve({ component: slidesDoc() });
+  try {
+    const r = await upload(s.url(COMPONENT_ID));
+    assert.strictEqual(r.status, 200, JSON.stringify(r.json));
+    assert.ok(r.json.success && r.json.payload.slides >= 3);
+    assert.strictEqual(s.calls.permission[0]._courseId, 'b'.repeat(24), 'the permission check was given the course id');
+    assert.strictEqual(s.calls.updates.length, 1);
+    assert.strictEqual(s.calls.updates[0].delta._courseId, 'b'.repeat(24));
+    assert.strictEqual(s.calls.updates[0].delta.properties._isSequenced, true, 'other component settings are kept');
+    assert.ok(s.calls.updates[0].delta.properties._items.length >= 3);
+    assert.strictEqual(s.calls.links.length, r.json.payload.pictures);
+    s.calls.links.forEach(l => assert.deepStrictEqual([l._contentType, l._contentTypeId, l._courseId], ['component', COMPONENT_ID, 'b'.repeat(24)]));
+    assert.strictEqual(s.calls.destroyed.length, 1);
+  } finally { s.close(); }
+});
+
+test('route: someone without permission changes nothing', async () => {
+  const s = await serve({ component: slidesDoc(), allowed: false });
+  try {
+    const r = await upload(s.url(COMPONENT_ID));
+    assert.strictEqual(r.status, 403);
+    assert.strictEqual(s.calls.updates.length + s.calls.assets.length + s.calls.links.length + s.calls.destroyed.length, 0);
+  } finally { s.close(); }
+});
+
+test('route: unknown component, bad id, wrong component type and wrong file type are refused with a message', async () => {
+  const other = Object.assign(slidesDoc(), { _component: 'text' });
+  let s = await serve({ component: null });
+  try {
+    assert.strictEqual((await upload(s.url(COMPONENT_ID))).status, 404);
+    assert.strictEqual((await upload(s.url('not-an-id'))).status, 400);
+  } finally { s.close(); }
+  s = await serve({ component: other });
+  try {
+    const r = await upload(s.url(COMPONENT_ID));
+    assert.strictEqual(r.status, 400);
+    assert.match(r.json.message, /Slides component/);
+  } finally { s.close(); }
+  s = await serve({ component: slidesDoc() });
+  try {
+    const r = await upload(s.url(COMPONENT_ID), 'notes.docx');
+    assert.strictEqual(r.status, 400);
+    assert.match(r.json.message, /\.pptx/);
+    assert.strictEqual(s.calls.updates.length, 0);
+  } finally { s.close(); }
+});
