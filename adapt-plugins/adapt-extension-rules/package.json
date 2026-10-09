@@ -1,0 +1,17 @@
+{
+  "name": "adapt-extension-rules",
+  "version": "0.1.0",
+  "framework": ">=5.48.4",
+  "homepage": "https://github.com/jasonswrench-beep/adapt_authoring",
+  "bugs": "https://github.com/jasonswrench-beep/adapt_authoring/issues",
+  "extension": "rules",
+  "displayName": "Rules (variables and triggers)",
+  "description": "Storyline-style variables and trigger rows: when something happens (a page is viewed, an element is completed, a question is answered, a button is pressed, a variable changes), set a variable, show or hide an element, jump somewhere, show a message or mark something complete",
+  "main": "js/adapt-extension-rules.js",
+  "keywords": [
+    "adapt-plugin",
+    "adapt-extension"
+  ],
+  "license": "GPL-3.0",
+  "targetAttribute": "_rules"
+}

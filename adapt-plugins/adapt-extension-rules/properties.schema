@@ -1,0 +1,295 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "id": "http://jsonschema.net",
+  "required": false,
+  "properties": {
+    "pluginLocations": {
+      "type": "object",
+      "required": true,
+      "properties": {
+        "config": {
+          "type": "object"
+        },
+        "course": {
+          "type": "object",
+          "properties": {
+            "_rules": {
+              "type": "object",
+              "required": false,
+              "legend": "Rules (variables and triggers)",
+              "properties": {
+                "_isEnabled": {
+                  "type": "boolean",
+                  "required": true,
+                  "default": false,
+                  "title": "Is enabled",
+                  "inputType": {
+                    "type": "Boolean",
+                    "options": [
+                      true,
+                      false
+                    ]
+                  },
+                  "validators": [],
+                  "help": "Turn the rules on for this course."
+                },
+                "_variables": {
+                  "type": "array",
+                  "required": false,
+                  "title": "Variables",
+                  "items": {
+                    "type": "object",
+                    "required": true,
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "required": false,
+                        "default": "",
+                        "title": "Name",
+                        "inputType": "Text",
+                        "validators": [
+                          "required"
+                        ],
+                        "help": "Letters, numbers and underscores, starting with a letter (for example Score or hasSeenVideo). Show it in any text with double square brackets: [[Score]]."
+                      },
+                      "type": {
+                        "type": "string",
+                        "required": true,
+                        "default": "number",
+                        "title": "Type",
+                        "inputType": {
+                          "type": "Select",
+                          "options": [
+                            "number",
+                            "text",
+                            "true/false"
+                          ]
+                        },
+                        "validators": [],
+                        "help": "Number, text, or true/false."
+                      },
+                      "initial": {
+                        "type": "string",
+                        "required": false,
+                        "default": "",
+                        "title": "Starting value",
+                        "inputType": "Text",
+                        "validators": [],
+                        "help": "What the variable holds when the course starts. For true/false type true or false."
+                      }
+                    }
+                  }
+                },
+                "_triggers": {
+                  "type": "array",
+                  "required": false,
+                  "title": "Triggers",
+                  "items": {
+                    "type": "object",
+                    "required": true,
+                    "properties": {
+                      "_name": {
+                        "type": "string",
+                        "required": false,
+                        "default": "",
+                        "title": "Label",
+                        "inputType": "Text",
+                        "validators": [],
+                        "help": "A note to yourself about what this trigger does. Not shown to learners."
+                      },
+                      "_isEnabled": {
+                        "type": "boolean",
+                        "required": false,
+                        "default": true,
+                        "title": "Enabled",
+                        "inputType": "Checkbox",
+                        "validators": [],
+                        "help": "Untick to switch this trigger off without deleting it."
+                      },
+                      "_when": {
+                        "type": "string",
+                        "required": true,
+                        "default": "viewed",
+                        "title": "When",
+                        "inputType": {
+                          "type": "Select",
+                          "options": [
+                            "start",
+                            "viewed",
+                            "completed",
+                            "correct",
+                            "incorrect",
+                            "button",
+                            "variable"
+                          ]
+                        },
+                        "validators": [],
+                        "help": "start: the course opens. viewed: an element appears on screen. completed: an element is completed. correct / incorrect: a question is submitted. button: adds a button to the element and runs when it is pressed. variable: a variable changes value."
+                      },
+                      "_target": {
+                        "type": "string",
+                        "required": false,
+                        "default": "",
+                        "title": "On element",
+                        "inputType": "Text",
+                        "validators": [],
+                        "help": "For viewed / completed / correct / incorrect / button: the element. Give the element a class in its settings (Classes box, for example intro-video) and type that name here."
+                      },
+                      "_watch": {
+                        "type": "string",
+                        "required": false,
+                        "default": "",
+                        "title": "Watch variable",
+                        "inputType": "Text",
+                        "validators": [],
+                        "help": "Only for the 'variable' event: the name of the variable to watch."
+                      },
+                      "_buttonText": {
+                        "type": "string",
+                        "required": false,
+                        "default": "",
+                        "title": "Button text",
+                        "inputType": "Text",
+                        "validators": [],
+                        "help": "Only for the 'button' event: the text on the button.",
+                        "translatable": true
+                      },
+                      "_ifVariable": {
+                        "type": "string",
+                        "required": false,
+                        "default": "",
+                        "title": "Only if variable",
+                        "inputType": "Text",
+                        "validators": [],
+                        "help": "Optional condition. Leave blank to always run. Otherwise the name of a variable to test."
+                      },
+                      "_ifOperator": {
+                        "type": "string",
+                        "required": true,
+                        "default": "=",
+                        "title": "Operator",
+                        "inputType": {
+                          "type": "Select",
+                          "options": [
+                            "=",
+                            "≠",
+                            ">",
+                            "≥",
+                            "<",
+                            "≤",
+                            "contains"
+                          ]
+                        },
+                        "validators": [],
+                        "help": "How to compare the variable with the value."
+                      },
+                      "_ifValue": {
+                        "type": "string",
+                        "required": false,
+                        "default": "",
+                        "title": "Value",
+                        "inputType": "Text",
+                        "validators": [],
+                        "help": "The value to compare with."
+                      },
+                      "_do": {
+                        "type": "string",
+                        "required": true,
+                        "default": "set-variable",
+                        "title": "Then",
+                        "inputType": {
+                          "type": "Select",
+                          "options": [
+                            "set-variable",
+                            "add-to-variable",
+                            "toggle-variable",
+                            "show",
+                            "hide",
+                            "go-to",
+                            "message",
+                            "complete"
+                          ]
+                        },
+                        "validators": [],
+                        "help": "set-variable, add-to-variable (numbers), toggle-variable (true/false); show / hide the element below; go-to the element below (page or element); message pops up a message; complete marks the element complete."
+                      },
+                      "_variable": {
+                        "type": "string",
+                        "required": false,
+                        "default": "",
+                        "title": "Variable",
+                        "inputType": "Text",
+                        "validators": [],
+                        "help": "For the variable actions: which variable to change."
+                      },
+                      "_value": {
+                        "type": "string",
+                        "required": false,
+                        "default": "",
+                        "title": "Value to set or add",
+                        "inputType": "Text",
+                        "validators": [],
+                        "help": "For set-variable and add-to-variable."
+                      },
+                      "_element": {
+                        "type": "string",
+                        "required": false,
+                        "default": "",
+                        "title": "Element",
+                        "inputType": "Text",
+                        "validators": [],
+                        "help": "For show, hide, go-to and complete: the element, by the class you gave it in the editor."
+                      },
+                      "_title": {
+                        "type": "string",
+                        "required": false,
+                        "default": "",
+                        "title": "Message title",
+                        "inputType": "Text",
+                        "validators": [],
+                        "help": "For message.",
+                        "translatable": true
+                      },
+                      "_text": {
+                        "type": "string",
+                        "required": false,
+                        "default": "",
+                        "title": "Message text",
+                        "inputType": "TextArea",
+                        "validators": [],
+                        "help": "For message. You can include [[variableName]].",
+                        "translatable": true
+                      },
+                      "_once": {
+                        "type": "boolean",
+                        "required": false,
+                        "default": false,
+                        "title": "Only run once",
+                        "inputType": "Checkbox",
+                        "validators": [],
+                        "help": "Tick to run this trigger the first time only."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "contentobject": {
+          "type": "object"
+        },
+        "article": {
+          "type": "object"
+        },
+        "block": {
+          "type": "object"
+        },
+        "component": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

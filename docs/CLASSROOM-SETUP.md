@@ -22,7 +22,7 @@ docker compose stop adapt && docker compose run --rm --entrypoint "" adapt node 
 
 ## Why a custom plugin installer
 
-The stock tool installs plugins through a Bower registry hosted on Heroku (`adapt-bower-repository.herokuapp.com`) and silently skips any plugin that fails. `scripts/install-plugin-bundle.js` instead clones each plugin from GitHub (or, for the three plugins in `adapt-plugins/`, copies them from this repository), picks the newest release compatible with the installed framework, and registers it through the tool's own `importPackage`. The list is `conf/plugin-bundle.json`; each entry notes its Rise/Storyline analogue.
+The stock tool installs plugins through a Bower registry hosted on Heroku (`adapt-bower-repository.herokuapp.com`) and silently skips any plugin that fails. `scripts/install-plugin-bundle.js` instead clones each plugin from GitHub (or, for the four plugins in `adapt-plugins/`, copies them from this repository), picks the newest release compatible with the installed framework, and registers it through the tool's own `importPackage`. The list is `conf/plugin-bundle.json`; each entry notes its Rise/Storyline analogue.
 
 ## Verification status (be aware)
 
@@ -46,6 +46,10 @@ Entries marked `"community": true` in `conf/plugin-bundle.json` are not maintain
 **Approval:** an `.h5p` file contains JavaScript, so a new file is never unpacked or run until an administrator approves it. Students see "waiting for an instructor to approve it" in preview, and downloads are refused until then. The administrator clicks **H5P approvals** in the editor sidebar (Super Admin only, enforced by the server's role permissions), sees each file's title, libraries and the courses using it, and approves or rejects it. Files **you** (an administrator) upload are approved automatically and badged in the dialog, where you can still choose Do not approve; switch this off with `h5pTrustAdminUploads: false`. Approval is per exact file (by hash) and is stored in `data/h5p-approvals.json`. Approving is a human judgement: check who uploaded the file and where it came from. See `adapt-plugins/adapt-component-h5p/README.md`.
 
 Also: H5P scores are not passed to the LMS (completion is); each activity adds roughly its unpacked size to the package. Tested with a real H5P file and a real framework build in a browser, including the approval lifecycle; **the approvals dialog, its buttons and the trusted-uploader check (which reads uploader permissions from the live database) have not yet been run against a live editor**.
+
+## Variables and triggers (Storyline-style)
+
+`adapt-plugins/adapt-extension-rules` adds Storyline-style **variables** (number, text, true/false) and **trigger rows**: *when* the course opens, an element is viewed or completed, a question is answered correctly or incorrectly, a button is pressed, or a variable changes, *then* set or add to a variable, show or hide something, jump to a page or element, pop up a message or mark something complete, optionally *only if* a variable meets a condition. Show a variable in any text with `[[Score]]`. Elements are targeted by a class you type into their Classes box in the editor. In SCORM the variables are saved with the learner's progress. See `adapt-plugins/adapt-extension-rules/README.md`. Tested in a real framework build in headless Chromium and with unit tests; **not yet tried in the editor** (the Variables and Triggers boxes). It is not a copy of Storyline's engine: there are no layers, timelines or free-form slides, but the message pop-up, show/hide and go-to cover most layer-style needs.
 
 ## Exporting: SCORM and Web
 
@@ -118,6 +122,6 @@ Adapt is page, block and component based with a responsive scrolling layout. Tha
 
 1. **Phase 1 (this change):** plugin bundle, hosted deploy, default theme.
 2. **Phase 2, polish:** custom theme/menu so new courses look like Rise lesson cards; default course template with pre-built pages (title, content, knowledge check, results); trim the editor's plugin list to the bundle for simpler student UX.
-3. **Phase 3, Storyline-like:** custom components (e.g. drag-and-drop, hotspot-with-layers, slide-style stepped component), a variable/trigger extension, and a simplified "slide" authoring view. This is real development work on both the framework and the editor front end (`frontend/src`).
+3. **Phase 3, Storyline-like:** custom components (e.g. drag-and-drop, hotspot-with-layers, slide-style stepped component), (a variable/trigger extension now exists, see *Variables and triggers*), and a simplified "slide" authoring view. This is real development work on both the framework and the editor front end (`frontend/src`).
 
 Decisions needed for Phase 2: institutional branding (colours, logo), whether LMS delivery (SCORM/xAPI via spoor) is required, and how many students will use the server at once.

@@ -20,6 +20,12 @@
       "riseEquivalent": "Embedded interactive activities (H5P: quizzes, drag-and-drop, interactive video, branching scenarios, course presentations)"
     },
     {
+      "group": "Interactions",
+      "name": "adapt-extension-rules",
+      "path": "adapt-plugins/adapt-extension-rules",
+      "riseEquivalent": "Storyline-style variables and triggers (show/hide, set a variable, jump, pop-up message, button actions)"
+    },
+    {
       "group": "Core look & menus",
       "name": "adapt-contrib-vanilla",
       "repo": "adaptlearning/adapt-contrib-vanilla",
