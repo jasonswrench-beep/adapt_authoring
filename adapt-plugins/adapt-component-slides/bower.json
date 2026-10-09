@@ -1,0 +1,17 @@
+{
+  "name": "adapt-component-slides",
+  "version": "0.1.0",
+  "framework": ">=5.48.4",
+  "homepage": "https://github.com/jasonswrench-beep/adapt_authoring",
+  "bugs": "https://github.com/jasonswrench-beep/adapt_authoring/issues",
+  "component": "slides",
+  "displayName": "Slides",
+  "description": "A slide-style stepped component: one slide at a time with Back and Next buttons, progress, optional image per slide, optional forced order, and completion when the learner has seen every slide",
+  "main": "js/adapt-component-slides.js",
+  "keywords": [
+    "adapt-plugin",
+    "adapt-component"
+  ],
+  "license": "GPL-3.0",
+  "targetAttribute": "_slides"
+}

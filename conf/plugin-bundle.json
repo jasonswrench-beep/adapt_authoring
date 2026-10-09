@@ -26,6 +26,12 @@
       "riseEquivalent": "Storyline-style variables and triggers (show/hide, set a variable, jump, pop-up message, button actions)"
     },
     {
+      "group": "Interactions",
+      "name": "adapt-component-slides",
+      "path": "adapt-plugins/adapt-component-slides",
+      "riseEquivalent": "Storyline-style slide deck: one slide at a time with Back/Next, progress dots, optional image per slide, optional forced order"
+    },
+    {
       "group": "Core look & menus",
       "name": "adapt-contrib-vanilla",
       "repo": "adaptlearning/adapt-contrib-vanilla",

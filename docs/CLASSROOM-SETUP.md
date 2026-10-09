@@ -22,7 +22,7 @@ docker compose stop adapt && docker compose run --rm --entrypoint "" adapt node 
 
 ## Why a custom plugin installer
 
-The stock tool installs plugins through a Bower registry hosted on Heroku (`adapt-bower-repository.herokuapp.com`) and silently skips any plugin that fails. `scripts/install-plugin-bundle.js` instead clones each plugin from GitHub (or, for the four plugins in `adapt-plugins/`, copies them from this repository), picks the newest release compatible with the installed framework, and registers it through the tool's own `importPackage`. The list is `conf/plugin-bundle.json`; each entry notes its Rise/Storyline analogue.
+The stock tool installs plugins through a Bower registry hosted on Heroku (`adapt-bower-repository.herokuapp.com`) and silently skips any plugin that fails. `scripts/install-plugin-bundle.js` instead clones each plugin from GitHub (or, for the five plugins in `adapt-plugins/`, copies them from this repository), picks the newest release compatible with the installed framework, and registers it through the tool's own `importPackage`. The list is `conf/plugin-bundle.json`; each entry notes its Rise/Storyline analogue.
 
 ## Verification status (be aware)
 
@@ -50,6 +50,10 @@ Also: H5P scores are not passed to the LMS (completion is); each activity adds r
 ## Variables and triggers (Storyline-style)
 
 `adapt-plugins/adapt-extension-rules` adds Storyline-style **variables** (number, text, true/false) and **trigger rows**: *when* the course opens, an element is viewed or completed, a question is answered correctly or incorrectly, a button is pressed, or a variable changes, *then* set or add to a variable, show or hide something, jump to a page or element, pop up a message or mark something complete, optionally *only if* a variable meets a condition. Show a variable in any text with `[[Score]]`. Elements are targeted by a class you type into their Classes box in the editor. In SCORM the variables are saved with the learner's progress. See `adapt-plugins/adapt-extension-rules/README.md`. Tested in a real framework build in headless Chromium and with unit tests; **not yet tried in the editor** (the Variables and Triggers boxes). It is not a copy of Storyline's engine: there are no layers, timelines or free-form slides, but the message pop-up, show/hide and go-to cover most layer-style needs.
+
+## Slides (stepped deck)
+
+`adapt-plugins/adapt-component-slides` adds a **Slides** component: one slide at a time with Back/Next, a "Slide 2 of 5" counter, progress dots, an optional image per slide, an optional "must be seen in order" setting, and completion when every (or the last) slide has been seen. Keyboard (arrows, Home, End), swipe and screen-reader behaviour are built in. Tested in a real framework build in headless Chromium (24 checks) and with axe-core; **not yet tried in the editor** (slide list, image picker). See `adapt-plugins/adapt-component-slides/README.md`.
 
 ## Exporting: SCORM and Web
 
