@@ -83,8 +83,8 @@ function runDeepCheck(buildFolder, opts = {}) {
         const errors = report.browser.errors || [];
         // a check that looked at nothing must never read as "all clear"
         if (!report.browser.pagesChecked) {
-          const why = errors.length ? errors[0] : 'no pages were opened';
-          return resolve({ ran: false, reason: `The browser could not open the course (${String(why).slice(0, 240)}).` });
+          const why = errors.length ? errors.slice(0, 2).join(' | ') : 'no pages were opened';
+          return resolve({ ran: false, reason: `The browser could not open the course (${String(why).slice(0, 600)}).` });
         }
         resolve({
           ran: true,

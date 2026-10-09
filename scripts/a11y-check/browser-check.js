@@ -65,6 +65,11 @@ async function checkInBrowser(root, routes, options = {}) {
     for (const target of targets) {
       const page = await context.newPage();
       const label = target.title || target.id;
+      const clues = [];
+      const clue = text => { if (clues.length < 4 && !clues.includes(text)) clues.push(text); };
+      page.on('pageerror', e => clue(`script error: ${String(e.message).split('\n')[0].slice(0, 120)}`));
+      page.on('requestfailed', r => clue(`request failed: ${r.url().replace(/^https?:\/\/[^/]+/, '').slice(0, 80)} (${(r.failure() || {}).errorText || 'unknown'})`));
+      page.on('response', r => { if (r.status() >= 400) clue(`HTTP ${r.status()}: ${r.url().replace(/^https?:\/\/[^/]+/, '').slice(0, 80)}`); });
       try {
         await page.goto(`${base}#/${target.id ? `id/${target.id}` : ''}`, { waitUntil: 'load' });
         await page.waitForFunction(() => document.querySelector('#wrapper .contentobject') && !/^Loading/.test(document.body.innerText.trim()), null, { timeout: 20000 });
@@ -79,7 +84,10 @@ async function checkInBrowser(root, routes, options = {}) {
         axeResults.violations.forEach(v => result.findings.push(toFinding(v, label, target.id)));
         axeResults.incomplete.forEach(v => result.review.push(toFinding(v, label, target.id, true)));
       } catch (e) {
-        result.errors.push(`${label}: ${e.message.split('\n')[0]}`);
+        // say what the page was showing, so a failure can be diagnosed from the report alone
+        const shown = await page.evaluate(() => document.body ? document.body.innerText.replace(/\s+/g, ' ').trim().slice(0, 100) : '').catch(() => '');
+        const detail = [shown ? `page showed "${shown}"` : 'page was blank'].concat(clues).join('; ');
+        result.errors.push(`${label}: ${e.message.split('\n')[0]} [${detail}]`);
       } finally {
         await page.close();
       }
