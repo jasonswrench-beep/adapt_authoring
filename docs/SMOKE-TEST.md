@@ -1,5 +1,7 @@
 # Smoke test: first run on a real server
 
+**Shortcut:** on the server, `git pull` then `sh scripts/selftest.sh` runs the server-side parts for you (log in, build a throwaway course, preview it twice, accessibility check, SCORM and Web downloads, H5P approvals list) and prints PASS or FAIL for each. What it cannot judge is how things look and feel in the editor: use the steps below for that.
+
 About 15–20 minutes. Do these in order; each step says what you should see. When something differs, note the step number and what you saw (a screenshot helps), plus the output of `docker compose logs --tail=100 adapt`.
 
 You need: the server running (see *Deploy* in `CLASSROOM-SETUP.md`), the super-user login from `.env`, one test student account, a small `.h5p` file (any activity exported from H5P.org or Lumi; the repo has one at `adapt-plugins/test/fixtures/h5p-test.h5p`), and an image.
