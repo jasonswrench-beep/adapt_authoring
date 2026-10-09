@@ -79,7 +79,10 @@ function handler(app, helpers, approvalStore, env = process.env, overrides = {})
           if (mainLibrary && (overrides.notEditable || notEditable)().includes(mainLibrary)) {
             throw new LibraryError('This kind of activity can be used in a course but not edited in this tool. Edit it in the free Lumi desktop editor and upload the file with "Select an Asset", or choose a different activity.', 400);
           }
-          const contentId = await client.importPackage(ctx.user, file);
+          // packages made before library folders were trimmed hold files H5P's importer refuses, so tidy the copy first
+          const tidy = path.join(dir, 'tidy.h5p');
+          await require('../../../h5p-library/assemble').cleanPackage({ file, outFile: tidy });
+          const contentId = await client.importPackage(ctx.user, tidy);
           target = `${BASE}/edit/${encodeURIComponent(contentId)}?${query}`;
         } finally {
           fs.remove(dir).catch(() => {});

@@ -11,7 +11,7 @@ const ROOT = path.join(__dirname, '..', '..', 'h5p-library');
 const catalogue = require(path.join(ROOT, 'catalogue.json'));
 const lock = require(path.join(ROOT, 'lock.json'));
 const { subContentLibraries, requirementsOf } = require(path.join(ROOT, 'requirements.js'));
-const { closure, assemble } = require(path.join(ROOT, 'assemble.js'));
+const { closure, assemble, cleanPackage } = require(path.join(ROOT, 'assemble.js'));
 const { addActivityToComponent, loadCatalogue, LibraryError } = require('../../plugins/output/adapt/h5pLibrary');
 
 let filter;
@@ -286,4 +286,29 @@ test('routes: thumbnails are only served for catalogue-shaped names', async () =
     await routes(app).thumb({ params: { id: 'a'.repeat(24), activity: name } }, Object.assign(res, { on() { return res; }, once() { return res; }, emit() { return res; }, write() {}, removeListener() { return res; } }));
     if (expected === 404) assert.strictEqual(res.statusCode, 404, name);
   }
+});
+
+test('cleanPackage drops files H5P refuses inside library folders and keeps everything else, as a readable zip', async () => {
+  const work = await fs.mkdtemp(path.join(os.tmpdir(), 'h5p-tidy-test-'));
+  const stage = path.join(work, 'stage');
+  await fs.outputJson(path.join(stage, 'h5p.json'), { title: 'T', mainLibrary: 'H5P.Main' });
+  await fs.outputJson(path.join(stage, 'content', 'content.json'), { a: 1 });
+  await fs.outputFile(path.join(stage, 'content', 'images', 'pic.png'), 'png');
+  await fs.outputJson(path.join(stage, 'H5P.Main-1.0', 'library.json'), { machineName: 'H5P.Main' });
+  await fs.outputFile(path.join(stage, 'H5P.Main-1.0', 'main.js'), '//js');
+  await fs.outputFile(path.join(stage, 'H5P.Main-1.0', 'main.css'), '/*css*/');
+  await fs.outputFile(path.join(stage, 'H5P.Main-1.0', 'LICENSE'), 'licence');
+  await fs.outputFile(path.join(stage, 'H5P.Main-1.0', 'eslint.config.mjs'), 'x');
+  await fs.outputFile(path.join(stage, 'H5P.Main-1.0', 'crowdin.yml'), 'x');
+  const archiver = require('archiver');
+  const dirty = path.join(work, 'dirty.h5p');
+  await new Promise((resolve, reject) => { const out = fs.createWriteStream(dirty); const a = archiver('zip'); out.on('close', resolve); a.on('error', reject); a.pipe(out); a.glob('**/*', { cwd: stage, dot: true }); a.finalize(); });
+  const clean = path.join(work, 'clean.h5p');
+  const { removed } = await cleanPackage({ file: dirty, outFile: clean });
+  assert.strictEqual(removed, 3);
+  const names = (await listZip(clean)).filter(n => !n.endsWith('/')).sort();
+  assert.deepStrictEqual(names, ['H5P.Main-1.0/library.json', 'H5P.Main-1.0/main.css', 'H5P.Main-1.0/main.js', 'content/content.json', 'content/images/pic.png', 'h5p.json']);
+  const { extractZipSafely } = require('../../plugins/output/adapt/h5pPackaging');
+  await extractZipSafely(clean, path.join(work, 'x'));
+  assert.strictEqual(await fs.readFile(path.join(work, 'x', 'H5P.Main-1.0', 'main.js'), 'utf8'), '//js');
 });

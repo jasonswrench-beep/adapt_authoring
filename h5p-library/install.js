@@ -16,6 +16,8 @@ const fs = require('fs');
 const path = require('path');
 
 const run = (cmd, args, cwd, timeout) => execFileSync(cmd, args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], timeout: timeout || 600000 });
+// bumped whenever what is copied into a library folder changes, so servers re-copy libraries they installed earlier
+const COPY_FORMAT = 2;
 const SKIP = new Set(['node_modules', '.git', '.github', 'test', 'tests', 'screenshots', '.gitignore', '.travis.yml']);
 
 function fetchCommit(dir, repo, commit) {
@@ -68,7 +70,7 @@ function install(outDir, workDir, lock, log, withEditor = false) {
     const target = path.join(outDir, key);
     const marker = path.join(target, '.locked-commit');
     const patch = patchFor(key);
-    const stamp = patch ? `${entry.commit}+${require('crypto').createHash('sha1').update(fs.readFileSync(patch)).digest('hex').slice(0, 8)}` : entry.commit;
+    const stamp = (patch ? `${entry.commit}+${require('crypto').createHash('sha1').update(fs.readFileSync(patch)).digest('hex').slice(0, 8)}` : entry.commit) + `#${COPY_FORMAT}`;
     if (fs.existsSync(marker) && fs.readFileSync(marker, 'utf8').trim() === stamp) { log(`${key}: already installed`); continue; }
     const src = path.join(workDir, key);
     try {

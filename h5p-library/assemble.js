@@ -100,4 +100,30 @@ function writeArchive(staging, libraries, libraryDir, outFile) {
   });
 }
 
-module.exports = { assemble, closure };
+/**
+ * Copies a complete .h5p without the files H5P's importer refuses inside library folders (a LICENSE, lint settings,
+ * translation settings...). Packages made before install.js started leaving those out need this before they can be
+ * opened in the H5P editor. Content, h5p.json and every file of an allowed type are kept untouched.
+ * @returns {Promise<{removed: number}>}
+ */
+async function cleanPackage({ file, outFile }) {
+  const { isAllowedFile } = require('./install');
+  const safe = name => !/(^|\/)\.\.(\/|$)/.test(name) && !path.isAbsolute(name);
+  const entries = await readEntries(file, safe);
+  const keep = entries.filter(e => e.name === 'h5p.json' || e.name.startsWith('content/') || isAllowedFile(e.name));
+  const staging = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'h5p-clean-'));
+  try {
+    for (const e of keep) {
+      const target = path.join(staging, e.name);
+      await fs.promises.mkdir(path.dirname(target), { recursive: true });
+      await fs.promises.writeFile(target, e.data);
+    }
+    await fs.promises.mkdir(path.dirname(outFile), { recursive: true });
+    await writeArchive(staging, [], null, outFile);
+  } finally {
+    await fs.promises.rm(staging, { recursive: true, force: true });
+  }
+  return { removed: entries.length - keep.length };
+}
+
+module.exports = { assemble, closure, cleanPackage };

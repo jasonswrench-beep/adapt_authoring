@@ -47,7 +47,7 @@ async function packageFor(activity, { libraryDir, cacheDir, root = LIBRARY_ROOT,
   const contentFile = path.join(root, 'content', activity.file);
   const lock = await fs.readJson(path.join(root, 'lock.json'));
   const content = await fs.readFile(contentFile);
-  const recipe = crypto.createHash('sha256').update(content).update(JSON.stringify(lock)).digest('hex').slice(0, 10);
+  const recipe = crypto.createHash('sha256').update(content).update(JSON.stringify(lock)).update('package-format-2').digest('hex').slice(0, 10);
   const file = path.join(cacheDir, `library-${activity.id}-${recipe}.h5p`);
   if (!(await fs.pathExists(file))) {
     await fs.ensureDir(cacheDir);
