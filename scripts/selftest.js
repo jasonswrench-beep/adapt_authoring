@@ -276,6 +276,39 @@ async function main() {
       must(again.status === 200 && again.json.success, 'choosing the same activity twice failed: ' + again.text.slice(0, 160));
       return 'unpacked and approved';
     });
+    // The H5P editor service: open the chosen activity in the editor, then take the (unchanged) activity back
+    let editorUrl;
+    await step('H5P editor: opens the chosen activity and serves the editor page', async () => {
+      const start = await call('POST', `/api/content/component/${h5pComponentId}/h5peditor/start`, { mode: 'edit', returnTo: '/' });
+      must(start.status !== 503, 'the H5P editor service is not running or not set up: ' + ((start.json && start.json.message) || start.text.slice(0, 160)) + ' (run: docker compose up -d --build)');
+      must(start.status === 200 && start.json && start.json.success, `start returned ${start.status}: ${start.text.slice(0, 200)}`);
+      editorUrl = start.json.payload.url;
+      must(/^\/h5p-editor\/edit\//.test(editorUrl), 'unexpected editor address ' + editorUrl);
+      const page = await call('GET', editorUrl);
+      must(page.status === 200 && /H5PIntegration/.test(page.text) && /adapt-h5p-save/.test(page.text), `editor page returned ${page.status}: ${page.text.slice(0, 160)}`);
+      const libs = await call('GET', '/h5p-editor/ajax?action=libraries');
+      must(libs.status === 200 || libs.status === 405, 'editor ajax endpoint returned ' + libs.status);
+      return 'editor page served';
+    });
+    if (editorUrl) {
+      await step('H5P editor: the editor is closed to anyone without an editor session', async () => {
+        const anon = await fetch(`${BASE}${editorUrl}`, { redirect: 'manual' });
+        must(anon.status === 403, 'expected 403 without a login, got ' + anon.status);
+      });
+      await step('H5P editor: finishing hands the activity back to the component', async () => {
+        const contentId = (editorUrl.match(/\/edit\/([\w-]+)/) || [])[1];
+        const before = await call('GET', `/api/content/component/${h5pComponentId}`);
+        const srcBefore = before.json.properties._h5p._src;
+        const done = await call('POST', `/api/content/component/${h5pComponentId}/h5peditor/finish`, { contentId });
+        must(done.status === 200 && done.json && done.json.success, `finish returned ${done.status}: ${done.text.slice(0, 240)}`);
+        const after = await call('GET', `/api/content/component/${h5pComponentId}`);
+        must(/^course\/assets\/.+\.h5p$/.test(after.json.properties._h5p._src), 'the component lost its activity');
+        await preview(true);
+        const status = await fetchPreview(`h5p/${h5pComponentId}/status.json`);
+        must(status.status === 200 && JSON.parse(status.text).status === 'approved', `the edited activity is not approved in the build: ${status.status} ${status.text.slice(0, 80)}`);
+        return srcBefore === after.json.properties._h5p._src ? 'same file (nothing was changed)' : 'new file attached and approved';
+      });
+    }
     await step('a made-up activity name is refused', async () => {
       const r = await call('POST', `/api/content/component/${h5pComponentId}/h5plibrary`, { activity: '../../etc/passwd' });
       must(r.status === 404, 'expected 404, got ' + r.status);

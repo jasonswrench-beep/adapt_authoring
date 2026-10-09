@@ -13,7 +13,9 @@ define(function(require) {
       'click .editor-component-edit-sidebar-cancel': 'cancelEditing',
       'click .editor-slides-import-button': 'chooseDeck',
       'change .editor-slides-import-file': 'importDeck',
-      'click .editor-h5p-library-button': 'openH5pLibrary'
+      'click .editor-h5p-library-button': 'openH5pLibrary',
+      'click .editor-h5p-edit-button': 'editH5p',
+      'click .editor-h5p-new-button': 'newH5p'
     },
 
     // the PowerPoint import is only offered for Slides components, the activity library for H5P Player components
@@ -21,6 +23,36 @@ define(function(require) {
       SidebarItemView.prototype.postRender.apply(this, arguments);
       if (this.model.get('_component') === 'slides') this.$('.editor-slides-import').removeClass('display-none');
       if (this.model.get('_component') === 'h5pPlayer') this.$('.editor-h5p-library').removeClass('display-none');
+    },
+
+    // opens the H5P editor on this component; the editor returns here when the activity is saved
+    startH5pEditor: function(mode, button) {
+      var t = function(key) { return Origin.l10n.t(key); };
+      var $button = $(button);
+      var label = $button.find('span').text();
+      $button.prop('disabled', true).find('span').text(t('app.h5peditoropening'));
+      $.ajax({
+        url: 'api/content/component/' + this.model.get('_id') + '/h5peditor/start',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ mode: mode, returnTo: '/' + window.location.hash })
+      }).done(function(data) {
+        window.location.href = data.payload.url;
+      }).fail(function(jqXHR) {
+        var message = (jqXHR.responseJSON && jqXHR.responseJSON.message) || t('app.errorgeneric');
+        Origin.Notify.alert({ type: 'error', title: t('app.h5peditorfailed'), text: _.escape(message) });
+        $button.prop('disabled', false).find('span').text(label);
+      });
+    },
+
+    editH5p: function(event) {
+      event.preventDefault();
+      this.startH5pEditor('edit', event.currentTarget);
+    },
+
+    newH5p: function(event) {
+      event.preventDefault();
+      this.startH5pEditor('new', event.currentTarget);
     },
 
     openH5pLibrary: function(event) {

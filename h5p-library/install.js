@@ -6,7 +6,8 @@
  * repository does not ship built files, and checked: a library whose preloaded files are missing is reported
  * and left out, so a broken library can never half-work.
  *
- *   node install.js <outLibDir> [workDir] [lockFile]
+ *   node install.js [--editor] <outLibDir> [workDir] [lockFile]
+ * --editor also installs the libraries only the H5P editor needs (for the editor service).
  *
  * Idempotent: a library that is already installed at the locked commit is skipped.
  */
@@ -42,21 +43,28 @@ function build(dir) {
   run('npm', ['run', 'build'], dir);
 }
 
+// H5P refuses to import a package holding other kinds of file (a LICENSE, lint settings, translation settings...),
+// and none of those are needed to run a library, so only these are copied.
+const ALLOWED_EXTENSIONS = new Set(('js css svg json png jpg jpeg gif bmp tif tiff eot ttf woff woff2 otf webm mp4 ogg mp3 m4a wav txt pdf rtf doc docx xls xlsx ppt pptx odt ods odp xml csv diff patch swf md textile vtt webvtt gltf glb').split(' '));
+const isAllowedFile = name => ALLOWED_EXTENSIONS.has(path.extname(name).slice(1).toLowerCase());
+
 function copyTree(src, dest) {
   fs.mkdirSync(dest, { recursive: true });
   for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
     if (SKIP.has(entry.name)) continue;
     const from = path.join(src, entry.name);
     if (entry.isDirectory()) copyTree(from, path.join(dest, entry.name));
-    else if (entry.isFile()) fs.copyFileSync(from, path.join(dest, entry.name)); // symbolic links are never followed
+    else if (entry.isFile() && isAllowedFile(entry.name)) fs.copyFileSync(from, path.join(dest, entry.name)); // symbolic links are never followed
   }
 }
 
-function install(outDir, workDir, lock, log) {
+/** Libraries that are only used by the H5P editor (its editing widgets) are skipped unless `withEditor` is set. */
+function install(outDir, workDir, lock, log, withEditor = false) {
   const failures = [];
   fs.mkdirSync(outDir, { recursive: true });
   for (const key of Object.keys(lock)) {
     const entry = lock[key];
+    if (entry.editorOnly && !withEditor) continue;
     const target = path.join(outDir, key);
     const marker = path.join(target, '.locked-commit');
     const patch = patchFor(key);
@@ -90,11 +98,13 @@ function install(outDir, workDir, lock, log) {
 }
 
 if (require.main === module) {
-  const [outDir, workDir = path.join(require('os').tmpdir(), 'h5p-library-work'), lockFile = path.join(__dirname, 'lock.json')] = process.argv.slice(2);
-  if (!outDir) { console.error('usage: node install.js <outLibDir> [workDir] [lockFile]'); process.exit(2); }
-  const failures = install(outDir, workDir, JSON.parse(fs.readFileSync(lockFile, 'utf8')), m => console.log(m));
+  const args = process.argv.slice(2);
+  const withEditor = args.includes('--editor');
+  const [outDir, workDir = path.join(require('os').tmpdir(), 'h5p-library-work'), lockFile = path.join(__dirname, 'lock.json')] = args.filter(a => a !== '--editor');
+  if (!outDir) { console.error('usage: node install.js [--editor] <outLibDir> [workDir] [lockFile]'); process.exit(2); }
+  const failures = install(outDir, workDir, JSON.parse(fs.readFileSync(lockFile, 'utf8')), m => console.log(m), withEditor);
   console.log(failures.length ? `${failures.length} librar${failures.length === 1 ? 'y' : 'ies'} could not be installed` : 'All H5P libraries installed');
   process.exitCode = failures.length ? 1 : 0;
 }
 
-module.exports = { install, copyTree };
+module.exports = { install, copyTree, isAllowedFile };

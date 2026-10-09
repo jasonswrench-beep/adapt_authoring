@@ -32,7 +32,7 @@ async function loadCatalogue({ libraryDir, root = LIBRARY_ROOT }) {
   try { lock = await fs.readJson(path.join(root, 'lock.json')); } catch (error) { /* no lock: nothing is available */ }
   const installed = new Set();
   try { (await fs.readdir(libraryDir)).forEach(name => installed.add(name)); } catch (error) { /* not installed yet */ }
-  const hasLibraries = installed.size > 0 && Object.keys(lock).length > 0 && Object.keys(lock).every(k => installed.has(k));
+  const hasLibraries = installed.size > 0 && Object.keys(lock).length > 0 && Object.keys(lock).filter(k => !lock[k].editorOnly).every(k => installed.has(k));
   return catalogue.map(a => Object.assign({}, a, {
     available: hasLibraries,
     thumbnail: fs.pathExistsSync(path.join(root, 'thumbs', `${a.id}.jpg`))
@@ -86,23 +86,41 @@ async function addActivityToComponent({ activityId, component, deps, libraryDir,
   } catch (error) {
     throw new LibraryError(`"${activity.title}" could not be prepared: ${error.message}`, 500);
   }
+  const attached = await attachPackageToComponent({
+    file, component, deps, title: `${activity.title} (H5P activity library)`, description: activity.summary,
+    completion: activity.completion === 'activity' ? 'completed' : 'inview', approvedBy: 'the H5P activity library'
+  });
+  return { id: activity.id, title: activity.title, completion: activity.completion, notes: activity.notes || '', hash: attached.hash };
+}
+
+/**
+ * Approves a complete .h5p file (it came from this tool, not from an upload), stores it in the asset library, links it
+ * to the component and points the component at it. Nothing is changed if an administrator has rejected the file.
+ * @param {{file: string, component: object, deps: object, title: string, description: string, completion?: string, approvedBy: string}} options
+ *   completion: the component's "Set completion on" value to apply ('completed' | 'inview'), or omitted to leave it
+ */
+async function attachPackageToComponent({ file, component, deps, title, description, completion, approvedBy }) {
+  if (!component || component._component !== COMPONENT) throw new LibraryError('This only works on an H5P Player component.');
   const hash = await sha256(file);
   const stat = await fs.stat(file);
   const { readH5pInfo } = require('./h5pPackaging');
-  const info = await readH5pInfo(file);
+  let info;
+  try {
+    info = await readH5pInfo(file);
+  } catch (error) {
+    throw new LibraryError(`The activity could not be used: ${error.message}`, 400);
+  }
+  const approved = await deps.approve(hash, Object.assign({ fileName: path.basename(file), size: stat.size }, info), approvedBy);
+  if (!approved) throw new LibraryError(`An administrator has rejected "${title}", so it cannot be added.`, 403);
 
-  const approved = await deps.approve(hash, Object.assign({ fileName: path.basename(file), size: stat.size }, info));
-  if (!approved) throw new LibraryError(`An administrator has rejected "${activity.title}", so it cannot be added.`, 403);
-
-  const asset = await deps.importAsset({ file: `${await sha1(file)}.h5p`, path: file, size: stat.size, title: `${activity.title} (H5P activity library)`, description: activity.summary });
+  const asset = await deps.importAsset({ file: `${await sha1(file)}.h5p`, path: file, size: stat.size, title, description });
   await deps.clearAssetLinks(component);
   await deps.linkAsset(component, asset.assetId, asset.filename);
   const previous = (component.properties && component.properties._h5p) || {};
-  await deps.saveComponent(component, {
-    _setCompletionOn: activity.completion === 'activity' ? 'completed' : 'inview',
-    _h5p: Object.assign({}, previous, { _src: `course/assets/${asset.filename}` })
-  });
-  return { id: activity.id, title: activity.title, completion: activity.completion, notes: activity.notes || '' };
+  const changes = { _h5p: Object.assign({}, previous, { _src: `course/assets/${asset.filename}` }) };
+  if (completion) changes._setCompletionOn = completion;
+  await deps.saveComponent(component, changes);
+  return { hash, filename: asset.filename, mainLibrary: info.mainLibrary };
 }
 
-module.exports = { loadCatalogue, addActivityToComponent, packageFor, LibraryError, LIBRARY_ROOT };
+module.exports = { loadCatalogue, addActivityToComponent, attachPackageToComponent, packageFor, LibraryError, LIBRARY_ROOT };

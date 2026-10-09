@@ -12,5 +12,9 @@
     "repo": "h5p/h5p-personality-quiz",
     "ref": "master"
   },
-  "H5P.KewArCode": "otacke/h5p-kewar-code"
+  "H5P.KewArCode": "otacke/h5p-kewar-code",
+  "Shepherd": "h5p/shepherd",
+  "H5P.CKEditor": "h5p/h5p-ckeditor",
+  "H5PEditor.KewArCode": "otacke/h5p-editor-kewar-code",
+  "H5PEditor.ImpressPresentation": "h5p/h5p-editor-impressive-presentation"
 }

@@ -134,7 +134,7 @@ function fakeDeps({ approve = true } = {}) {
   return {
     log,
     deps: {
-      async approve(hash, info) { log.approved.push({ hash, info }); return approve; },
+      async approve(hash, info, label) { log.approved.push({ hash, info, label }); return approve; },
       async importAsset(a) { log.imported.push(a); return { assetId: 'asset1', filename: 'stored.h5p' }; },
       async clearAssetLinks() { log.cleared++; },
       async linkAsset(c, id, name) { log.linked.push([id, name]); },
@@ -156,6 +156,7 @@ test('adding an activity approves it, stores it once, links it and sets the comp
   assert.deepStrictEqual(first.log.linked, [['asset1', 'stored.h5p']]);
   assert.match(first.log.approved[0].hash, /^[a-f0-9]{64}$/);
   assert.strictEqual(first.log.approved[0].info.mainLibrary, 'H5P.Main');
+  assert.strictEqual(first.log.approved[0].label, 'the H5P activity library');
   assert.match(first.log.imported[0].file, /^[a-f0-9]{40}\.h5p$/);
 
   // choosing the same activity again produces identical bytes, so one approval and one asset serve every use

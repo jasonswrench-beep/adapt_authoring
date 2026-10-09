@@ -19,7 +19,7 @@ const OWNERS = ['h5p', 'NDLANO', 'otacke', 'tunapanda', 'icc', 'jhlabs', 'Lumied
 const OVERRIDES = require('./repo-overrides.json');
 
 function kebab(name) {
-  return name.replace(/^H5P\./, '')
+  return name.replace(/^H5P\./, '').replace(/^H5PEditor\./, 'editor-')
     .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
     .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
     .toLowerCase();
@@ -67,12 +67,21 @@ const refFor = name => (OVERRIDES[name] && OVERRIDES[name].ref) || null;
 function resolve(cacheDir, requirements) {
   const lock = {};
   const problems = [];
-  const queue = requirements.map(r => { const m = /^(.+)-(\d+)\.(\d+)$/.exec(r); return { name: m[1], major: +m[2], minor: +m[3], via: 'catalogue' }; });
+  const queue = requirements.map(r => { const m = /^(.+)-(\d+)\.(\d+)$/.exec(r); return { name: m[1], major: +m[2], minor: +m[3], via: 'catalogue', editor: false }; });
   const seen = new Set();
+  const queueRuntime = key => {
+    const dir = path.join(cacheDir, key);
+    const lib = JSON.parse(fs.readFileSync(path.join(dir, 'library.json'), 'utf8'));
+    (lib.preloadedDependencies || []).forEach(d => queue.push({ name: d.machineName, major: d.majorVersion, minor: d.minorVersion, via: key, editor: false }));
+  };
   while (queue.length) {
     const req = queue.shift();
     const key = `${req.name}-${req.major}.${req.minor}`;
-    if (seen.has(key)) continue;
+    if (seen.has(key)) {
+      // needed at run time after all: it is not an editor-only library
+      if (!req.editor && lock[key] && lock[key].editorOnly) { delete lock[key].editorOnly; queueRuntime(key); }
+      continue;
+    }
     seen.add(key);
     const dir = path.join(cacheDir, key);
     let found = null;
@@ -96,8 +105,10 @@ function resolve(cacheDir, requirements) {
     if (!found) { problems.push(`${key}: no usable source found (needed by ${req.via})${notes.length ? ' - ' + notes.slice(0, 2).join('; ') : ''}`); fs.rmSync(dir, { recursive: true, force: true }); continue; }
     const commit = git(['rev-parse', 'HEAD'], { cwd: dir }).trim();
     lock[key] = { machineName: lib.machineName, repo: found.repo, tag: found.tag, commit, version: `${lib.majorVersion}.${lib.minorVersion}.${lib.patchVersion}` };
-    // editor dependencies are not needed to play content, only preloaded ones are followed
-    (lib.preloadedDependencies || []).forEach(d => queue.push({ name: d.machineName, major: d.majorVersion, minor: d.minorVersion, via: key }));
+    if (req.editor) lock[key].editorOnly = true;
+    // editor dependencies (the editing widgets) are only needed by the H5P editor, never to play content
+    (lib.preloadedDependencies || []).forEach(d => queue.push({ name: d.machineName, major: d.majorVersion, minor: d.minorVersion, via: key, editor: req.editor }));
+    (lib.editorDependencies || []).forEach(d => queue.push({ name: d.machineName, major: d.majorVersion, minor: d.minorVersion, via: key, editor: true }));
     // files that must exist for the library to run
     const missing = [].concat(lib.preloadedJs || [], lib.preloadedCss || []).map(f => f.path).filter(f => !fs.existsSync(path.join(dir, f)));
     if (missing.length) lock[key].missingFiles = missing;
