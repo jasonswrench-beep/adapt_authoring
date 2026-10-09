@@ -397,6 +397,16 @@ function buildZip(content, assets, options) {
     // _isEnabled is its master switch for focus management and screen reader support
     _accessibility: { _isEnabled: true, _isSkipNavigationEnabled: true }
   });
+  // The authoring tool's importer works out the course's theme and menu from plugin folders inside the zip (it fails
+  // without them). Only the version file is needed: a version that is not newer than the installed plugin is
+  // recognised as already installed and nothing is replaced. The server passes the real installed versions.
+  const plugins = options.plugins || {};
+  const meta = (type, name) => {
+    const given = plugins[type] || {};
+    return { name, version: given.version || '0.0.1', framework: given.framework || '>=5.0.0', [type]: given[type] || name, displayName: given.displayName || name };
+  };
+  put(`src/theme/${options.theme}/bower.json`, meta('theme', options.theme));
+  put(`src/menu/${options.menu}/bower.json`, meta('menu', options.menu));
   put(`${base}/course.json`, content.course);
   put(`${base}/contentObjects.json`, content.contentObjects);
   put(`${base}/articles.json`, content.articles);

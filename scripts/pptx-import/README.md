@@ -38,6 +38,10 @@ Then in the authoring tool: **Import source** → choose the zip.
 
 Animations, transitions, slide layout/positions, fonts and colours, charts, SmartArt, embedded video/audio (links are kept as text), emf/wmf/tiff images, and images without alt text (listed so you can add it). Only the core `text` and `graphic` components are emitted, so the import never depends on optional plugins; enhance the draft in the editor (accordions, tabs, quizzes).
 
+## How the importer uses the zip
+
+The authoring tool's importer works out the course's theme and menu from plugin folders inside the zip, so the converter writes `src/theme/<theme>/bower.json` and `src/menu/<menu>/bower.json` (version files only, nothing else). A version that is not newer than the installed plugin is recognised as already installed and replaces nothing. The editor passes the installed versions; the command line writes `0.0.1`.
+
 ## Testing
 
 `test/make_sample.py` builds a deck covering these cases (`pip install python-pptx pillow`); `test/validate.js` checks a generated zip against the constraints enforced by `plugins/output/adapt/importsourcecheck.js` and `importsource.js`. This has **not** been run through a live authoring tool yet; please import a real deck after your first deploy and report anything odd.

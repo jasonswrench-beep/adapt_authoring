@@ -18,6 +18,12 @@ const arts = json(`src/course/${L}/articles.json`) || [];
 const blocks = json(`src/course/${L}/blocks.json`) || [];
 const comps = json(`src/course/${L}/components.json`) || [];
 
+// the importer derives the course's theme and menu from plugin folders in the zip and crashes without them
+['theme', 'menu'].forEach(kind => {
+  const found = zip.getEntries().filter(e => new RegExp(`^src/${kind}/[^/]+/bower\\.json$`).test(e.entryName));
+  if (found.length !== 1) fail(`needs exactly one src/${kind}/<name>/bower.json (importsource.js reads plugindata.${kind}[0])`);
+});
+
 const ids = new Set(['course']);
 [...cos, ...arts, ...blocks, ...comps].forEach(i => { if (ids.has(i._id)) fail(`duplicate _id ${i._id}`); ids.add(i._id); });
 const parentOk = (items, type, parents) => items.forEach(i => {
