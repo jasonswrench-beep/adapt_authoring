@@ -14,6 +14,7 @@ const logger = require('../../../lib/logger');
 const origin = require('../../../');
 const h5pApprovalStore = require('./h5pApprovalStore');
 const h5pPackaging = require('./h5pPackaging');
+const { trustedUploadsFor } = require('./h5pTrustedUploads');
 const outputHelpers = require('./outputHelpers');
 const usermanager = require('../../../lib/usermanager');
 
@@ -259,12 +260,18 @@ function publishCourse(courseId, mode, request, response, next) {
       // Unpack approved .h5p files for the H5P Player component (no-op when the course has none).
       // Files that are not approved are never unpacked: a preview shows a "waiting for approval" notice,
       // but a download or publish is refused until an administrator has approved them.
-      h5pPackaging.packageH5P({
+      const hasH5P = (outputJson.component || []).some(c => c && c._component === h5pPackaging.COMPONENT);
+      // uploads by someone who may approve H5P files anyway are approved automatically (see h5pTrustedUploads.js)
+      (hasH5P ? trustedUploadsFor({ courseId, tenantId }).catch(error => {
+        logger.log('warn', 'Could not check H5P uploaders; approvals stay manual: ' + error.message);
+        return new Map();
+      }) : Promise.resolve(new Map())).then(trustedUploads => h5pPackaging.packageH5P({
         components: outputJson.component,
         buildFolder: BUILD_FOLDER,
         approvals: h5pApprovalStore(),
+        trustedUploads,
         context: { courseId: String(courseId), courseTitle: outputJson.course.title }
-      }).then(summary => {
+      })).then(summary => {
         summary.warnings.forEach(warning => logger.log('warn', warning));
         if (summary.pending.length && mode !== Constants.Modes.Preview) {
           const list = summary.pending.map(p => `"${p.title}" (${p.fileName}, ${p.status})`).join(', ');

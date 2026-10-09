@@ -178,6 +178,8 @@
   "app.h5preject": "Do not approve",
   "app.h5pwithdraw": "Withdraw approval",
   "app.h5pforget": "Forget this decision",
+  "app.h5pnotapprove": "Do not approve",
+  "app.h5pautobadge": "Approved automatically",
   "app.h5punnamed": "Untitled H5P file",
   "app.h5pfile": "File:",
   "app.h5ptype": "Type:",

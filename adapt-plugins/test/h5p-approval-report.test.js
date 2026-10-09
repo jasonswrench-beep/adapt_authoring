@@ -73,3 +73,16 @@ test('each button has an accessible name that includes the activity, so identica
   const evil = report.buildHtml({ pending: [entry({ title: '"><script>alert(1)</script>' })], approved: [], rejected: [] }, t, esc);
   assert.ok(!evil.includes('<script'));
 });
+
+test('an automatically approved file is badged and only offers "Do not approve"', () => {
+  const html = report.buildHtml({ pending: [], approved: [entry({ auto: true, decidedBy: 'auto: uploaded by admin@example.edu' })], rejected: [] }, t, esc);
+  assert.ok(html.includes('app.h5pautobadge'));
+  assert.ok(html.includes(`data-action="reject" data-hash="${H}"`));
+  assert.ok(!html.includes('data-action="revoke"'), 'withdrawing would just be re-approved on the next build');
+  assert.ok(html.includes('auto: uploaded by admin@example.edu'));
+});
+
+test('a manually approved file has no badge', () => {
+  const html = report.buildHtml({ pending: [], approved: [entry({ decidedBy: 'teacher@example.edu' })], rejected: [] }, t, esc);
+  assert.ok(!html.includes('app.h5pautobadge'));
+});

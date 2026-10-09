@@ -21,8 +21,13 @@ define(function() {
   }
 
   function renderEntry(entry, section, t, esc) {
-    var html = '<li class="h5p-entry h5p-' + section.key + '">';
+    // approved automatically because an administrator uploaded it: withdrawing would only re-approve it on the
+    // next build, so the one useful action is "Do not approve" (a rejection sticks)
+    var auto = section.key === 'approved' && entry.auto === true;
+    var actions = auto ? [['reject', 'app.h5pnotapprove']] : section.actions;
+    var html = '<li class="h5p-entry h5p-' + section.key + (auto ? ' h5p-auto' : '') + '">';
     html += '<strong>' + esc(entry.title || entry.fileName || t('app.h5punnamed')) + '</strong>';
+    if (auto) html += ' <span class="h5p-badge">' + esc(t('app.h5pautobadge')) + '</span>';
     html += '<ul class="h5p-details">';
     html += '<li>' + esc(t('app.h5pfile')) + ' ' + esc(entry.fileName || '') + (entry.size ? ' (' + esc(formatSize(entry.size)) + ')' : '') + '</li>';
     if (entry.mainLibrary) html += '<li>' + esc(t('app.h5ptype')) + ' ' + esc(entry.mainLibrary) + '</li>';
@@ -37,7 +42,7 @@ define(function() {
     // a decision button is only drawn for a well-formed hash, so the value placed in the page is always 64 hex characters
     if (HASH.test(entry.hash || '')) {
       html += '<div class="h5p-actions">';
-      section.actions.forEach(function(action) {
+      actions.forEach(function(action) {
         // the label names the activity, so a screen reader can tell the buttons apart
         var label = t(action[1]) + ': ' + (entry.title || entry.fileName || '');
         html += '<button type="button" class="js-h5p-action h5p-action-' + action[0] + '" data-action="' + action[0] +

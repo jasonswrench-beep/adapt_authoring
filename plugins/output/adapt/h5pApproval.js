@@ -95,6 +95,22 @@ class ApprovalStore {
     return this._decide(hash, by, 'rejected');
   }
 
+  /**
+   * Approves a file because a trusted user uploaded it. Never overrides an existing decision, so a file an
+   * administrator has rejected stays rejected. Resolves true if the file is now approved.
+   */
+  autoApprove(hash, info, label) {
+    if (!isHash(hash)) return Promise.reject(new Error('Invalid file hash'));
+    return this._update(state => {
+      if (state.rejected[hash]) return false;
+      if (state.approved[hash]) return true;
+      const entry = state.pending[hash] || Object.assign({ firstSeen: new Date().toISOString(), seenIn: [] }, info);
+      delete state.pending[hash];
+      state.approved[hash] = Object.assign({}, entry, { decidedBy: `auto: uploaded by ${label}`, decidedAt: new Date().toISOString(), auto: true });
+      return true;
+    });
+  }
+
   _decide(hash, by, decision) {
     if (!isHash(hash)) return Promise.reject(new Error('Invalid file hash'));
     return this._update(state => {

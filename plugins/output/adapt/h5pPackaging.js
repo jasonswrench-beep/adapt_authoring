@@ -18,6 +18,7 @@ const os = require('os');
 const path = require('path');
 const yauzl = require('yauzl');
 const { hashFile } = require('./h5pApproval');
+const { safeDecode } = require('./h5pTrust');
 
 const COMPONENT = 'h5pPlayer';
 const LIMITS = { maxFiles: 5000, maxEntryBytes: 100 * 1024 * 1024, maxTotalBytes: 250 * 1024 * 1024 };
@@ -140,11 +141,13 @@ async function writeStatus(dest, status, sha256) {
  * @param {object} options.approvals - an ApprovalStore (statusOf / recordPending). Required: nothing is
  *   unpacked without it, so a missing approval list can never let an unreviewed file through.
  * @param {{courseId: string, courseTitle: string}} [options.context] - recorded with pending files
+ * @param {Map<string, string>} [options.trustedUploads] - asset filename -> uploader label for files uploaded by
+ *   someone allowed to approve H5P files; those are approved automatically (never if already rejected)
  * @returns {Promise<{packaged: number, warnings: string[], pending: object[]}>}
  *   `pending` lists activities that are not approved (status 'pending' or 'rejected').
  *   Rejects with a readable Error if an archive is unusable.
  */
-async function packageH5P({ components, buildFolder, approvals, context, limits }) {
+async function packageH5P({ components, buildFolder, approvals, context, limits, trustedUploads }) {
   const result = { packaged: 0, warnings: [], pending: [] };
   const players = (components || []).filter(c => c && c._component === COMPONENT && c._h5p && c._h5p._src);
   if (!players.length) return result;
@@ -154,19 +157,20 @@ async function packageH5P({ components, buildFolder, approvals, context, limits 
 
   for (const component of players) {
     const label = component.displayTitle || component.title || component._id;
-    const source = path.resolve(build, component._h5p._src);
+    const srcPath = safeDecode(component._h5p._src); // the path in the JSON is URL-encoded; the file on disk is not
+    const source = path.resolve(build, srcPath);
     const dest = path.join(build, 'h5p', folderName(component._id));
     if (!source.startsWith(build + path.sep)) {
       throw new Error(`H5P activity "${label}": the file path is outside the course.`);
     }
     const notApproved = (status, sha256, extra) => result.pending.push(Object.assign({
-      componentId: component._id, title: label, hash: sha256, fileName: path.basename(component._h5p._src), status
+      componentId: component._id, title: label, hash: sha256, fileName: path.basename(srcPath), status
     }, extra));
 
     if (!(await fs.pathExists(source))) {
       // an earlier build already unpacked (and removed) the file: check the approval still stands
       const earlier = await readStatus(dest);
-      if (!earlier) { result.warnings.push(`H5P activity "${label}": file not found (${component._h5p._src}).`); continue; }
+      if (!earlier) { result.warnings.push(`H5P activity "${label}": file not found (${srcPath}).`); continue; }
       const now = await approvals.statusOf(earlier.sha256);
       if (earlier.status === 'approved' && now === 'approved') continue;
       if (now === 'approved') {
@@ -192,10 +196,16 @@ async function packageH5P({ components, buildFolder, approvals, context, limits 
       }
       const sha256 = await hashFile(copy.file);
       let decision = await approvals.statusOf(sha256);
-      if (decision === 'unknown') {
+      if (decision === 'unknown' || decision === 'pending') {
         const stat = await fs.stat(copy.file);
-        await approvals.recordPending(sha256, Object.assign({ fileName: path.basename(component._h5p._src), size: stat.size }, info), context);
-        decision = 'pending';
+        const details = Object.assign({ fileName: path.basename(srcPath), size: stat.size }, info);
+        const uploader = trustedUploads && trustedUploads.get(path.basename(srcPath));
+        if (uploader && approvals.autoApprove) {
+          if (await approvals.autoApprove(sha256, Object.assign({ seenIn: context ? [context] : [] }, details), uploader)) decision = 'approved';
+        } else if (decision === 'unknown') {
+          await approvals.recordPending(sha256, details, context);
+          decision = 'pending';
+        }
       }
       if (decision !== 'approved') {
         // keep the file in the build so approving it later does not need a rebuild; downloads are blocked by the caller

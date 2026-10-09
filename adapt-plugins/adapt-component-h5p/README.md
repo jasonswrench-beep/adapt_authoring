@@ -27,6 +27,8 @@ An `.h5p` file contains JavaScript, so an uploaded file is **never unpacked or r
 
 How approval works: files are identified by the SHA-256 of their bytes, so approving one file approves nothing else, and a changed file needs approving again. The same file in other courses is approved once. Decisions are stored in `data/h5p-approvals.json` (in the Docker volume). If that file is unreadable the server refuses to unpack anything rather than treating files as approved.
 
+**Your own uploads (trusted-uploader shortcut).** A file uploaded by a user who is allowed to approve H5P files (a Super Admin) is approved automatically the first time a course using it is previewed or built, so you do not have to click for your own work. It appears in the dialog under *Approved* with an "Approved automatically" badge and the note "auto: uploaded by <email>"; its only button is **Do not approve**, which rejects it for good (withdrawing would just re-approve it). A file you have already rejected is never auto-approved. If someone else uploaded a file with the same name into the same course, the name is not trusted. The check asks the permission system (the same one that guards the approval routes), so no role names are hardcoded. Turn it off with `"h5pTrustAdminUploads": false` in `conf/config.json`. Files are matched by file name within the course, so the shortcut covers uploads made through the asset library.
+
 What to check before approving: who uploaded it, and where it came from (your own work, H5P.org, Lumi). The dialog shows the libraries it uses but cannot tell you whether the content is safe.
 
 ## Limits and cautions
