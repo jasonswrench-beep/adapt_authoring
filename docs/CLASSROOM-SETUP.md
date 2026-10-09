@@ -66,7 +66,7 @@ Also: H5P scores are not passed to the LMS (completion is); each activity adds r
 
 ## Exporting: SCORM and Web
 
-Spoor (the tracking extension SCORM needs) is added to every **new** course automatically (`addedByDefault` in `conf/plugin-bundle.json`, applied by the installer). A course created before that needs it added once under **Manage extensions**; without it the SCORM button explains this and the Web export still works.
+Spoor (the tracking extension SCORM needs) is added to every **new** course automatically (`addedByDefault` in `conf/plugin-bundle.json`, applied by the installer). A course created before that needs it added once under **Manage extensions**; without it the SCORM button explains this and the Web export still works. The Web package leaves out the SCORM launch files (`imsmanifest.xml`, the `.xsd` schemas, `index_lms.html` and the test pages), so an LMS cannot mistake it for a SCORM package.
 
 The editor sidebar now has two buttons in place of the single Publish button:
 

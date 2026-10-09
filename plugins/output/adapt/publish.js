@@ -289,6 +289,14 @@ function publishCourse(courseId, mode, request, response, next) {
       }, error => callback(error));
     },
     function(callback) {
+      // A Web package must not carry the SCORM launch files: with Spoor in the course the build always includes them,
+      // and an LMS that finds imsmanifest.xml would treat the zip as a SCORM package.
+      if (exportFormat !== 'web') return callback(null);
+      const scormOnly = ['imsmanifest.xml', 'adlcp_rootv1p2.xsd', 'ims_xml.xsd', 'imscp_rootv1p1p2.xsd', 'imsmd_rootv1p2p1.xsd',
+        'index_lms.html', 'log_output.html', 'scorm_test_harness.html', 'connection.txt'];
+      async.each(scormOnly, (file, done) => fs.remove(path.join(BUILD_FOLDER, file), done), error => callback(error));
+    },
+    function(callback) {
       const configPath = path.join(BUILD_FOLDER, Constants.Folders.Course, Constants.CourseCollections.config.filename);
       self.removeBuildIncludes(configPath, err => callback(err));
     },
