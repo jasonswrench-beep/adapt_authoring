@@ -393,6 +393,29 @@ async function main() {
     });
   }
 
+  // The screen recorder's upload route: a small generated video goes in as WebM and must come out as an MP4 asset
+  await step('screen recorder: a WebM recording is converted to MP4 and added to the asset library', async () => {
+    const ffmpegBinary = (() => { for (const base of ['/app/node_modules', path.join(__dirname, '..', 'node_modules')]) { try { const m = require(path.join(base, 'ffmpeg-static')); return typeof m === 'string' ? m : m.path; } catch (e) { /* try the next place */ } } return null; })();
+    must(ffmpegBinary, 'ffmpeg is not installed with the authoring tool');
+    const file = path.join(os.tmpdir(), 'selftest-recording.webm');
+    const made = require('child_process').spawnSync(ffmpegBinary, ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'lavfi', '-i', 'testsrc=size=320x180:rate=10', '-f', 'lavfi', '-i', 'sine=frequency=440', '-t', '1', '-c:v', 'libvpx', '-c:a', 'libopus', file]);
+    must(made.status === 0, 'could not make a test video: ' + String(made.stderr).slice(0, 160));
+    const form = new FormData();
+    form.append('file', new Blob([fs.readFileSync(file)], { type: 'video/webm' }), 'recording.webm');
+    form.append('title', 'Selftest recording');
+    form.append('description', 'Made by the self-test');
+    const res = await fetch(`${BASE}/api/asset/recording`, { method: 'POST', headers: { cookie }, body: form });
+    const text = await res.text();
+    fs.unlinkSync(file);
+    let json; try { json = JSON.parse(text); } catch (e) { /* reported below */ }
+    must(res.status === 200 && json && json.success, `recording upload returned ${res.status}: ${text.slice(0, 240)}`);
+    must(/\.mp4$/.test(json.payload.filename), 'the stored file is not an MP4: ' + json.payload.filename);
+    const served = await fetch(`${BASE}/api/asset/serve/${json.payload._id}`, { headers: { cookie } });
+    must(served.status === 200 && /video\/mp4/.test(served.headers.get('content-type') || ''), `the asset is served as ${served.headers.get('content-type')} (status ${served.status})`);
+    await call('PUT', `/api/asset/trash/${json.payload._id}`); // tidy up; the file stays in the trash like any deleted asset
+    return `stored as ${json.payload.filename}`;
+  });
+
   await step('H5P approvals list is available to the administrator', async () => {
     const r = await call('GET', '/api/h5papproval');
     const lists = r.json && (r.json.payload || r.json);
